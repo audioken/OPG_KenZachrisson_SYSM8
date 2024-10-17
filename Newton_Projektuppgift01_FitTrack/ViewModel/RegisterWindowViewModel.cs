@@ -1,4 +1,6 @@
-﻿namespace Newton_Projektuppgift01_FitTrack.ViewModel
+﻿using Newton_Projektuppgift01_FitTrack.MVVM;
+
+namespace Newton_Projektuppgift01_FitTrack.ViewModel
 {
     public class RegisterWindowViewModel
     {
@@ -7,17 +9,14 @@
         public string ConfirmPasswordInput { get; set; }
         public string CountryComboBox { get; set; }
 
-        public RegisterWindowViewModel(string UsernameInput, string PasswordInput, string ConfirmPasswordInput, string CountryComboBox)
-        {
-            this.UsernameInput = UsernameInput;
-            this.PasswordInput = PasswordInput;
-            this.ConfirmPasswordInput = ConfirmPasswordInput;
-            this.CountryComboBox = CountryComboBox;
-        }
+        public RelayCommand RegisterNewUserCommand => new RelayCommand(execute => RegisterNewUser());
 
         public void RegisterNewUser()
         {
-            // Kod för att registrera en ny användare
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+
+            // Kod för att stänga fönstret här
         }
     }
 }
