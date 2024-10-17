@@ -7,9 +7,10 @@
         mc:Ignorable="d"
         Title="RegisterWindow" Height="450" Width="800">
     <StackPanel>
-        <TextBox Text="Välj användarnamn.."/>
-        <TextBox Text="Välj lösenord.."/>
-        <ComboBox/>
+        <TextBox Text="{Binding UsernameInput}"/>
+        <TextBox Text="{Binding PasswordInput}"/>
+        <TextBox Text="{Binding ConfirmPassWordInput}"/>
+        <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding CountryComboBox}"/>
         <Button Content="Register" Command="{Binding RegisterNewUserCommand}"/>
     </StackPanel>
 </Window>

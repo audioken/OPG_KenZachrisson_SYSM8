@@ -6,14 +6,19 @@
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    
+    <!-- Enkel meny under testning -->
     <StackPanel>
-        <Label Content="FitTrack"/>
-        <TextBox Text="Username.."/>
-        <TextBox Text="Password.."/>
+        
+        <Label Content="{Binding LabelTitle}"/>
+        <TextBox Text="{Binding UsernameInput}"/>
+        <TextBox Text="{Binding PasswordInput}"/>
         <Button Height="20" Content="Sign in" Command="{Binding SignInCommand}"/>
         <Button Height="20" Content="Register" Command="{Binding RegisterCommand}"/>
         
         <!-- För VG -->
         <Button Height="20" Content="Forgot Password" Command="{Binding ForgotPasswordCommand}"/>
+        
     </StackPanel>
+    
 </Window>
