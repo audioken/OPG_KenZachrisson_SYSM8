@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Newton_Projektuppgift01_FitTrack.Model
 {
-    class CardioWorkout
+    public class CardioWorkout : Workout
     {
+        public int Distance { get; set; }
+
+        public CardioWorkout(DateTime Date, string Type, TimeSpan Duration, int CaloriesBurned, string Notes, int Distance) : base(Date, Type, Duration, CaloriesBurned, Notes)
+        {
+            this.Distance = Distance;
+        }
+
+        public override int CalculateCaloriesBurned()
+        {
+            return 0; // Bara tillfäligt, behöver kod här
+        }
     }
 }

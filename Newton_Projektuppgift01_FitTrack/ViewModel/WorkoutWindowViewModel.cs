@@ -1,12 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newton_Projektuppgift01_FitTrack.Model;
 
 namespace Newton_Projektuppgift01_FitTrack.ViewModel
 {
-    class WorkoutWindowViewModel
+    public class WorkoutWindowViewModel
     {
+        public User User { get; set; }
+        public List<Workout> WorkoutList { get; set; }
+
+        public WorkoutWindowViewModel(User User, List<Workout> WorkoutList)
+        {
+            this.User = User;
+            this.WorkoutList = WorkoutList;
+        }
+
+        public void AddWorkout()
+        {
+            // Öppna -> AddWorkoutWindow
+        }
+
+        public void RemoveWorkout()
+        {
+            // Kod för att ta bort workout
+        }
+
+        public void OpenDetails(Workout workout)
+        {
+            // Öppna -> WorkoutDetailsWindow
+        }
     }
 }

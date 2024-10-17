@@ -1,12 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Newton_Projektuppgift01_FitTrack.ViewModel
+﻿namespace Newton_Projektuppgift01_FitTrack.ViewModel
 {
-    class AddWorkWindowViewModel
+    public class AddWorkWindowViewModel
     {
+        public string WorkoutTypeComboBox { get; set; }
+        public TimeSpan DurationInput { get; set; }
+        public int CaloriesBurnedInput { get; set; }
+        public string NotesInput { get; set; }
+
+        public AddWorkWindowViewModel(string WorkoutTypeComboBox, TimeSpan DurationInput, int CaloriesBurnedInput, string NotesInput)
+        {
+            this.WorkoutTypeComboBox = WorkoutTypeComboBox;
+            this.DurationInput = DurationInput;
+            this.CaloriesBurnedInput = CaloriesBurnedInput;
+            this.NotesInput = NotesInput;
+        }
+
+        public void SaveWorkout()
+        {
+            // Kod för att spara sitt träningsupplägg
+        }
     }
 }
