@@ -21,7 +21,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             set
             {
                 countryComboBox = value;
-                OnPropertyChanged();
+                //OnPropertyChanged(); Finns inget behov för OnPropertyChanged här vad jag kan förstå
             }
         }
 
@@ -33,7 +33,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             set
             {
                 countries = value;
-                OnPropertyChanged();
+                //OnPropertyChanged(); Finns inget behov för OnPropertyChanged här vad jag kan förstå
             }
         }
 
@@ -57,21 +57,30 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Registera ny användare baserat på inmatad information
         public void RegisterNewUser()
         {
-            if (UsernameInput != null && PasswordInput != null)
+            if (!string.IsNullOrEmpty(UsernameInput) && !string.IsNullOrEmpty(PasswordInput) && !string.IsNullOrEmpty(ConfirmPasswordInput))
             {
-                Manager.Instance.AllUsers.Add(new User(UsernameInput, PasswordInput, CountryComboBox));
+                if (PasswordInput == ConfirmPasswordInput)
+                {
+                    Manager.Instance.AllUsers.Add(new User(UsernameInput, PasswordInput, CountryComboBox));
 
-                Manager.Instance.PrintAllUsers();
+                    // Testutskrift
+                    //Manager.Instance.PrintAllUsers();
+
+                    // Öppna MainWindow
+                    MainWindow mainWindow = new MainWindow(); // Kanske ska instansieras någon annanstans?
+                    mainWindow.Show();
+
+                    // KOD HÄR för att stänga detta fönster
+                }
+                else
+                {
+                    MessageBox.Show("Lösenorden matchar inte!");
+                }
             }
             else
             {
                 MessageBox.Show("Någon ruta saknar text!");
             }
-
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-
-            // Kod för att stänga fönstret här
         }
     }
 }

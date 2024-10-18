@@ -9,7 +9,7 @@
     <StackPanel>
         <TextBox Text="{Binding UsernameInput}"/>
         <TextBox Text="{Binding PasswordInput}"/>
-        <TextBox Text="{Binding ConfirmPassWordInput}"/>
+        <TextBox Text="{Binding ConfirmPasswordInput}"/>
         <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding CountryComboBox}"/>
         <Button Content="Register" Command="{Binding RegisterNewUserCommand}"/>
     </StackPanel>

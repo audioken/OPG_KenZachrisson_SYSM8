@@ -6,7 +6,12 @@
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View"
         mc:Ignorable="d"
         Title="WorkoutWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    
+    <StackPanel>
+
+        <Label Content="{Binding User.UserName}"/>
+        <Button Content="User Details" Command="{Binding UserDetailsCommand}"/>
+
+    </StackPanel>
+    
 </Window>

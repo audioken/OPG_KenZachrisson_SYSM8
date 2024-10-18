@@ -1,4 +1,6 @@
-﻿namespace Newton_Projektuppgift01_FitTrack.Model
+﻿using System.Windows;
+
+namespace Newton_Projektuppgift01_FitTrack.Model
 {
     public class User : Person
     {
@@ -22,7 +24,7 @@
 
         public override void SignIn()
         {
-
+            MessageBox.Show($"Användaren {UserName} från {Country} är inloggad..");
         }
 
         public void ResetPassword(string securityAnswer)

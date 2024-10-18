@@ -43,8 +43,17 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     // Kontrollerar så det matchar en användarprofil
                     if (UsernameInput == user.UserName && PasswordInput == user.Password)
                     {
+                        // Lagrar nuvarande användare
+                        Manager.Instance.CurrentUser = user;
+
+                        // Anropar metod för att skriva ut inloggningsinformation
+                        user.SignIn();
+
+                        // Öppna "WorkoutWindow"
+                        WorkoutWindow workoutWindow = new WorkoutWindow();
+                        workoutWindow.Show();
+
                         // Testutskrift
-                        MessageBox.Show("Jodå vi hittade dig!");
                         accountFound = true; // Undviker att skriva ut felmeddelandet efter foreach-loopen
                         break;
                     }
@@ -77,7 +86,25 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // För VG 
         public void ForgotPassword()
         {
-            // Kod som hanterar glömt lösenord här
+            // Kolla så text är inmatad för användarnamn
+            if (!string.IsNullOrEmpty(UsernameInput))
+            {
+                // Kollar igenom användarlistan i Managerklassen
+                foreach (User user in Manager.Instance.AllUsers)
+                {
+                    // Kontrollerar så det matchar en användarprofil
+                    if (UsernameInput == user.UserName)
+                    {
+                        // Kod för återställning av lösenord. Behöver man gör ett nytt window?
+                        // user.ResetPassword(securityAnswer);
+                    }
+                }
+            }
+            // Felmeddelande om textboxen för användarnamn är tom
+            else
+            {
+                MessageBox.Show("Du måste skriva in ett giltigt användarnamn!");
+            }
         }
     }
 }

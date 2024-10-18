@@ -7,11 +7,19 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public User User { get; set; }
         public List<Workout> WorkoutList { get; set; }
 
-        public WorkoutWindowViewModel(User User, List<Workout> WorkoutList)
+        //public RelayCommand UserDetailsCommand => new RelayCommand(execute => OpenDetails());
+
+        public WorkoutWindowViewModel()
         {
-            this.User = User;
-            this.WorkoutList = WorkoutList;
+            // Håller koll på nuvarande användare
+            User = Manager.Instance.CurrentUser;
         }
+
+        //public WorkoutWindowViewModel(User User, List<Workout> WorkoutList)
+        //{
+        //    this.User = User;
+        //    this.WorkoutList = WorkoutList;
+        //}
 
         public void AddWorkout()
         {

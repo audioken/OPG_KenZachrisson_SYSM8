@@ -6,12 +6,15 @@ namespace Newton_Projektuppgift01_FitTrack.Model
     public class Manager
     {
         //EGENSKAPER ↓
-        // Singleton-implementering av Manger för att möjliggöra åtkomst över hela projektet
+        // Singleton-implementering av Manager för att möjliggöra åtkomst över hela projektet
         private static Manager _instance;
         public static Manager Instance => _instance ??= new Manager();
 
         // Lista som lagrar alla användare
         public ObservableCollection<User> AllUsers { get; private set; }
+
+        // Håller koll på inloggad användare
+        public User CurrentUser { get; set; }
 
         // KONSTRUKTOR ↓
         private Manager()
