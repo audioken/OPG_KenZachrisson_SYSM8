@@ -41,7 +41,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 foreach (User user in Manager.Instance.AllUsers)
                 {
                     // Kontrollerar så det matchar en användarprofil
-                    if (UsernameInput == user.UserName && PasswordInput == user.Password)
+                    if (UsernameInput == user.Username && PasswordInput == user.Password)
                     {
                         // Lagrar nuvarande användare
                         Manager.Instance.CurrentUser = user;
@@ -93,7 +93,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 foreach (User user in Manager.Instance.AllUsers)
                 {
                     // Kontrollerar så det matchar en användarprofil
-                    if (UsernameInput == user.UserName)
+                    if (UsernameInput == user.Username)
                     {
                         // Kod för återställning av lösenord. Behöver man gör ett nytt window?
                         // user.ResetPassword(securityAnswer);

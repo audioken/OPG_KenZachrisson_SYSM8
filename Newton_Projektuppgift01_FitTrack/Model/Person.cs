@@ -2,12 +2,12 @@
 {
     public abstract class Person
     {
-        public string UserName { get; set; }
+        public string Username { get; set; }
         public string Password { get; set; }
 
-        public Person(string UserName, string Password)
+        public Person(string Username, string Password)
         {
-            this.UserName = UserName;
+            this.Username = Username;
             this.Password = Password;
         }
 

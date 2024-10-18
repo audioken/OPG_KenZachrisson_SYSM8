@@ -6,11 +6,17 @@
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View"
         mc:Ignorable="d"
         Title="RegisterWindow" Height="450" Width="800">
+    
     <StackPanel>
+        
         <TextBox Text="{Binding UsernameInput}"/>
         <TextBox Text="{Binding PasswordInput}"/>
-        <TextBox Text="{Binding ConfirmPasswordInput}"/>
+        
+        <!-- För VG -->
+        <TextBox Text="{Binding ConfirmPasswordInput}"/> 
+        
         <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding CountryComboBox}"/>
         <Button Content="Register" Command="{Binding RegisterNewUserCommand}"/>
+        
     </StackPanel>
 </Window>

@@ -29,7 +29,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         {
             foreach (User user in AllUsers)
             {
-                MessageBox.Show($"{user.UserName} {user.Password} {user.Country}");
+                MessageBox.Show($"{user.Username} {user.Password} {user.Country}");
             }
         }
     }

@@ -9,13 +9,13 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         private string SecurityAnswer { get; set; }
 
         // Anropas vid registrering av ny användare
-        public User(string UserName, string Password, string Country) : base(UserName, Password)
+        public User(string Username, string Password, string Country) : base(Username, Password)
         {
             this.Country = Country;
         }
 
         // Anropas när all information om användaren ska med
-        public User(string UserName, string Password, string Country, string SecurityQuestion, string SecurityAnswer) : base(UserName, Password)
+        public User(string Username, string Password, string Country, string SecurityQuestion, string SecurityAnswer) : base(Username, Password)
         {
             this.Country = Country;
             this.SecurityQuestion = SecurityQuestion;
@@ -24,7 +24,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
 
         public override void SignIn()
         {
-            MessageBox.Show($"Användaren {UserName} från {Country} är inloggad..");
+            MessageBox.Show($"Användaren {Username} från {Country} är inloggad..");
         }
 
         public void ResetPassword(string securityAnswer)

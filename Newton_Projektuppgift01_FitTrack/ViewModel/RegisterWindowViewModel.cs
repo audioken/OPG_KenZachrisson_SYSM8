@@ -54,33 +54,58 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // METOD ↓
-        // Registera ny användare baserat på inmatad information
+        // Registrera ny användare baserad på inmatad information
         public void RegisterNewUser()
         {
-            if (!string.IsNullOrEmpty(UsernameInput) && !string.IsNullOrEmpty(PasswordInput) && !string.IsNullOrEmpty(ConfirmPasswordInput))
+            // Kontrollerar så alla inputs har inmatning
+            if (!string.IsNullOrEmpty(UsernameInput) && !string.IsNullOrEmpty(PasswordInput) &&
+                !string.IsNullOrEmpty(ConfirmPasswordInput) && !string.IsNullOrEmpty(CountryComboBox))
             {
-                if (PasswordInput == ConfirmPasswordInput)
+                // Kontroll för tillgängligt användarnamn
+                bool isUserNameAvailable = true;
+
+                // Kollar om användarnamnet redan finns
+                foreach (User user in Manager.Instance.AllUsers)
                 {
-                    Manager.Instance.AllUsers.Add(new User(UsernameInput, PasswordInput, CountryComboBox));
-
-                    // Testutskrift
-                    //Manager.Instance.PrintAllUsers();
-
-                    // Öppna MainWindow
-                    MainWindow mainWindow = new MainWindow(); // Kanske ska instansieras någon annanstans?
-                    mainWindow.Show();
-
-                    // KOD HÄR för att stänga detta fönster
+                    if (user.Username == UsernameInput)
+                    {
+                        isUserNameAvailable = false; // Samma användarnamn finns redan
+                        break;
+                    }
                 }
-                else
+
+                // Om användarnamnet är ledigt
+                if (isUserNameAvailable)
                 {
-                    MessageBox.Show("Lösenorden matchar inte!");
+                    // Kontrollerar så lösenordet är starkt nog
+                    string specialCharacters = "!@#$%^&*()-_=+[{]};:’\"|\\,<.>/?"; // Mall för lösenordskontroll av specialtecken
+                    bool hasSpecial = PasswordInput.Any(c => specialCharacters.Contains(c)); // Innehåller det specialtecken?
+                    bool hasLength = PasswordInput.Length > 7; // Innehåller det minst åtta tecken?
+                    bool hasDigit = PasswordInput.Any(char.IsDigit); // Innehåller det minst en siffra?
+
+                    // Om lösenordet är starkt nog
+                    if (hasSpecial && hasLength && hasDigit)
+                    {
+                        // Om lösenord och bekräfta lösenord matchar
+                        if (PasswordInput == ConfirmPasswordInput)
+                        {
+                            // Registrera ny användare och lagra i masterklassens lista för "AllUsers"
+                            Manager.Instance.AllUsers.Add(new User(UsernameInput, PasswordInput, CountryComboBox));
+                            MessageBox.Show($"Tack {UsernameInput}! Din användarprofil har skapats. Var god logga in..");
+
+                            // Öppna MainWindow
+                            MainWindow mainWindow = new MainWindow(); // Kanske ska instansieras någon annanstans?
+                            mainWindow.Show();
+
+                            // KOD HÄR för att stänga detta fönster
+                        }
+                        else { MessageBox.Show("Lösenorden matchar inte!"); }
+                    }
+                    else { MessageBox.Show("Minst en åtta tecken, en siffra och ett specieltecken!"); }
                 }
+                else { MessageBox.Show("Användarnamnet finns redan!"); }
             }
-            else
-            {
-                MessageBox.Show("Någon ruta saknar text!");
-            }
+            else { MessageBox.Show("Du måste fylla i all information!"); }
         }
     }
 }

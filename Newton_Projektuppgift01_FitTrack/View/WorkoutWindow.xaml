@@ -9,7 +9,7 @@
     
     <StackPanel>
 
-        <Label Content="{Binding User.UserName}"/>
+        <Label Content="{Binding User.Username}"/>
         <Button Content="User Details" Command="{Binding UserDetailsCommand}"/>
 
     </StackPanel>
