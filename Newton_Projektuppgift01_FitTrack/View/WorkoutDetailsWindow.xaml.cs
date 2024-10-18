@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Newton_Projektuppgift01_FitTrack.ViewModel;
+using System.Windows;
 
 namespace Newton_Projektuppgift01_FitTrack.View
 {
@@ -7,6 +8,8 @@ namespace Newton_Projektuppgift01_FitTrack.View
         public WorkoutDetailsWindow()
         {
             InitializeComponent();
+            WorkoutDetailsWindowViewModel viewModel = new WorkoutDetailsWindowViewModel();
+            DataContext = viewModel;
         }
     }
 }

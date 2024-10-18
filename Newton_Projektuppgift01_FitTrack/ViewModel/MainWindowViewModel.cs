@@ -53,6 +53,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                         WorkoutWindow workoutWindow = new WorkoutWindow();
                         workoutWindow.Show();
 
+                        // Stäng "MainWindow"
+                        Application.Current.MainWindow.Close();
+
                         // Testutskrift
                         accountFound = true; // Undviker att skriva ut felmeddelandet efter foreach-loopen
                         break;
@@ -68,7 +71,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // Felmeddelande om textboxarna är tomma
             else
             {
-                MessageBox.Show("Inget har skrivits in!");
+                MessageBox.Show("Du måste fylla i all information!");
             }
         }
 

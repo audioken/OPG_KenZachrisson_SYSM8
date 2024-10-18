@@ -14,28 +14,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public string ConfirmPasswordInput { get; set; }
 
         // Spårar användarens valda land från "Countries" för lagring i användarkonto
-        private string countryComboBox;
-        public string CountryComboBox
-        {
-            get { return countryComboBox; }
-            set
-            {
-                countryComboBox = value;
-                //OnPropertyChanged(); Finns inget behov för OnPropertyChanged här vad jag kan förstå
-            }
-        }
+        public string CountryComboBox { get; set; }
 
         // Lista där användaren väljer land och som speglas i ComboBox
-        private ObservableCollection<string> countries;
-        public ObservableCollection<string> Countries
-        {
-            get { return countries; }
-            set
-            {
-                countries = value;
-                //OnPropertyChanged(); Finns inget behov för OnPropertyChanged här vad jag kan förstå
-            }
-        }
+        public ObservableCollection<string> Countries { get; set; }
 
         // Relay-kommando som anropar metoden "RegisterNewUser" vid klick
         public RelayCommand RegisterNewUserCommand => new RelayCommand(execute => RegisterNewUser());

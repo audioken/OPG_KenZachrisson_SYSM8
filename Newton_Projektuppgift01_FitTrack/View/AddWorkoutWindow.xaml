@@ -6,7 +6,22 @@
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View"
         mc:Ignorable="d"
         Title="AddWorkoutWindow" Height="450" Width="800">
-    <Grid>
+    
+    <StackPanel>
+
+        <DatePicker SelectedDate="{Binding SelectedDate}"/>
         
-    </Grid>
+        <ComboBox ItemsSource="{Binding AvailableTimes}" SelectedItem="{Binding AvailableTimeComboBox}"/>
+
+        <ComboBox ItemsSource="{Binding WorkoutTypes}" SelectedItem="{Binding WorkoutTypeCombobox}"/>
+        
+        <ComboBox ItemsSource="{Binding DurationMinutes}" SelectedItem="{Binding DurationInput}"/>
+
+        <TextBox Text="{Binding CaloriesBurnedInput}"/>
+        <TextBox Text="{Binding NotesInput}"/>
+        <Button Content="Save" Command="{Binding SaveCommand}"/>
+        <Button Content="Cancel" Command="{Binding CancelCommand}"/>
+
+    </StackPanel>
+    
 </Window>

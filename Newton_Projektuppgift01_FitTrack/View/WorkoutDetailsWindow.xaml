@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View"
         mc:Ignorable="d"
         Title="WorkoutDetailsWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <StackPanel>
+        <DataGrid ItemsSource="{Binding Workout}"/>
+    </StackPanel>
 </Window>

@@ -1,15 +1,11 @@
 ﻿using Newton_Projektuppgift01_FitTrack.Model;
+using Newton_Projektuppgift01_FitTrack.MVVM;
 
 namespace Newton_Projektuppgift01_FitTrack.ViewModel
 {
-    public class WorkoutDetailsWindowViewModel
+    public class WorkoutDetailsWindowViewModel : ViewModelBase
     {
         public Workout Workout { get; set; }
-
-        public WorkoutDetailsWindowViewModel(Workout Workout)
-        {
-            this.Workout = Workout;
-        }
 
         public void EditWorkout()
         {

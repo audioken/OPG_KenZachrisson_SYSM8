@@ -12,7 +12,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
 
         public override int CalculateCaloriesBurned()
         {
-            return 0; // Bara tillfäligt, behöver kod här
+            return Repetition * CaloriesBurned;
         }
     }
 }

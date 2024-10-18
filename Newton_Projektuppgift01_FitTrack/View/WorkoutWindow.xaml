@@ -11,6 +11,17 @@
 
         <Label Content="{Binding User.Username}"/>
         <Button Content="User Details" Command="{Binding UserDetailsCommand}"/>
+        <Button Content="Add Workout" Command="{Binding AddWorkoutCommand}"/>
+
+        <DataGrid ItemsSource="{Binding WorkoutList}" SelectedItem="{Binding SelectedWorkout}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Content="Details" Command="{Binding OpenDetailsCommand}"/>
+        <Button Content="Remove" Command="{Binding RemoveWorkoutCommand}"/>
 
     </StackPanel>
     

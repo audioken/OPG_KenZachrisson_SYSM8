@@ -8,6 +8,12 @@
         public int CaloriesBurned { get; set; }
         public string Notes { get; set; }
 
+        //public Workout(DateTime Date, string Type)
+        //{
+        //    this.Date = Date;
+        //    this.Type = Type;
+        //}
+
         public Workout(DateTime Date, string Type, TimeSpan Duration, int CaloriesBurned, string Notes)
         {
             this.Date = Date;

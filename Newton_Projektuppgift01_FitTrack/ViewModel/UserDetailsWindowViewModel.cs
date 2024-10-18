@@ -1,6 +1,8 @@
-﻿namespace Newton_Projektuppgift01_FitTrack.ViewModel
+﻿using Newton_Projektuppgift01_FitTrack.MVVM;
+
+namespace Newton_Projektuppgift01_FitTrack.ViewModel
 {
-    public class UserDetailsWindowViewModel
+    public class UserDetailsWindowViewModel : ViewModelBase
     {
         public string UsernameInput { get; set; }
         public string PasswordInput { get; set; }
