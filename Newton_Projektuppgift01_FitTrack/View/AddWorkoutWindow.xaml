@@ -16,8 +16,8 @@
 
         <ComboBox ItemsSource="{Binding WorkoutTypes}" SelectedItem="{Binding WorkoutTypeComboBox}"/>
 
-        <ComboBox ItemsSource="{Binding DurationHours}" SelectedItem="{Binding SelectedHours}"/>
-        <ComboBox ItemsSource="{Binding DurationMinutes}" SelectedItem="{Binding SelectedMinutes}"/>
+        <ComboBox ItemsSource="{Binding DurationHours}" SelectedItem="{Binding SelectedDurationHours}"/>
+        <ComboBox ItemsSource="{Binding DurationMinutes}" SelectedItem="{Binding SelectedDurationMinutes}"/>
 
         <TextBox Text="{Binding CaloriesBurnedInput}"/>
         

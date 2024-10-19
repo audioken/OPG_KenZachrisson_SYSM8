@@ -65,26 +65,26 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        private int selectedHours;
-        public int SelectedHours
+        private int selectedDurationHours;
+        public int SelectedDurationHours
         {
-            get { return selectedHours; }
+            get { return selectedDurationHours; }
             set
             {
-                selectedHours = value;
-                DurationInput = new TimeSpan(selectedHours, selectedMinutes, 0);
+                selectedDurationHours = value;
+                DurationInput = new TimeSpan(selectedDurationHours, selectedDurationMinutes, 0);
                 OnPropertyChanged();
             }
         }
 
-        private int selectedMinutes;
-        public int SelectedMinutes
+        private int selectedDurationMinutes;
+        public int SelectedDurationMinutes
         {
-            get { return selectedMinutes; }
+            get { return selectedDurationMinutes; }
             set
             {
-                selectedMinutes = value;
-                DurationInput = new TimeSpan(selectedHours, selectedMinutes, 0);
+                selectedDurationMinutes = value;
+                DurationInput = new TimeSpan(selectedDurationHours, selectedDurationMinutes, 0);
                 OnPropertyChanged();
             }
         }
@@ -111,9 +111,23 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // Instansierar listor med värden
             WorkoutTypes = new ObservableCollection<string> { "Cardio Workout", "Strength Workout" };
             AvailableDateHours = new ObservableCollection<int> { 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
-            AvailableDateMinutes = new ObservableCollection<int> { 0, 15, 30, 45 };
+            AvailableDateMinutes = new ObservableCollection<int> { 00, 15, 30, 45 };
             DurationHours = new ObservableCollection<int> { 0, 1, 2, 3 };
             DurationMinutes = new ObservableCollection<int> { 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55 };
+
+            SelectedDate = new DateTime(2024, 10, 25, 10, 00, 00);
+            SelectedDateHour = 10;
+            SelectedDateMinute = 00;
+
+            WorkoutTypeComboBox = "Strength Workout";
+
+            SelectedDurationHours = 1;
+            SelectedDurationMinutes = 30;
+
+            CaloriesBurnedInput = 200;
+
+            NotesInput = "Weightlifting";
+
 
             User = Manager.Instance.CurrentUser;
         }

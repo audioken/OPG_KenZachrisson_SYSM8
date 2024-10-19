@@ -8,15 +8,18 @@
         Title="WorkoutDetailsWindow" Height="450" Width="800">
     <StackPanel>
         
-        <DataGrid ItemsSource="{Binding Workout}" SelectedItem="{Binding SelectedWorkout}" AutoGenerateColumns="False" IsEnabled="False">
+        <DataGrid ItemsSource="{Binding WorkoutList}" SelectedItem="{Binding SelectedWorkout}" AutoGenerateColumns="False" IsEnabled="{Binding IsEnabled}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
                 <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
-                <DataGridTextColumn Header="Duration" Binding="{Binding Type}"/>
-                <DataGridTextColumn Header="Calories Burned" Binding="{Binding Type}"/>
-                <DataGridTextColumn Header="Notes" Binding="{Binding Type}"/>
+                <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
+                <DataGridTextColumn Header="Calories Burned" Binding="{Binding CaloriesBurned}"/>
+                <DataGridTextColumn Header="Notes" Binding="{Binding Notes}"/>
             </DataGrid.Columns>
         </DataGrid>
+
+        <Button Content="Edit Workout" Command="{Binding EditWorkoutCommand}"/>
+        <Button Content="Save Workout" Command="{Binding SaveWorkoutCommand}"/>
 
     </StackPanel>
 </Window>

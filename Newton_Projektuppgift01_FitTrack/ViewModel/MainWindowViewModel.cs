@@ -12,8 +12,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public string LabelTitle { get; set; } = "FitTrack";
 
         // Spårar inloggningsuppgifter för kontroll
-        public string UsernameInput { get; set; }
-        public string PasswordInput { get; set; }
+        public string UsernameInput { get; set; } = "user"; // Tillfälligt för att logga in snabbare
+        public string PasswordInput { get; set; } = "password"; // Tillfälligt för att logga in snabbare
 
         // Relay-kommand som anropar olika metoder för inloggning och registrering vid klick
         public RelayCommand SignInCommand => new RelayCommand(execute => SignIn());
@@ -23,9 +23,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // KONSTRUKTOR ↓
         public MainWindowViewModel()
         {
-            // Skapar en tillfällig User för testning
-            Manager.Instance.AllUsers.Add(new User("user", "password", "nocountry"));
-
         }
 
         // METODER ↓
