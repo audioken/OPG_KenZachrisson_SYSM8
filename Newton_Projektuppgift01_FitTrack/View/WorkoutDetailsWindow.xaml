@@ -8,7 +8,7 @@
         Title="WorkoutDetailsWindow" Height="450" Width="800">
     <StackPanel>
         
-        <DataGrid ItemsSource="{Binding WorkoutList}" SelectedItem="{Binding SelectedWorkout}" AutoGenerateColumns="False" IsEnabled="{Binding IsEnabled}">
+        <DataGrid ItemsSource="{Binding WorkoutList}" SelectedItem="{Binding SelectedWorkout}" AutoGenerateColumns="False" IsEnabled="{Binding IsEditDataGridEnabled}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
                 <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
@@ -19,6 +19,7 @@
         </DataGrid>
 
         <Button Content="Edit Workout" Command="{Binding EditWorkoutCommand}"/>
+        <Button Content="Cancel Edit" Command="{Binding CancelEditCommand}"/>
         <Button Content="Save Workout" Command="{Binding SaveWorkoutCommand}"/>
 
     </StackPanel>

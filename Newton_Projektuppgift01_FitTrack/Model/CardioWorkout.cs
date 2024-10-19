@@ -14,5 +14,11 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         {
             return 0; // Bara tillfäligt, behöver kod här
         }
+
+        // Överskuggande metod som "kopierar" en träning och möjliggör redigering
+        public override Workout Clone()
+        {
+            return new CardioWorkout(Date, Type, Duration, CaloriesBurned, Notes, Distance);
+        }
     }
 }

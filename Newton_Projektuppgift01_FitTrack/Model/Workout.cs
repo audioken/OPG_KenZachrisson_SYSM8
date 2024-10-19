@@ -18,5 +18,8 @@
         }
 
         public abstract int CalculateCaloriesBurned();
+
+        // Tvingar härledda klasser att ha en metod för kloning
+        public abstract Workout Clone();
     }
 }

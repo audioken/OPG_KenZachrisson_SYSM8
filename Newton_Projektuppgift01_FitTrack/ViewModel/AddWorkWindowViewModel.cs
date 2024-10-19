@@ -7,10 +7,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 {
     public class AddWorkWindowViewModel : ViewModelBase
     {
+        // EGENSKAPER ↓
         // Håller koll på inloggad användare
         public User User { get; set; }
 
-        // Datum och Tid
+        // Date
         private DateTime selectedDate;
         public DateTime SelectedDate
         {
@@ -50,10 +51,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             get { return new DateTime(SelectedDate.Year, SelectedDate.Month, SelectedDate.Day, SelectedDateHour, SelectedDateMinute, 0); }
         }
 
-        // Typ av träning
+        // Type
         public string WorkoutTypeComboBox { get; set; }
 
-        // Varaktighet av träning
+        // Duration
         private TimeSpan durationInput;
         public TimeSpan DurationInput
         {
@@ -89,13 +90,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Brända kalorier
+        // CaloriesBurned
         public int CaloriesBurnedInput { get; set; }
 
-        // Anteckningar
+        // Notes
         public string NotesInput { get; set; }
 
-        // Listor
+        // Listor som gör inmatningen enklare för användaren
         public ObservableCollection<string> WorkoutTypes { get; set; }
         public ObservableCollection<int> AvailableDateHours { get; set; }
         public ObservableCollection<int> AvailableDateMinutes { get; set; }
@@ -105,9 +106,12 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Relay-kommandon
         public RelayCommand SaveCommand => new RelayCommand(execute => SaveWorkout());
 
-        // Konstruktor
+        // KONSTRUKTOR ↓
         public AddWorkWindowViewModel()
         {
+            // Hämtar nuvarande användare
+            User = Manager.Instance.CurrentUser;
+
             // Instansierar listor med värden
             WorkoutTypes = new ObservableCollection<string> { "Cardio Workout", "Strength Workout" };
             AvailableDateHours = new ObservableCollection<int> { 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
@@ -115,31 +119,37 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             DurationHours = new ObservableCollection<int> { 0, 1, 2, 3 };
             DurationMinutes = new ObservableCollection<int> { 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55 };
 
-            SelectedDate = new DateTime(2024, 10, 25, 10, 00, 00);
+            // Instansierar värdet för alla inputs för att det ska finnas något förifyllt
+            SelectedDate = new DateTime();
             SelectedDateHour = 10;
             SelectedDateMinute = 00;
-
             WorkoutTypeComboBox = "Strength Workout";
-
             SelectedDurationHours = 1;
             SelectedDurationMinutes = 30;
-
             CaloriesBurnedInput = 200;
-
             NotesInput = "Weightlifting";
-
-
-            User = Manager.Instance.CurrentUser;
         }
 
-        // Metoder
+        // METODER ↓
+        // Spara träningspasset
         public void SaveWorkout()
         {
             // KOD HÄR för kontroll av inputs
-            User.UserWorkouts.Add(new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 5));
+
+            if (WorkoutTypeComboBox == "Strength Workout")
+            {
+                // Lägger till träning i användarens träningslista
+                User.UserWorkouts.Add(new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0));
+
+            }
+            else if (WorkoutTypeComboBox == "Cardio Workout")
+            {
+                // Lägger till träning i användarens träningslista
+                User.UserWorkouts.Add(new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0));
+            }
 
             // TESTNING
-            MessageBox.Show($"{FullDateTime} {WorkoutTypeComboBox} {DurationInput} {CaloriesBurnedInput} {NotesInput}");
+            MessageBox.Show($"Du har lagt till följande träning:\n{FullDateTime} {WorkoutTypeComboBox} {DurationInput} {CaloriesBurnedInput} {NotesInput}");
         }
     }
 }

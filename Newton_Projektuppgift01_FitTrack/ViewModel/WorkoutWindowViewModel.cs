@@ -10,7 +10,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     {
         // EGENSKAPER ↓
         public User User { get; set; } // Håller koll på inloggad användare
-        public ObservableCollection<Workout> WorkoutList { get; set; } // Håller koll på alla workouts
+        public ObservableCollection<Workout> WorkoutList { get; set; } // Håller koll på alla träningspass
         public Workout Workout { get; set; }
         public Workout SelectedWorkout { get; set; }
 
@@ -33,6 +33,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // METODER ↓
+        // Öppnar fönster för att kunna lägga till ett träningspass
         public void AddWorkout()
         {
             // Öppnar "AddWorkoutWindow"
@@ -42,6 +43,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // KOD HÄR för att stänga detta fönster?
         }
 
+        // Tar bort det valda träningspasset
         public void RemoveWorkout()
         {
             if (SelectedWorkout != null)
@@ -55,10 +57,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Öppna fönster för att hämta mer information av det valda träningspasset
         public void OpenWorkoutDetails()
         {
+            // Om något är valt i listan
             if (SelectedWorkout != null)
             {
+                // Tillfällig lagring av vald träning i managerklassen
                 Manager.Instance.CurrentWorkout = SelectedWorkout;
 
                 // Öppnar "WorkoutDetailsWindow"
@@ -73,6 +78,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Öppna fönster för användarens profilinställningar
         public void OpenUserDetails()
         {
             // Öppnar "UserDetailsWindow"
@@ -82,13 +88,16 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // KOD HÄR för att stänga detta fönster?
         }
 
+        // Öppnar en popup med information om företaget och appen
         public void AppInfo()
         {
-            // KOD HÄR för att öppna en nu ruta eller ett fönster med företagets och appens info
+            // KOD HÄR för att öppna en ny ruta eller ett fönster med företagets och appens info
         }
 
+        // Logga ut och återgå till MainWindow
         public void SignOut()
         {
+            // Öppnar "MainWindow"
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
 

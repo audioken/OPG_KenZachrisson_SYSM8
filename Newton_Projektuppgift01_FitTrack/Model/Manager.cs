@@ -10,8 +10,9 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         private static Manager _instance;
         public static Manager Instance => _instance ??= new Manager();
 
-        public ObservableCollection<User> AllUsers { get; private set; } // Alla användare
-        public ObservableCollection<Workout> AllWorkouts { get; private set; } // Alla träningspass
+        // Deklarerar listor som lagrar alla användare och träningar
+        public ObservableCollection<User> AllUsers { get; private set; }
+        public ObservableCollection<Workout> AllWorkouts { get; private set; }
 
         // Håller koll på inloggad användare
         public User CurrentUser { get; set; }
@@ -20,19 +21,25 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         // KONSTRUKTOR ↓
         private Manager()
         {
+            // Start användare redan inlagda för testning
             User user = new User("user", "password", "Sweden");
-            User admin = new AdminUser("admin", "password", "Sweden");
+            User admin = new AdminUser("admin", "password", "Sweden"); // BEHÖVER FIXAS SÅ MAN KAN VARA ADMIN
 
+            // Parametrar för förinlagda exempelträningar
             DateTime dateTime = DateTime.Now;
             TimeSpan timeSpan = TimeSpan.FromMinutes(30);
 
+            // Förinlagda träningar för profilen "user"
             Workout userWorkout1 = new StrengthWorkout(dateTime, "Strength Workout", timeSpan, 200, "Tynglyftning", 5);
             Workout userWorkout2 = new CardioWorkout(dateTime, "Cardio Workout", timeSpan, 300, "Running", 5000);
 
+            // Lägger till träningarna i "user"
             user.UserWorkouts = new ObservableCollection<Workout> { userWorkout1, userWorkout2 };
 
-            // Instansierar listor
+            // Instansierar lista för alla användare samt lägger till de två test-användarna
             AllUsers = new ObservableCollection<User> { user, admin };
+
+            // Instansierar lista för alla träningar
             AllWorkouts = new ObservableCollection<Workout>();
         }
 
