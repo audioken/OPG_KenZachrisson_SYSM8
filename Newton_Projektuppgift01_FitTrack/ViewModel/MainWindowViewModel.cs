@@ -25,6 +25,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             // Skapar en tillfällig User för testning
             Manager.Instance.AllUsers.Add(new User("user", "password", "nocountry"));
+
         }
 
         // METODER ↓
@@ -45,6 +46,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     {
                         // Lagrar nuvarande användare
                         Manager.Instance.CurrentUser = user;
+                        //Manager.Instance.CurrentUserWorkouts = user.UserWorkouts;
 
                         // Anropar metod för att skriva ut inloggningsinformation
                         user.SignIn();

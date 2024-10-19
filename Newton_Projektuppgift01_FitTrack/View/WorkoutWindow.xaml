@@ -22,6 +22,8 @@
 
         <Button Content="Details" Command="{Binding OpenDetailsCommand}"/>
         <Button Content="Remove" Command="{Binding RemoveWorkoutCommand}"/>
+        <Button Content="Info" Command="{Binding AppInfoCommand}"/>
+        <Button Content="Sign Out" Command="{Binding SignOutCommand}"/>
 
     </StackPanel>
     

@@ -14,7 +14,7 @@
         <ComboBox ItemsSource="{Binding AvailableDateHours}" SelectedItem="{Binding SelectedDateHour}"/>
         <ComboBox ItemsSource="{Binding AvailableDateMinutes}" SelectedItem="{Binding SelectedDateMinute}"/>
 
-        <ComboBox ItemsSource="{Binding WorkoutTypes}" SelectedItem="{Binding WorkoutTypeCombobox}"/>
+        <ComboBox ItemsSource="{Binding WorkoutTypes}" SelectedItem="{Binding WorkoutTypeComboBox}"/>
 
         <ComboBox ItemsSource="{Binding DurationHours}" SelectedItem="{Binding SelectedHours}"/>
         <ComboBox ItemsSource="{Binding DurationMinutes}" SelectedItem="{Binding SelectedMinutes}"/>

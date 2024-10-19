@@ -2,6 +2,7 @@
 using Newton_Projektuppgift01_FitTrack.MVVM;
 using Newton_Projektuppgift01_FitTrack.View;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Newton_Projektuppgift01_FitTrack.ViewModel
 {
@@ -18,6 +19,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public RelayCommand AddWorkoutCommand => new RelayCommand(execute => AddWorkout());
         public RelayCommand OpenDetailsCommand => new RelayCommand(execute => OpenWorkoutDetails());
         public RelayCommand RemoveWorkoutCommand => new RelayCommand(execute => RemoveWorkout());
+        public RelayCommand AppInfoCommand => new RelayCommand(execute => AppInfo());
+        public RelayCommand SignOutCommand => new RelayCommand(execute => SignOut());
 
         // KONSTRUKTOR ↓
         public WorkoutWindowViewModel()
@@ -25,16 +28,14 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // Håller koll på nuvarande användare
             User = Manager.Instance.CurrentUser;
 
-            // Tillfällig träning för test
-            DateTime dateTime = DateTime.Now;
-            TimeSpan timeSpan = TimeSpan.FromSeconds(1);
-            Workout = new StrengthWorkout(dateTime, "Strength Workout", timeSpan, 200, "Tough session", 5);
-            WorkoutList = new ObservableCollection<Workout> { Workout };
+            // Hämtar användarens lista för träningspass
+            WorkoutList = User.UserWorkouts;
         }
 
         // METODER ↓
         public void AddWorkout()
         {
+            // Öppnar "AddWorkoutWindow"
             AddWorkoutWindow addWorkoutWindow = new AddWorkoutWindow();
             addWorkoutWindow.Show();
 
@@ -43,13 +44,33 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
         public void RemoveWorkout()
         {
-            WorkoutList.Remove(SelectedWorkout);
+            if (SelectedWorkout != null)
+            {
+                // Ta bort träningspass
+                WorkoutList.Remove(SelectedWorkout);
+            }
+            else
+            {
+                MessageBox.Show("Du måste välja något i listan!");
+            }
         }
 
         public void OpenWorkoutDetails()
         {
-            WorkoutDetailsWindow detailsWindow = new WorkoutDetailsWindow();
-            detailsWindow.Show();
+            if (SelectedWorkout != null)
+            {
+                Manager.Instance.CurrentWorkout = SelectedWorkout;
+
+                // Öppnar "WorkoutDetailsWindow"
+                WorkoutDetailsWindow detailsWindow = new WorkoutDetailsWindow();
+                detailsWindow.Show();
+
+                // KOD HÄR för att stänga detta fönster?
+            }
+            else
+            {
+                MessageBox.Show("Du måste välja något i listan!");
+            }
         }
 
         public void OpenUserDetails()
@@ -59,6 +80,19 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             userDetailsWindow.Show();
 
             // KOD HÄR för att stänga detta fönster?
+        }
+
+        public void AppInfo()
+        {
+            // KOD HÄR för att öppna en nu ruta eller ett fönster med företagets och appens info
+        }
+
+        public void SignOut()
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+
+            // KOD HÄR för att stänga detta fönster
         }
     }
 }

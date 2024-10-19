@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Newton_Projektuppgift01_FitTrack.Model
 {
@@ -7,6 +8,8 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         public string Country { get; set; }
         public string SecurityQuestion { get; set; }
         private string SecurityAnswer { get; set; }
+
+        public ObservableCollection<Workout> UserWorkouts { get; set; } = new ObservableCollection<Workout>();
 
         // Anropas vid registrering av ny användare
         public User(string Username, string Password, string Country) : base(Username, Password)

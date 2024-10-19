@@ -7,6 +7,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 {
     public class AddWorkWindowViewModel : ViewModelBase
     {
+        // Håller koll på inloggad användare
+        public User User { get; set; }
+
         // Datum och Tid
         private DateTime selectedDate;
         public DateTime SelectedDate
@@ -111,13 +114,17 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             AvailableDateMinutes = new ObservableCollection<int> { 0, 15, 30, 45 };
             DurationHours = new ObservableCollection<int> { 0, 1, 2, 3 };
             DurationMinutes = new ObservableCollection<int> { 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55 };
+
+            User = Manager.Instance.CurrentUser;
         }
 
         // Metoder
         public void SaveWorkout()
         {
-            Manager.Instance.AllUsersWorkouts.Add(new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 5));
+            // KOD HÄR för kontroll av inputs
+            User.UserWorkouts.Add(new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 5));
 
+            // TESTNING
             MessageBox.Show($"{FullDateTime} {WorkoutTypeComboBox} {DurationInput} {CaloriesBurnedInput} {NotesInput}");
         }
     }
