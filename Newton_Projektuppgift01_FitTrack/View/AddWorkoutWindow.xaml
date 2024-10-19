@@ -10,15 +10,19 @@
     <StackPanel>
 
         <DatePicker SelectedDate="{Binding SelectedDate}"/>
-        
-        <ComboBox ItemsSource="{Binding AvailableTimes}" SelectedItem="{Binding AvailableTimeComboBox}"/>
+
+        <ComboBox ItemsSource="{Binding AvailableDateHours}" SelectedItem="{Binding SelectedDateHour}"/>
+        <ComboBox ItemsSource="{Binding AvailableDateMinutes}" SelectedItem="{Binding SelectedDateMinute}"/>
 
         <ComboBox ItemsSource="{Binding WorkoutTypes}" SelectedItem="{Binding WorkoutTypeCombobox}"/>
-        
-        <ComboBox ItemsSource="{Binding DurationMinutes}" SelectedItem="{Binding DurationInput}"/>
+
+        <ComboBox ItemsSource="{Binding DurationHours}" SelectedItem="{Binding SelectedHours}"/>
+        <ComboBox ItemsSource="{Binding DurationMinutes}" SelectedItem="{Binding SelectedMinutes}"/>
 
         <TextBox Text="{Binding CaloriesBurnedInput}"/>
+        
         <TextBox Text="{Binding NotesInput}"/>
+        
         <Button Content="Save" Command="{Binding SaveCommand}"/>
         <Button Content="Cancel" Command="{Binding CancelCommand}"/>
 
