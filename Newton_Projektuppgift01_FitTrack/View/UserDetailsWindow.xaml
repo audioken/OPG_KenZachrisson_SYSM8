@@ -6,7 +6,19 @@
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View"
         mc:Ignorable="d"
         Title="UserDetailsWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    
+    <StackPanel>
+
+        <TextBox Text="{Binding NewUsernameInput}"/>
+        <TextBox Text="{Binding NewPasswordInput}"/>
+
+        <!-- För VG -->
+        <TextBox Text="{Binding ConfirmNewPasswordInput}"/>
+
+        <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding CountryComboBox}"/>
+        <Button Content="Save" Command="{Binding SaveUserDetailsCommand}"/>
+        <Button Content="Cancel" Command="{Binding CancelCommand}"/>
+
+    </StackPanel>
+    
 </Window>

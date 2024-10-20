@@ -146,11 +146,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     {
                         // Lägger till en styrketräning i användarens träningslista
                         User.UserWorkouts.Add(new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0));
+                        Manager.Instance.AllWorkouts.Add(new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0));
                     }
                     else if (WorkoutTypeComboBox == "Cardio Workout")
                     {
                         // Lägger till en konditionsträning i användarens träningslista
                         User.UserWorkouts.Add(new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0));
+                        Manager.Instance.AllWorkouts.Add(new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0));
                     }
 
                     MessageBox.Show($"Du har lagt till följande träning:\n{FullDateTime} {WorkoutTypeComboBox} {DurationInput} {CaloriesBurnedInput} {NotesInput}");

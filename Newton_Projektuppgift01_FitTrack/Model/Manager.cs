@@ -16,6 +16,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
 
         // Håller koll på inloggad användare
         public User CurrentUser { get; set; }
+        public AdminUser AdminUser { get; set; }
         public Workout CurrentWorkout { get; set; }
 
         // KONSTRUKTOR ↓
@@ -23,7 +24,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         {
             // Start användare redan inlagda för testning
             User user = new User("user", "password", "Sweden");
-            User admin = new AdminUser("admin", "password", "Sweden"); // BEHÖVER FIXAS SÅ MAN KAN VARA ADMIN
+            AdminUser admin = new AdminUser("admin", "password", "Sweden"); // BEHÖVER FIXAS SÅ MAN KAN VARA ADMIN
 
             // Parametrar för förinlagda exempelträningar
             DateTime dateTime = DateTime.Now;

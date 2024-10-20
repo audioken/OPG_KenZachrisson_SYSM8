@@ -6,10 +6,9 @@
         {
         }
 
-        // Private eftersom den inte behövs i andra klasser
-        private void ManageAllWorkouts()
+        public void ManageAllWorkouts()
         {
-            // Kod för att kunna radera alla användare och dess inbokade tider
+
         }
     }
 }

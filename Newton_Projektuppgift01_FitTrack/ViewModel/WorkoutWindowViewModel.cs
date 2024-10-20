@@ -40,8 +40,16 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // Håller koll på nuvarande användare
             User = Manager.Instance.CurrentUser;
 
-            // Hämtar användarens lista för träningspass
-            WorkoutList = User.UserWorkouts; // NOT: Ska man binda User.Userworkouts direkt i xaml istället för WorkoutList?
+            if (User.Username == "admin")
+            {
+                WorkoutList = Manager.Instance.AllWorkouts;
+                //Manager.Instance.AdminUser.ManageAllWorkouts(); // Hittar inget behov för att anropa metoden. Får ju upp alla pass som det är?
+            }
+            else
+            {
+                // Hämtar användarens lista för träningspass
+                WorkoutList = User.UserWorkouts; // NOT: Ska man binda User.Userworkouts direkt i xaml istället för WorkoutList?
+            }
         }
 
         // METODER ↓

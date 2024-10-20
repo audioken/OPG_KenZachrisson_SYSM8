@@ -1,30 +1,110 @@
-﻿using Newton_Projektuppgift01_FitTrack.MVVM;
+﻿using Newton_Projektuppgift01_FitTrack.Model;
+using Newton_Projektuppgift01_FitTrack.MVVM;
+using Newton_Projektuppgift01_FitTrack.View;
+using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Newton_Projektuppgift01_FitTrack.ViewModel
 {
     public class UserDetailsWindowViewModel : ViewModelBase
     {
-        public string UsernameInput { get; set; }
-        public string PasswordInput { get; set; }
-        public string ConfirmPasswordInput { get; set; }
-        public string CountryComboBox { get; set; }
+        // EGENSKAPER ↓
+        // Spårar information vid registrering av nytt användarkonto
+        public string NewUsernameInput { get; set; } = Manager.Instance.CurrentUser.Username;
+        public string NewPasswordInput { get; set; } = Manager.Instance.CurrentUser.Password;
+        public string ConfirmNewPasswordInput { get; set; } = Manager.Instance.CurrentUser.Password;
 
-        public UserDetailsWindowViewModel(string UsernameInput, string PasswordInput, string ConfirmPasswordInput, string CountryComboBox)
+        // Spårar användarens valda land från "Countries" för lagring i användarkonto
+        public string CountryComboBox { get; set; } = Manager.Instance.CurrentUser.Country;
+
+        // Lista där användaren väljer land och som speglas i ComboBox
+        public ObservableCollection<string> Countries { get; set; }
+
+        // Relay-kommando som anropar metoden "RegisterNewUser" vid klick
+        public RelayCommand SaveUserDetailsCommand => new RelayCommand(execute => SaveUserDetails());
+        public RelayCommand CancelCommand => new RelayCommand(execute => Cancel());
+
+        // KONSTRUKTOR ↓
+        public UserDetailsWindowViewModel()
         {
-            this.UsernameInput = UsernameInput;
-            this.PasswordInput = PasswordInput;
-            this.ConfirmPasswordInput = ConfirmPasswordInput;
-            this.CountryComboBox = CountryComboBox;
+            // Initierar "Countries" med en lista av länder
+            Countries = new ObservableCollection<string>
+            {
+                "Sweden",
+                "Denmark",
+                "Norway",
+                "Finland"
+            };
         }
 
+        // METOD ↓
         public void SaveUserDetails()
         {
-            // Kod för att spara användardetaljer
+            // Kontrollerar så alla inputs har inmatning
+            if (!string.IsNullOrEmpty(NewUsernameInput) && !string.IsNullOrEmpty(NewPasswordInput) &&
+                !string.IsNullOrEmpty(ConfirmNewPasswordInput) && !string.IsNullOrEmpty(CountryComboBox))
+            {
+                if (NewUsernameInput.Length >= 3)
+                {
+                    // Kontrollbool för tillgängligt användarnamn
+                    bool isUserNameAvailable = true;
+
+                    // Kollar om användarnamnet redan finns
+                    foreach (User user in Manager.Instance.AllUsers)
+                    {
+                        if (user.Username == NewUsernameInput)
+                        {
+                            isUserNameAvailable = false; // Samma användarnamn finns redan
+                            break;
+                        }
+                    }
+
+                    // Om användarnamnet är ledigt
+                    if (isUserNameAvailable)
+                    {
+                        // Kontrollerar så lösenordet är starkt nog
+                        string specialCharacters = "!@#$%^&*()-_=+[{]};:’\"|\\,<.>/?"; // Mall för lösenordskontroll av specialtecken
+                        bool hasSpecial = NewPasswordInput.Any(c => specialCharacters.Contains(c)); // Innehåller det specialtecken?
+                        bool hasLength = NewPasswordInput.Length > 7; // Innehåller det minst åtta tecken?
+                        bool hasDigit = NewPasswordInput.Any(char.IsDigit); // Innehåller det minst en siffra?
+
+                        // Om lösenordet är starkt nog
+                        if (hasSpecial && hasLength && hasDigit)
+                        {
+                            // Om lösenord och bekräfta lösenord matchar
+                            if (NewPasswordInput == ConfirmNewPasswordInput)
+                            {
+                                // Skriv över den gamla användarinformationen
+                                Manager.Instance.CurrentUser.Username = NewUsernameInput;
+                                Manager.Instance.CurrentUser.Password = NewPasswordInput;
+                                Manager.Instance.CurrentUser.Country = CountryComboBox;
+
+                                MessageBox.Show($"Tack {NewUsernameInput}! Din användarprofil har uppdaterats. Var god logga in på nytt..");
+
+                                // Öppna MainWindow
+                                MainWindow mainWindow = new MainWindow(); // Kanske ska instansieras någon annanstans?
+                                mainWindow.Show();
+
+                                // KOD HÄR för att stänga detta fönster
+                            }
+                            else { MessageBox.Show("Lösenorden matchar inte!"); }
+                        }
+                        else { MessageBox.Show("Minst en åtta tecken, en siffra och ett specieltecken!"); }
+                    }
+                    else { MessageBox.Show("Användarnamnet finns redan!"); }
+                }
+                else { MessageBox.Show("Användarnamnet måste ha minst tre tecken!"); }
+            }
+            else { MessageBox.Show("Du måste fylla i all information!"); }
         }
 
         public void Cancel()
         {
-            // Stäng fönstret utan att spara
+            // Öppna "WorkoutWindow"
+            WorkoutWindow workoutWindow = new WorkoutWindow();
+            workoutWindow.Show();
+
+            // KOD HÄR för att stänga detta fönster
         }
     }
 }
