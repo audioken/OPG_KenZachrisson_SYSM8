@@ -119,8 +119,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             DurationHours = new ObservableCollection<int> { 0, 1, 2, 3 };
             DurationMinutes = new ObservableCollection<int> { 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55 };
 
-            // Instansierar värdet för alla inputs för att det ska finnas något förifyllt
-            SelectedDate = new DateTime();
+            // Instansierar värden för alla inputs för att det ska finnas något förifyllt
+            DateTime now = DateTime.Now; // Hämtar aktuellt datum
+            SelectedDate = now; // Tilldelar aktuellt datum
             SelectedDateHour = 10;
             SelectedDateMinute = 00;
             WorkoutTypeComboBox = "Strength Workout";
@@ -134,22 +135,29 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Spara träningspasset
         public void SaveWorkout()
         {
-            // KOD HÄR för felhantering av inputs
-
-            if (WorkoutTypeComboBox == "Strength Workout")
+            // Kolla så kalorier inte är negativt
+            if (CaloriesBurnedInput >= 0)
             {
-                // Lägger till träning i användarens träningslista
-                User.UserWorkouts.Add(new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0));
+                // Kolla också så det finns en kommentar
+                if (!string.IsNullOrEmpty(NotesInput))
+                {
+                    // Kolla sen vad det är för typ av träning för att instansiera rätt träningsklass
+                    if (WorkoutTypeComboBox == "Strength Workout")
+                    {
+                        // Lägger till en styrketräning i användarens träningslista
+                        User.UserWorkouts.Add(new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0));
+                    }
+                    else if (WorkoutTypeComboBox == "Cardio Workout")
+                    {
+                        // Lägger till en konditionsträning i användarens träningslista
+                        User.UserWorkouts.Add(new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0));
+                    }
 
+                    MessageBox.Show($"Du har lagt till följande träning:\n{FullDateTime} {WorkoutTypeComboBox} {DurationInput} {CaloriesBurnedInput} {NotesInput}");
+                }
+                else { MessageBox.Show("Du måste skriva en kommentar.."); }
             }
-            else if (WorkoutTypeComboBox == "Cardio Workout")
-            {
-                // Lägger till träning i användarens träningslista
-                User.UserWorkouts.Add(new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0));
-            }
-
-            // TESTNING
-            MessageBox.Show($"Du har lagt till följande träning:\n{FullDateTime} {WorkoutTypeComboBox} {DurationInput} {CaloriesBurnedInput} {NotesInput}");
+            else { MessageBox.Show("Antal brända kalorier måste minst vara 0.."); }
         }
     }
 }
