@@ -11,8 +11,8 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         public static Manager Instance => _instance ??= new Manager();
 
         // Deklarerar listor som lagrar alla användare och träningar
-        public ObservableCollection<User> AllUsers { get; private set; }
-        public ObservableCollection<Workout> AllWorkouts { get; private set; }
+        public ObservableCollection<User> AllUsers { get; private set; } // Readonly
+        public ObservableCollection<Workout> AllWorkouts { get; private set; } // Readonly
 
         // Håller koll på inloggad användare
         public User CurrentUser { get; set; }
@@ -40,7 +40,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
             AllUsers = new ObservableCollection<User> { user, admin };
 
             // Instansierar lista för alla träningar
-            AllWorkouts = new ObservableCollection<Workout>();
+            AllWorkouts = new ObservableCollection<Workout> { userWorkout1, userWorkout2 };
         }
 
         // METODER ↓

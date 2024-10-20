@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="WorkoutDetailsWindow" Height="450" Width="800">
     <StackPanel>
-        
+
         <DataGrid ItemsSource="{Binding WorkoutList}" SelectedItem="{Binding SelectedWorkout}" AutoGenerateColumns="False" IsEnabled="{Binding IsEditDataGridEnabled}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>

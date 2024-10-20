@@ -134,7 +134,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Spara träningspasset
         public void SaveWorkout()
         {
-            // KOD HÄR för kontroll av inputs
+            // KOD HÄR för felhantering av inputs
 
             if (WorkoutTypeComboBox == "Strength Workout")
             {

@@ -19,7 +19,8 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         // Överskuggande metod som "kopierar" en träning och möjliggör redigering
         public override Workout Clone()
         {
-            return new StrengthWorkout(Date, Type, Duration, CaloriesBurned, Notes, Repetition);
+            return (Workout)this.MemberwiseClone();
+            //return new StrengthWorkout(Date, Type, Duration, CaloriesBurned, Notes, Repetition);
         }
     }
 }

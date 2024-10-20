@@ -10,7 +10,19 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     {
         // EGENSKAPER ↓
         public User User { get; set; } // Håller koll på inloggad användare
-        public ObservableCollection<Workout> WorkoutList { get; set; } // Håller koll på alla träningspass
+        //public ObservableCollection<Workout> WorkoutList { get; set; } // Håller koll på alla träningspass // KANSKE INTE BEHÖVS
+
+        private ObservableCollection<Workout> workoutList;
+        public ObservableCollection<Workout> WorkoutList
+        {
+            get { return workoutList; }
+            set
+            {
+                workoutList = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Workout Workout { get; set; }
         public Workout SelectedWorkout { get; set; }
 
@@ -29,7 +41,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             User = Manager.Instance.CurrentUser;
 
             // Hämtar användarens lista för träningspass
-            WorkoutList = User.UserWorkouts;
+            WorkoutList = User.UserWorkouts; // NOT: Ska man binda User.Userworkouts direkt i xaml istället för WorkoutList?
         }
 
         // METODER ↓
@@ -49,7 +61,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             if (SelectedWorkout != null)
             {
                 // Ta bort träningspass
-                WorkoutList.Remove(SelectedWorkout);
+                User.UserWorkouts.Remove(SelectedWorkout);
             }
             else
             {
