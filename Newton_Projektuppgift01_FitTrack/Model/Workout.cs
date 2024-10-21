@@ -7,6 +7,7 @@
         public TimeSpan Duration { get; set; }
         public int CaloriesBurned { get; set; }
         public string Notes { get; set; }
+        public User User { get; internal set; }
 
         public Workout(DateTime Date, string Type, TimeSpan Duration, int CaloriesBurned, string Notes)
         {

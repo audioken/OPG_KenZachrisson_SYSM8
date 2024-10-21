@@ -10,16 +10,16 @@ namespace Newton_Projektuppgift01_FitTrack.Model
             this.Distance = Distance;
         }
 
+        // BEHÖVER FÖRSTÅ HUR VI SKA ANVÄNDA DENNA?
         public override int CalculateCaloriesBurned()
         {
-            return 0; // Bara tillfälligt, behöver kod här
+            return 0; // TILLFÄLLIGT
         }
 
-        // Överskuggande metod som "kopierar" en träning och möjliggör redigering
+        // Överskuggande metod som klonar en träning och möjliggör tillfällig redigering
         public override Workout Clone()
         {
             return (Workout)this.MemberwiseClone();
-            //return new CardioWorkout(Date, Type, Duration, CaloriesBurned, Notes, Distance);
         }
     }
 }

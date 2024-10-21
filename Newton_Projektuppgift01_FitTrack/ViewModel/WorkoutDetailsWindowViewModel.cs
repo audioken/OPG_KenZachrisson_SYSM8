@@ -36,7 +36,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             {
                 workoutList = value;
                 OnPropertyChanged();
-                //OnPropertyChanged(nameof(WorkoutWindowViewModel.WorkoutList));
             }
         }
 
@@ -68,9 +67,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Möjliggör redigering av valt träningspass
         public void EditWorkout()
         {
-            //WorkoutEditable = Workout.Clone();
-            //WorkoutList = new ObservableCollection<Workout> { WorkoutEditable };
-
             // Aktiverar redigering av DataGrid som visar Workout
             IsEditDataGridEnabled = true;
         }
@@ -92,17 +88,20 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public void SaveWorkout()
         {
             // Hitta index för originalet av träningen som ändras
-            int index = User.UserWorkouts.IndexOf(Workout);
+            int indexUser = User.UserWorkouts.IndexOf(Workout);
+            int indexManager = Manager.Instance.AllWorkouts.IndexOf(Workout);
 
-            if (index >= 0)
+            if (indexUser >= 0 && indexManager >= 0)
             {
                 // Ersätt originalet med den redigerade träningen
-                User.UserWorkouts[index] = WorkoutEditable;
+                User.UserWorkouts[indexUser] = WorkoutEditable;
+                Manager.Instance.AllWorkouts[indexManager] = WorkoutEditable;
             }
             else
             {
                 // Annars lägg till träning (Denna kod ska dock inte behövas..)
                 User.UserWorkouts.Add(WorkoutEditable);
+                Manager.Instance.AllWorkouts.Add(WorkoutEditable);
             }
 
             // Tror inte denna behövs?

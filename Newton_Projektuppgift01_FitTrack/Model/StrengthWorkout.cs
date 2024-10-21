@@ -13,14 +13,13 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         // BEHÖVER FÖRSTÅ HUR VI SKA ANVÄNDA DENNA?
         public override int CalculateCaloriesBurned()
         {
-            return Repetition * CaloriesBurned;
+            return 0; // TILLFÄLLIGT
         }
 
-        // Överskuggande metod som "kopierar" en träning och möjliggör redigering
+        // Överskuggande metod som klonar en träning och möjliggör tillfällig redigering
         public override Workout Clone()
         {
             return (Workout)this.MemberwiseClone();
-            //return new StrengthWorkout(Date, Type, Duration, CaloriesBurned, Notes, Repetition);
         }
     }
 }

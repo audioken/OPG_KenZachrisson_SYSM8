@@ -41,12 +41,20 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     // Kontrollerar så det matchar en användarprofil
                     if (UsernameInput == user.Username && PasswordInput == user.Password)
                     {
-                        // Lagrar nuvarande användare
-                        Manager.Instance.CurrentUser = user;
-                        //Manager.Instance.CurrentUserWorkouts = user.UserWorkouts;
+                        if (user is AdminUser admin)
+                        {
+                            Manager.Instance.CurrentUser = admin;
+                            //admin.ManageAllWorkouts(); // Skapar problem när admin ska ta bort pass från andra
+                            admin.SignIn();
+                        }
+                        else
+                        {
+                            // Lagrar nuvarande användare
+                            Manager.Instance.CurrentUser = user;
 
-                        // Anropar metod för att skriva ut inloggningsinformation
-                        user.SignIn();
+                            // Anropar metod för att skriva ut inloggningsinformation
+                            user.SignIn();
+                        }
 
                         // Öppna "WorkoutWindow"
                         WorkoutWindow workoutWindow = new WorkoutWindow();
@@ -60,18 +68,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                         break;
                     }
                 }
-
-                // Felmeddelande om inget konto matchar
-                if (accountFound == false)
-                {
-                    MessageBox.Show("Användarnamn och/eller lösenord är fel..");
-                }
+                if (!accountFound) { MessageBox.Show("Användarnamn och/eller lösenord är fel.."); }
             }
-            // Felmeddelande om textboxarna är tomma
-            else
-            {
-                MessageBox.Show("Du måste fylla i all information!");
-            }
+            else { MessageBox.Show("Du måste fylla i all information!"); }
         }
 
         // Öppnar fönster för registrering av användare
@@ -102,11 +101,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     }
                 }
             }
-            // Felmeddelande om textboxen för användarnamn är tom
-            else
-            {
-                MessageBox.Show("Du måste skriva in ett giltigt användarnamn!");
-            }
+            else { MessageBox.Show("Du måste skriva in ett giltigt användarnamn!"); }
         }
     }
 }

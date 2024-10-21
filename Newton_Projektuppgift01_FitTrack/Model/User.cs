@@ -5,13 +5,14 @@ namespace Newton_Projektuppgift01_FitTrack.Model
 {
     public class User : Person
     {
+        // EGENSKAPER ↓
         public string Country { get; set; }
         public string SecurityQuestion { get; set; }
         private string SecurityAnswer { get; set; }
 
         public ObservableCollection<Workout> UserWorkouts { get; set; } = new ObservableCollection<Workout>();
 
-        // Anropas vid registrering av ny användare
+        // KONSTRUKTOR ↓
         public User(string Username, string Password, string Country) : base(Username, Password)
         {
             this.Country = Country;
@@ -25,13 +26,15 @@ namespace Newton_Projektuppgift01_FitTrack.Model
             this.SecurityAnswer = SecurityAnswer;
         }
 
+        // METODER ↓
+        // SKriv ut text för lyckad inloggning
         public override void SignIn()
         {
             MessageBox.Show($"Användaren {Username} från {Country} är inloggad..");
         }
 
-        // OBS OTESTAD KOD
-        public void ResetPassword(string securityAnswer)
+        // Återställ lösenordet för användaren
+        public void ResetPassword(string securityAnswer)         // OBS OTESTAD KOD
         {
             if (SecurityAnswer != null && securityAnswer != null)
             {

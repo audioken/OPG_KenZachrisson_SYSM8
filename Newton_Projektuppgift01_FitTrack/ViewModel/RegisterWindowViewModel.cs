@@ -61,7 +61,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 {
                     // Kontrollerar så lösenordet är starkt nog
                     string specialCharacters = "!@#$%^&*()-_=+[{]};:’\"|\\,<.>/?"; // Mall för lösenordskontroll av specialtecken
-                    bool hasSpecial = PasswordInput.Any(c => specialCharacters.Contains(c)); // Innehåller det specialtecken?
+                    bool hasSpecial = PasswordInput.Any(c => specialCharacters.Contains(c)); // Innehåller det minst ett specialtecken?
                     bool hasLength = PasswordInput.Length > 7; // Innehåller det minst åtta tecken?
                     bool hasDigit = PasswordInput.Any(char.IsDigit); // Innehåller det minst en siffra?
 
@@ -71,8 +71,12 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                         // Om lösenord och bekräfta lösenord matchar
                         if (PasswordInput == ConfirmPasswordInput)
                         {
-                            // Registrera ny användare och lagra i masterklassens lista för "AllUsers"
-                            Manager.Instance.AllUsers.Add(new User(UsernameInput, PasswordInput, CountryComboBox));
+                            // Skapa ny användare baserat på den inmatade informationen
+                            User newUser = new User(UsernameInput, PasswordInput, CountryComboBox);
+
+                            // Lägg till ny användare i listan för alla användare
+                            Manager.Instance.AllUsers.Add(newUser);
+
                             MessageBox.Show($"Tack {UsernameInput}! Din användarprofil har skapats. Var god logga in..");
 
                             // Öppna MainWindow

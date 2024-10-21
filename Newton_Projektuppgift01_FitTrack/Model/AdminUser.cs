@@ -6,9 +6,11 @@
         {
         }
 
+        // Möjliggör hantering av användares träningspass
         public void ManageAllWorkouts()
         {
-
+            // Spegla alla användares träningar i admins lista för träningar
+            this.UserWorkouts = Manager.Instance.AllWorkouts;
         }
     }
 }

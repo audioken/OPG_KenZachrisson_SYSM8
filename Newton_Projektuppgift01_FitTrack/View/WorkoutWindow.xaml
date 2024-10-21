@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View"
+        xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View" 
         mc:Ignorable="d"
         Title="WorkoutWindow" Height="450" Width="800">
-    
+
     <StackPanel>
 
         <Label Content="{Binding User.Username}"/>
@@ -17,6 +17,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
                 <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
+                <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
             </DataGrid.Columns>
         </DataGrid>
 

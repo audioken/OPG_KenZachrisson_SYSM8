@@ -10,6 +10,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     {
         // EGENSKAPER ↓
         public User User { get; set; } // Håller koll på inloggad användare
+        public AdminUser AdminUser { get; set; } // Håller koll på inloggad admin
         //public ObservableCollection<Workout> WorkoutList { get; set; } // Håller koll på alla träningspass // KANSKE INTE BEHÖVS
 
         private ObservableCollection<Workout> workoutList;
@@ -40,15 +41,16 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // Håller koll på nuvarande användare
             User = Manager.Instance.CurrentUser;
 
-            if (User.Username == "admin")
+            // Visa träningspassen efter användare
+            if (User is AdminUser admin)
             {
+                // Visa alla träningspass om admin är inloggad
                 WorkoutList = Manager.Instance.AllWorkouts;
-                //Manager.Instance.AdminUser.ManageAllWorkouts(); // Hittar inget behov för att anropa metoden. Får ju upp alla pass som det är?
             }
             else
             {
-                // Hämtar användarens lista för träningspass
-                WorkoutList = User.UserWorkouts; // NOT: Ska man binda User.Userworkouts direkt i xaml istället för WorkoutList?
+                // Visa endast användarens egna träningspass
+                WorkoutList = User.UserWorkouts;
             }
         }
 
@@ -68,8 +70,46 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             if (SelectedWorkout != null)
             {
-                // Ta bort träningspass
-                User.UserWorkouts.Remove(SelectedWorkout);
+                // Tar bort träningspass i viss ordning beroende på vem som är inloggad. Det funkar, men känns inte som rätt kod..
+                if (User is AdminUser admin)
+                {
+                    // Uppdatera alla användares träningslistor som innehåller detta träningspass
+                    foreach (var user in Manager.Instance.AllUsers)
+                    {
+                        if (user.UserWorkouts.Contains(SelectedWorkout))
+                        {
+                            user.UserWorkouts.Remove(SelectedWorkout);
+                            OnPropertyChanged(nameof(user.UserWorkouts));
+
+                            // TEST
+                            MessageBox.Show("Vi är inne i if-satsen som kollar, if (user.UserWorkouts.Contains(SelectedWorkout)");
+                        }
+                    }
+
+                    // Ta bort träningspass från alla relevanta listor
+                    Manager.Instance.AllWorkouts.Remove(SelectedWorkout);
+                }
+                else
+                {
+                    // Ta bort träningspass från alla relevanta listor
+                    Manager.Instance.AllWorkouts.Remove(SelectedWorkout);
+
+                    // Uppdatera alla användares träningslistor som innehåller detta träningspass
+                    foreach (var user in Manager.Instance.AllUsers)
+                    {
+                        if (user.UserWorkouts.Contains(SelectedWorkout))
+                        {
+                            user.UserWorkouts.Remove(SelectedWorkout);
+                            OnPropertyChanged(nameof(user.UserWorkouts));
+
+                            // TEST
+                            MessageBox.Show("Vi är inne i if-satsen som kollar, if (user.UserWorkouts.Contains(SelectedWorkout)");
+                        }
+                    }
+                }
+
+                // Uppdatera listan
+                OnPropertyChanged(nameof(WorkoutList));
             }
             else
             {

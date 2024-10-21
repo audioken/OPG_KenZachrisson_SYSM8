@@ -144,16 +144,26 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     // Kolla sen vad det är för typ av träning för att instansiera rätt träningsklass
                     if (WorkoutTypeComboBox == "Strength Workout")
                     {
-                        // Lägger till en styrketräning i användarens träningslista
-                        User.UserWorkouts.Add(new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0));
-                        Manager.Instance.AllWorkouts.Add(new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0));
+                        // Skapar en ny styrketräning
+                        Workout strengthWorkout = new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0);
+
+                        // Lägger den nya styrketräningen i användarens och managers lista
+                        Manager.Instance.CurrentUser.UserWorkouts.Add(strengthWorkout);
+                        Manager.Instance.AllWorkouts.Add(strengthWorkout);
                     }
                     else if (WorkoutTypeComboBox == "Cardio Workout")
                     {
-                        // Lägger till en konditionsträning i användarens träningslista
-                        User.UserWorkouts.Add(new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0));
-                        Manager.Instance.AllWorkouts.Add(new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0));
+                        // Skapar en ny konditionsträning
+                        Workout cardioWorkout = new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0);
+
+                        // Lägger den nya konditionsträningen i användarens och managers lista
+                        Manager.Instance.CurrentUser.UserWorkouts.Add(cardioWorkout);
+                        Manager.Instance.AllWorkouts.Add(cardioWorkout);
                     }
+
+                    // Oklart om man behöver använda dessa uppdateringar
+                    OnPropertyChanged(nameof(Manager.Instance.AllWorkouts));
+                    OnPropertyChanged(nameof(Manager.Instance.CurrentUser.UserWorkouts));
 
                     MessageBox.Show($"Du har lagt till följande träning:\n{FullDateTime} {WorkoutTypeComboBox} {DurationInput} {CaloriesBurnedInput} {NotesInput}");
                 }
