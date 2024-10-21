@@ -11,7 +11,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // EGENSKAPER ↓
         public User User { get; set; } // Håller koll på inloggad användare
         public AdminUser AdminUser { get; set; } // Håller koll på inloggad admin
-        //public ObservableCollection<Workout> WorkoutList { get; set; } // Håller koll på alla träningspass // KANSKE INTE BEHÖVS
 
         private ObservableCollection<Workout> workoutList;
         public ObservableCollection<Workout> WorkoutList
@@ -24,8 +23,36 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        public ObservableCollection<Workout> FilteredWorkoutList { get; set; } = new ObservableCollection<Workout>();
+
         public Workout Workout { get; set; }
         public Workout SelectedWorkout { get; set; }
+
+        private string filter;
+        public string Filter
+        {
+            get { return filter; }
+            set
+            {
+                filter = value;
+                OnPropertyChanged();
+                ApplySearchFilter();
+            }
+        }
+
+        private int durationFilter;
+
+        public int DurationFilter
+        {
+            get { return durationFilter; }
+            set
+            {
+                durationFilter = value;
+                OnPropertyChanged();
+                ApplyDurationFilter();
+            }
+        }
+
 
         // Relay-kommando som öppnar olika fönster vid klick
         public RelayCommand UserDetailsCommand => new RelayCommand(execute => OpenUserDetails());
@@ -52,6 +79,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 // Visa endast användarens egna träningspass
                 WorkoutList = User.UserWorkouts;
             }
+
+            // Sätter startvärdet för slidern så alla pass visas
+            DurationFilter = 240;
+
+            ApplySearchFilter();
+            ApplyDurationFilter();
+
         }
 
         // METODER ↓
@@ -162,6 +196,34 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             mainWindow.Show();
 
             // KOD HÄR för att stänga detta fönster
+        }
+
+        // Fritt sökfilter
+        public void ApplySearchFilter()
+        {
+            FilteredWorkoutList.Clear();
+
+            foreach (var workout in WorkoutList)
+            {
+                if (string.IsNullOrEmpty(Filter) || workout.Type.Contains(Filter) || workout.Notes.Contains(Filter))
+                {
+                    FilteredWorkoutList.Add(workout);
+                }
+            }
+        }
+
+        // Försök på duration-filter
+        public void ApplyDurationFilter()
+        {
+            FilteredWorkoutList.Clear();
+
+            foreach (var workout in WorkoutList)
+            {
+                if (workout.Duration.TotalMinutes < DurationFilter)
+                {
+                    FilteredWorkoutList.Add(workout);
+                }
+            }
         }
     }
 }

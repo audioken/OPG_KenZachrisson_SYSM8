@@ -12,8 +12,11 @@
         <Label Content="{Binding User.Username}"/>
         <Button Content="User Details" Command="{Binding UserDetailsCommand}"/>
         <Button Content="Add Workout" Command="{Binding AddWorkoutCommand}"/>
+        <TextBox Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"/>
+        <Slider Value="{Binding DurationFilter, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="240"/>
+        <Label Content="{Binding DurationFilter}"/>
 
-        <DataGrid ItemsSource="{Binding WorkoutList}" SelectedItem="{Binding SelectedWorkout}" AutoGenerateColumns="False">
+        <DataGrid ItemsSource="{Binding FilteredWorkoutList}" SelectedItem="{Binding SelectedWorkout}" AutoGenerateColumns="False" IsReadOnly="true">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
                 <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
