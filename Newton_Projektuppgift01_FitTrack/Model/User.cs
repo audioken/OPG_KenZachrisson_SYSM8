@@ -36,16 +36,14 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         // Återställ lösenordet för användaren
         public void ResetPassword(string securityAnswer)         // OBS OTESTAD KOD
         {
-            if (SecurityAnswer != null && securityAnswer != null)
+            if (SecurityAnswer != null)
             {
-                if (string.IsNullOrEmpty(securityAnswer))
+                if (!string.IsNullOrEmpty(securityAnswer))
                 {
                     if (SecurityAnswer == securityAnswer)
                     {
                         Random random = new Random();
-
                         int randomizedPin = random.Next(100000, 1000000);
-
                         Password = randomizedPin.ToString();
 
                         MessageBox.Show($"Ditt nya lösenord är {Password}");

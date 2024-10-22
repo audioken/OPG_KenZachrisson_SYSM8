@@ -56,6 +56,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             SecurityQuestions = new ObservableCollection<string>
             {
                 "The name of your favourite pet?",
+                "What was the name of your first car?",
+                "What was the name of your childhood best friend?",
+                "What city were your mother born in?"
             };
         }
 

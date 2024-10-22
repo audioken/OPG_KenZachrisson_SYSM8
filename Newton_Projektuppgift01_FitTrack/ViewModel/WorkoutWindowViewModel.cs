@@ -25,6 +25,18 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
         public ObservableCollection<Workout> FilteredWorkoutList { get; set; } = new ObservableCollection<Workout>();
 
+        //private ObservableCollection<Workout> filteredWorkoutList = new ObservableCollection<Workout>();
+        //public ObservableCollection<Workout> FilteredWorkoutList
+        //{
+        //    get { return filteredWorkoutList; }
+        //    set
+        //    {
+        //        filteredWorkoutList = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+
+
         public Workout Workout { get; set; }
         public Workout SelectedWorkout { get; set; }
 
