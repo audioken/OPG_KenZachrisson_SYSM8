@@ -9,6 +9,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     public class WorkoutWindowViewModel : ViewModelBase
     {
         // EGENSKAPER ↓
+
+        public Window _workoutWindow { get; set; }
+
         public User User { get; set; } // Håller koll på inloggad användare
         public AdminUser AdminUser { get; set; } // Håller koll på inloggad admin
 
@@ -24,18 +27,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         public ObservableCollection<Workout> FilteredWorkoutList { get; set; } = new ObservableCollection<Workout>();
-
-        //private ObservableCollection<Workout> filteredWorkoutList = new ObservableCollection<Workout>();
-        //public ObservableCollection<Workout> FilteredWorkoutList
-        //{
-        //    get { return filteredWorkoutList; }
-        //    set
-        //    {
-        //        filteredWorkoutList = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-
 
         public Workout Workout { get; set; }
         public Workout SelectedWorkout { get; set; }
@@ -53,7 +44,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         private int durationFilter;
-
         public int DurationFilter
         {
             get { return durationFilter; }
@@ -74,8 +64,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public RelayCommand SignOutCommand => new RelayCommand(execute => SignOut());
 
         // KONSTRUKTOR ↓
-        public WorkoutWindowViewModel()
+        public WorkoutWindowViewModel(Window _workoutWindow)
         {
+            this._workoutWindow = _workoutWindow;
+
             // Håller koll på nuvarande användare
             User = Manager.Instance.CurrentUser;
 
@@ -103,11 +95,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Öppnar fönster för att kunna lägga till ett träningspass
         public void AddWorkout()
         {
-            // Öppnar "AddWorkoutWindow"
-            AddWorkoutWindow addWorkoutWindow = new AddWorkoutWindow();
-            addWorkoutWindow.Show();
+            // Öppnar AddWorkoutWindow
+            OpenAddWorkoutWindow();
 
-            // KOD HÄR för att stänga detta fönster?
+            // Stäng WorkoutWindow
+            _workoutWindow.Close();
         }
 
         // Tar bort det valda träningspasset
@@ -115,43 +107,23 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             if (SelectedWorkout != null)
             {
-                // Tar bort träningspass i viss ordning beroende på vem som är inloggad. Det funkar, men känns inte som rätt kod..
-                if (User is AdminUser admin)
+                // Uppdatera alla användares träningslistor som innehåller detta träningspass
+                foreach (var user in Manager.Instance.AllUsers)
                 {
-                    // Uppdatera alla användares träningslistor som innehåller detta träningspass
-                    foreach (var user in Manager.Instance.AllUsers)
-                    {
-                        if (user.UserWorkouts.Contains(SelectedWorkout))
-                        {
-                            user.UserWorkouts.Remove(SelectedWorkout);
-                            OnPropertyChanged(nameof(user.UserWorkouts));
-                            ApplySearchFilter();
-
-                            // TEST
-                            MessageBox.Show("Vi är inne i if-satsen som kollar, if (user.UserWorkouts.Contains(SelectedWorkout)");
-                        }
-                    }
-
-                    // Ta bort träningspass från alla relevanta listor
-                    Manager.Instance.AllWorkouts.Remove(SelectedWorkout);
-                }
-                else
-                {
-                    // Ta bort träningspass från alla relevanta listor
+                    // Ta bort träningspass från listan som har alla träningar
                     Manager.Instance.AllWorkouts.Remove(SelectedWorkout);
 
-                    // Uppdatera alla användares träningslistor som innehåller detta träningspass
-                    foreach (var user in Manager.Instance.AllUsers)
+                    // Ta bort träningspass från användarens lista av träningspass
+                    if (user.UserWorkouts.Contains(SelectedWorkout))
                     {
-                        if (user.UserWorkouts.Contains(SelectedWorkout))
-                        {
-                            user.UserWorkouts.Remove(SelectedWorkout);
-                            OnPropertyChanged(nameof(user.UserWorkouts));
-                            ApplySearchFilter();
+                        user.UserWorkouts.Remove(SelectedWorkout);
+                        OnPropertyChanged(nameof(user.UserWorkouts));
 
-                            // TEST
-                            MessageBox.Show("Vi är inne i if-satsen som kollar, if (user.UserWorkouts.Contains(SelectedWorkout)");
-                        }
+                        // Kör filtret för att uppdatera vyn
+                        ApplySearchFilter();
+
+                        // TEST
+                        MessageBox.Show("Vi är inne i if-satsen som kollar, if (user.UserWorkouts.Contains(SelectedWorkout)");
                     }
                 }
 
@@ -173,11 +145,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 // Tillfällig lagring av vald träning i managerklassen
                 Manager.Instance.CurrentWorkout = SelectedWorkout;
 
-                // Öppnar "WorkoutDetailsWindow"
-                WorkoutDetailsWindow detailsWindow = new WorkoutDetailsWindow();
-                detailsWindow.Show();
+                // Öppnar WorkoutDetailsWindow
+                OpenWorkoutDetailsWindow();
 
-                // KOD HÄR för att stänga detta fönster?
+                // Stänger WorkoutWindow
+                _workoutWindow.Close();
             }
             else
             {
@@ -188,11 +160,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Öppna fönster för användarens profilinställningar
         public void OpenUserDetails()
         {
-            // Öppnar "UserDetailsWindow"
-            UserDetailsWindow userDetailsWindow = new UserDetailsWindow();
-            userDetailsWindow.Show();
+            // Öppnar UserDetailsWindow
+            OpenUserDetailsWindow();
 
-            // KOD HÄR för att stänga detta fönster?
+            // Stänger WorkoutWindow
+            _workoutWindow.Close();
         }
 
         // Öppnar en popup med information om företaget och appen
@@ -204,11 +176,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Logga ut och återgå till MainWindow
         public void SignOut()
         {
-            // Öppnar "MainWindow"
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
+            // Öppnar MainWindow
+            OpenMainWindow();
 
-            // KOD HÄR för att stänga detta fönster
+            // Stäng WorkoutWindow
+            _workoutWindow.Close();
         }
 
         // Sökfilter med textruta för träningstyp och kommentarer
@@ -245,6 +217,30 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     FilteredWorkoutList.Add(workout);
                 }
             }
+        }
+
+        public void OpenUserDetailsWindow()
+        {
+            UserDetailsWindow userDetailsWindow = new UserDetailsWindow();
+            userDetailsWindow.Show();
+        }
+
+        public void OpenWorkoutDetailsWindow()
+        {
+            WorkoutDetailsWindow workoutDetailsWindow = new WorkoutDetailsWindow();
+            workoutDetailsWindow.Show();
+        }
+
+        public void OpenMainWindow()
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+        }
+
+        public void OpenAddWorkoutWindow()
+        {
+            AddWorkoutWindow addWorkoutWindow = new AddWorkoutWindow();
+            addWorkoutWindow.Show();
         }
     }
 }

@@ -9,6 +9,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     public class UserDetailsWindowViewModel : ViewModelBase
     {
         // EGENSKAPER ↓
+
+        public Window _userDetailsWindow { get; set; }
+
         // Spårar information vid registrering av nytt användarkonto
         public string NewUsernameInput { get; set; } = Manager.Instance.CurrentUser.Username;
         public string NewPasswordInput { get; set; } = Manager.Instance.CurrentUser.Password;
@@ -25,8 +28,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public RelayCommand CancelCommand => new RelayCommand(execute => Cancel());
 
         // KONSTRUKTOR ↓
-        public UserDetailsWindowViewModel()
+        public UserDetailsWindowViewModel(Window userDetailsWindow)
         {
+            _userDetailsWindow = userDetailsWindow;
+
             // Initierar "Countries" med en lista av länder
             Countries = new ObservableCollection<string>
             {
@@ -79,13 +84,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                                 Manager.Instance.CurrentUser.Password = NewPasswordInput;
                                 Manager.Instance.CurrentUser.Country = CountryComboBox;
 
-                                MessageBox.Show($"Tack {NewUsernameInput}! Din användarprofil har uppdaterats. Var god logga in på nytt..");
+                                MessageBox.Show($"Tack {NewUsernameInput}! Din användarprofil har uppdaterats..");
 
-                                // Öppna MainWindow
-                                MainWindow mainWindow = new MainWindow(); // Kanske ska instansieras någon annanstans?
-                                mainWindow.Show();
+                                // Öppna WorkoutWindow
+                                OpenWorkoutWindow();
 
-                                // KOD HÄR för att stänga detta fönster
+                                // Stäng UserDetailsWindow
+                                _userDetailsWindow.Close();
                             }
                             else { MessageBox.Show("Lösenorden matchar inte!"); }
                         }
@@ -100,11 +105,17 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
         public void Cancel()
         {
-            // Öppna "WorkoutWindow"
+            // Öppna WorkoutWindow
+            OpenWorkoutWindow();
+
+            // Stäng UserDetailsWindow
+            _userDetailsWindow.Close();
+        }
+
+        public void OpenWorkoutWindow()
+        {
             WorkoutWindow workoutWindow = new WorkoutWindow();
             workoutWindow.Show();
-
-            // KOD HÄR för att stänga detta fönster
         }
     }
 }

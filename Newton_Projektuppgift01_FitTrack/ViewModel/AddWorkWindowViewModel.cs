@@ -1,5 +1,6 @@
 ﻿using Newton_Projektuppgift01_FitTrack.Model;
 using Newton_Projektuppgift01_FitTrack.MVVM;
+using Newton_Projektuppgift01_FitTrack.View;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -8,6 +9,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     public class AddWorkWindowViewModel : ViewModelBase
     {
         // EGENSKAPER ↓
+
+        public Window _addWorkoutWindow { get; set; }
+
         // Håller koll på inloggad användare
         public User User { get; set; }
 
@@ -106,10 +110,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Relay-kommandon
         public RelayCommand SaveCommand => new RelayCommand(execute => SaveWorkout());
         public RelayCommand PasteWorkoutCommand => new RelayCommand(execute => PasteWorkout());
+        public RelayCommand CancelCommand => new RelayCommand(execute => Cancel());
 
         // KONSTRUKTOR ↓
-        public AddWorkWindowViewModel()
+        public AddWorkWindowViewModel(Window addWorkoutWindow)
         {
+            _addWorkoutWindow = addWorkoutWindow;
+
             // Hämtar nuvarande användare
             User = Manager.Instance.CurrentUser; // Behövs kanske inte? Jag sparar ju direkt till Managerklassen i Save
 
@@ -163,11 +170,17 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                         Manager.Instance.AllWorkouts.Add(cardioWorkout);
                     }
 
+                    MessageBox.Show($"Du har lagt till följande träning:\n{FullDateTime} {WorkoutTypeComboBox} {DurationInput} {CaloriesBurnedInput} {NotesInput}");
+
+                    // Öppna WorkoutWindow
+                    OpenWorkoutWindow();
+
+                    // Stäng AddWorkoutWindow
+                    _addWorkoutWindow.Close();
+
                     // Oklart om man behöver använda dessa uppdateringar
                     OnPropertyChanged(nameof(Manager.Instance.AllWorkouts));
                     OnPropertyChanged(nameof(Manager.Instance.CurrentUser.UserWorkouts));
-
-                    MessageBox.Show($"Du har lagt till följande träning:\n{FullDateTime} {WorkoutTypeComboBox} {DurationInput} {CaloriesBurnedInput} {NotesInput}");
                 }
                 else { MessageBox.Show("Du måste skriva en kommentar.."); }
             }
@@ -200,6 +213,21 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
             NotesInput = Manager.Instance.CopiedWorkout.Notes;
             OnPropertyChanged(nameof(NotesInput));
+        }
+
+        public void Cancel()
+        {
+            // Öppna WorkoutWindow
+            OpenWorkoutWindow();
+
+            // Stäng AddWorkoutWindow
+            _addWorkoutWindow.Close();
+        }
+
+        public void OpenWorkoutWindow()
+        {
+            WorkoutWindow workoutWindow = new WorkoutWindow();
+            workoutWindow.Show();
         }
     }
 }

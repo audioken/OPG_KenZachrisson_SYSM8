@@ -8,7 +8,7 @@ namespace Newton_Projektuppgift01_FitTrack.View
         public WorkoutDetailsWindow()
         {
             InitializeComponent();
-            WorkoutDetailsWindowViewModel viewModel = new WorkoutDetailsWindowViewModel();
+            WorkoutDetailsWindowViewModel viewModel = new WorkoutDetailsWindowViewModel(this);
             DataContext = viewModel;
         }
     }

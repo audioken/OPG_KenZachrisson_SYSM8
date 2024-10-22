@@ -113,7 +113,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                                 MainWindow mainWindow = new MainWindow(); // Kanske ska instansieras någon annanstans?
                                 mainWindow.Show();
 
-                                // KOD HÄR för att stänga detta fönster
+                                // Stäng RegisterWindow
                                 _registerWindow.Close();
                             }
                             else { MessageBox.Show("Lösenorden matchar inte!"); }

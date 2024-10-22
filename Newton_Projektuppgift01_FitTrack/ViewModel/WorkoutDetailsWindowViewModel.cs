@@ -1,5 +1,6 @@
 ﻿using Newton_Projektuppgift01_FitTrack.Model;
 using Newton_Projektuppgift01_FitTrack.MVVM;
+using Newton_Projektuppgift01_FitTrack.View;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -8,6 +9,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     public class WorkoutDetailsWindowViewModel : ViewModelBase
     {
         // EGENSKAPER ↓
+        public Window _workoutDetailsWindow { get; set; }
+
         public User User { get; set; }
 
         // Används för att lagra den valda träningen
@@ -47,8 +50,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public RelayCommand CopyWorkoutCommand => new RelayCommand(execute => CopyWorkout());
 
         // KONSTRUKTOR ↓
-        public WorkoutDetailsWindowViewModel()
+        public WorkoutDetailsWindowViewModel(Window _workoutDetailsWindow)
         {
+            this._workoutDetailsWindow = _workoutDetailsWindow;
+
             // Referens till inloggad användare
             User = Manager.Instance.CurrentUser;
 
@@ -109,16 +114,26 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // Tror inte denna behövs?
             Manager.Instance.CurrentWorkout = WorkoutEditable;
 
-            // Avvaktivera möjlighet till redigering
+            // Avvaktivera möjlighet till redigering i DataGrid
             IsEditDataGridEnabled = false;
 
-            // KOD HÄR för att stänga fönstret
+            // Öppna WorkoutWindow
+            OpenWorkoutWindow();
+
+            // Stäng WorkoutDetailsWindow
+            _workoutDetailsWindow.Close();
         }
 
         public void CopyWorkout()
         {
             Manager.Instance.CopiedWorkout = WorkoutEditable;
             MessageBox.Show("Kopierat!");
+        }
+
+        public void OpenWorkoutWindow()
+        {
+            WorkoutWindow workoutWindow = new WorkoutWindow();
+            workoutWindow.Show();
         }
     }
 }

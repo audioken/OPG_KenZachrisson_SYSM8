@@ -14,8 +14,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Spårar inloggningsuppgifter för kontroll
         public string UsernameInput { get; set; } = "user"; // Tillfälligt för att logga in snabbare
         public string PasswordInput { get; set; } = "password"; // Tillfälligt för att logga in snabbare
-        public string TwoFAInput { get; set; }
-        public string TwoFACode { get; set; }
+        public string TwoFAInput { get; set; } = "123456";
+        public string TwoFACode { get; set; } = "123456";
         public string SecurityAnswerInput { get; set; }
 
         // Visas när användaren klickar på knappen "Forgot Password"
@@ -70,11 +70,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 // Kollar igenom användarlistan i Managerklassen
                 foreach (User user in Manager.Instance.AllUsers)
                 {
+                    // Kontrollerar så det matchar en användarprofil
                     if (UsernameInput == user.Username && PasswordInput == user.Password)
                     {
-                        accountFound = true; // Undviker att skriva ut felmeddelandet efter foreach-loopen
+                        // Undviker att skriva ut felmeddelandet efter foreach-loopen
+                        accountFound = true;
 
-                        // Kontrollerar så det matchar en användarprofil
+                        // Kontrollerar så 2FA stämmer
                         if (TwoFAInput == TwoFACode)
                         {
                             if (user is AdminUser admin)
