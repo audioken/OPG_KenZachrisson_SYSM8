@@ -11,10 +11,11 @@
         
         <TextBox Text="{Binding UsernameInput}"/>
         <TextBox Text="{Binding PasswordInput}"/>
-        
-        <!-- För VG -->
-        <TextBox Text="{Binding ConfirmPasswordInput}"/> 
-        
+        <TextBox Text="{Binding ConfirmPasswordInput}"/>
+        <ComboBox ItemsSource="{Binding SecurityQuestions}" SelectedItem="{Binding SelectedSecurityQuestion}"/>
+        <TextBox Text="{Binding SecurityAnswerInput}"/>
+
+
         <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding CountryComboBox}"/>
         <Button Content="Register" Command="{Binding RegisterNewUserCommand}"/>
         

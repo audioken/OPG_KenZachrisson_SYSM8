@@ -111,7 +111,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public AddWorkWindowViewModel()
         {
             // Hämtar nuvarande användare
-            User = Manager.Instance.CurrentUser;
+            User = Manager.Instance.CurrentUser; // Behövs kanske inte? Jag sparar ju direkt till Managerklassen i Save
 
             // Instansierar listor med värden
             WorkoutTypes = new ObservableCollection<string> { "Cardio Workout", "Strength Workout" };

@@ -13,11 +13,14 @@
         <Label Content="{Binding LabelTitle}"/>
         <TextBox Text="{Binding UsernameInput}"/>
         <TextBox Text="{Binding PasswordInput}"/>
+        <!--<Label Content="{Binding User.SecurityQuestion}"/>-->
+        <TextBox Text="{Binding SecurityAnswerInput}" Visibility="{Binding SecurityAnswerVisibility}"/>
         <Button Height="20" Content="Sign in" Command="{Binding SignInCommand}"/>
         <Button Height="20" Content="Register" Command="{Binding RegisterCommand}"/>
         
         <!-- För VG -->
         <Button Height="20" Content="Forgot Password" Command="{Binding ForgotPasswordCommand}"/>
+        <Button Height="20" Content="Generate New Password" Command="{Binding GenerateNewPasswordCommand}" Visibility="{Binding GenerateNewPasswordVisibility}"/>
         
     </StackPanel>
     

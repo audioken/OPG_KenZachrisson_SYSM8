@@ -12,6 +12,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public string UsernameInput { get; set; }
         public string PasswordInput { get; set; }
         public string ConfirmPasswordInput { get; set; }
+        public string SecurityAnswerInput { get; set; }
 
         // Spårar användarens valda land från "Countries" för lagring i användarkonto
         public string CountryComboBox { get; set; }
@@ -19,12 +20,30 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Lista där användaren väljer land och som speglas i ComboBox
         public ObservableCollection<string> Countries { get; set; }
 
+        public ObservableCollection<string> SecurityQuestions { get; set; }
+
+        private string selectedSecurityQuestion;
+        public string SelectedSecurityQuestion
+        {
+            get { return selectedSecurityQuestion; }
+            set
+            {
+                selectedSecurityQuestion = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         // Relay-kommando som anropar metoden "RegisterNewUser" vid klick
         public RelayCommand RegisterNewUserCommand => new RelayCommand(execute => RegisterNewUser());
 
+        public Window _registerWindow { get; set; }
+
         // KONSTRUKTOR ↓
-        public RegisterWindowViewModel()
+        public RegisterWindowViewModel(Window _registerWindow)
         {
+            this._registerWindow = _registerWindow;
+
             // Initierar "Countries" med en lista av länder
             Countries = new ObservableCollection<string>
             {
@@ -32,6 +51,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 "Denmark",
                 "Norway",
                 "Finland"
+            };
+
+            SecurityQuestions = new ObservableCollection<string>
+            {
+                "The name of your favourite pet?",
             };
         }
 
@@ -41,7 +65,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             // Kontrollerar så alla inputs har inmatning
             if (!string.IsNullOrEmpty(UsernameInput) && !string.IsNullOrEmpty(PasswordInput) &&
-                !string.IsNullOrEmpty(ConfirmPasswordInput) && !string.IsNullOrEmpty(CountryComboBox))
+                !string.IsNullOrEmpty(ConfirmPasswordInput) && !string.IsNullOrEmpty(CountryComboBox) &&
+                !string.IsNullOrEmpty(SecurityAnswerInput) && !string.IsNullOrEmpty(selectedSecurityQuestion))
             {
                 if (UsernameInput.Length >= 3)
                 {
@@ -74,7 +99,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                             if (PasswordInput == ConfirmPasswordInput)
                             {
                                 // Skapa ny användare baserat på den inmatade informationen
-                                User newUser = new User(UsernameInput, PasswordInput, CountryComboBox);
+                                User newUser = new User(UsernameInput, PasswordInput, CountryComboBox, SelectedSecurityQuestion, SecurityAnswerInput);
 
                                 // Lägg till ny användare i listan för alla användare
                                 Manager.Instance.AllUsers.Add(newUser);
@@ -86,6 +111,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                                 mainWindow.Show();
 
                                 // KOD HÄR för att stänga detta fönster
+                                _registerWindow.Close();
                             }
                             else { MessageBox.Show("Lösenorden matchar inte!"); }
                         }

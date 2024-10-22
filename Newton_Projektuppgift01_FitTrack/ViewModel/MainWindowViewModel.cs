@@ -14,15 +14,43 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Spårar inloggningsuppgifter för kontroll
         public string UsernameInput { get; set; } = "user"; // Tillfälligt för att logga in snabbare
         public string PasswordInput { get; set; } = "password"; // Tillfälligt för att logga in snabbare
+        public string SecurityAnswerInput { get; set; }
+
+        // Visas när användaren klickar på knappen "Forgot Password"
+        private string securityAnswerVisibility;
+        public string SecurityAnswerVisibility
+        {
+            get { return securityAnswerVisibility; }
+            set
+            {
+                securityAnswerVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Visas när användaren klickar på knappen "Forgot Password"
+        private string generateNewPasswordVisibility;
+        public string GenerateNewPasswordVisibility
+        {
+            get { return generateNewPasswordVisibility; }
+            set
+            {
+                generateNewPasswordVisibility = value;
+                OnPropertyChanged();
+            }
+        }
 
         // Relay-kommand som anropar olika metoder för inloggning och registrering vid klick
         public RelayCommand SignInCommand => new RelayCommand(execute => SignIn());
         public RelayCommand RegisterCommand => new RelayCommand(execute => Register());
-        public RelayCommand ForgottPasswordCommand => new RelayCommand(execute => ForgotPassword()); // För VG
+        public RelayCommand ForgotPasswordCommand => new RelayCommand(execute => ForgotPassword());
+        public RelayCommand GenerateNewPasswordCommand => new RelayCommand(execute => GenerateNewPassword());
 
         // KONSTRUKTOR ↓
         public MainWindowViewModel()
         {
+            SecurityAnswerVisibility = "Collapsed";
+            GenerateNewPasswordVisibility = "Collapsed";
         }
 
         // METODER ↓
@@ -96,12 +124,19 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     // Kontrollerar så det matchar en användarprofil
                     if (UsernameInput == user.Username)
                     {
-                        // Kod för återställning av lösenord. Behöver man gör ett nytt window?
-                        // user.ResetPassword(securityAnswer);
+                        SecurityAnswerVisibility = "Visible";
+                        GenerateNewPasswordVisibility = "Visible";
+                        Manager.Instance.CurrentUser = user;
+                        //user.ResetPassword(SecurityAnswerInput);
                     }
                 }
             }
             else { MessageBox.Show("Du måste skriva in ett giltigt användarnamn!"); }
+        }
+
+        public void GenerateNewPassword()
+        {
+            Manager.Instance.CurrentUser.ResetPassword(SecurityAnswerInput);
         }
     }
 }

@@ -38,25 +38,23 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         {
             if (SecurityAnswer != null && securityAnswer != null)
             {
-                if (securityAnswer == "2")
+                if (string.IsNullOrEmpty(securityAnswer))
                 {
-                    Random random = new Random();
+                    if (SecurityAnswer == securityAnswer)
+                    {
+                        Random random = new Random();
 
-                    int randomizedPin = random.Next(100000, 1000000);
+                        int randomizedPin = random.Next(100000, 1000000);
 
-                    Password = randomizedPin.ToString();
+                        Password = randomizedPin.ToString();
 
-                    MessageBox.Show($"Ditt nya lösenord är {Password}");
+                        MessageBox.Show($"Ditt nya lösenord är {Password}");
+                    }
+                    else { MessageBox.Show("Tyvärr var det fel svar.."); }
                 }
-                else
-                {
-                    MessageBox.Show("Tyvärr var det fel svar..");
-                }
+                else { MessageBox.Show("Du måste skriva ett svar på din säkerhetsfråga.."); }
             }
-            else
-            {
-                MessageBox.Show("Du måste skriva in något..");
-            }
+            else { MessageBox.Show("Du har inte ställt in någon säkerhetsfråga.."); }
         }
     }
 }
