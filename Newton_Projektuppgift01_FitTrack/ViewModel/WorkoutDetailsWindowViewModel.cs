@@ -45,9 +45,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
         // Relay-kommandon
         public RelayCommand EditWorkoutCommand => new RelayCommand(execute => EditWorkout());
-        public RelayCommand CancelEditCommand => new RelayCommand(execute => CancelEdit());
+        public RelayCommand AbortEditCommand => new RelayCommand(execute => AbortEdit());
         public RelayCommand SaveWorkoutCommand => new RelayCommand(execute => SaveWorkout());
         public RelayCommand CopyWorkoutCommand => new RelayCommand(execute => CopyWorkout());
+        public RelayCommand CancelCommand => new RelayCommand(execute => Cancel());
 
         // KONSTRUKTOR ↓
         public WorkoutDetailsWindowViewModel(Window _workoutDetailsWindow)
@@ -79,7 +80,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Avbryter redigering och återställer värdena
-        public void CancelEdit()
+        public void AbortEdit()
         {
             // Klonar originalet för att återställa värdena
             WorkoutEditable = Workout.Clone();
@@ -130,10 +131,22 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             MessageBox.Show("Kopierat!");
         }
 
+        public void Cancel()
+        {
+            // Öppna WorkoutWindow
+            OpenWorkoutWindow();
+
+            // Stäng WorkoutDetails
+            _workoutDetailsWindow.Close();
+        }
+
+        // Öppna WorkoutWindow
         public void OpenWorkoutWindow()
         {
             WorkoutWindow workoutWindow = new WorkoutWindow();
             workoutWindow.Show();
         }
+
+
     }
 }

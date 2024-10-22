@@ -57,9 +57,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     // Kollar om användarnamnet redan finns
                     foreach (User user in Manager.Instance.AllUsers)
                     {
-                        if (user.Username == NewUsernameInput)
+                        // Användarnamn redan upptaget om det inte gäller det inloggade kontots användarnamn
+                        if (NewUsernameInput == user.Username && NewUsernameInput != Manager.Instance.CurrentUser.Username)
                         {
-                            isUserNameAvailable = false; // Samma användarnamn finns redan
+                            // Användernamnet var upptaget
+                            isUserNameAvailable = false;
+
+                            // Behöver inte iterera fler gånger
                             break;
                         }
                     }

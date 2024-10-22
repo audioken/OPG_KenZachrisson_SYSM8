@@ -33,7 +33,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-
         // Relay-kommando som anropar metoden "RegisterNewUser" vid klick
         public RelayCommand RegisterNewUserCommand => new RelayCommand(execute => RegisterNewUser());
 
