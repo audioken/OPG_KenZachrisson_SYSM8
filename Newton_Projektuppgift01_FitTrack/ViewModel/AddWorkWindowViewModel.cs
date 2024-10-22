@@ -105,6 +105,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
         // Relay-kommandon
         public RelayCommand SaveCommand => new RelayCommand(execute => SaveWorkout());
+        public RelayCommand PasteWorkoutCommand => new RelayCommand(execute => PasteWorkout());
 
         // KONSTRUKTOR ↓
         public AddWorkWindowViewModel()
@@ -150,6 +151,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                         // Lägger den nya styrketräningen i användarens och managers lista
                         Manager.Instance.CurrentUser.UserWorkouts.Add(strengthWorkout);
                         Manager.Instance.AllWorkouts.Add(strengthWorkout);
+
                     }
                     else if (WorkoutTypeComboBox == "Cardio Workout")
                     {
@@ -170,6 +172,34 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 else { MessageBox.Show("Du måste skriva en kommentar.."); }
             }
             else { MessageBox.Show("Antal brända kalorier måste minst vara 0.."); }
+        }
+
+        // Infoga alla parametrar från träningspasset som kopierades i WorkoutDetailsWindow
+        public void PasteWorkout()
+        {
+            SelectedDate = Manager.Instance.CopiedWorkout.Date;
+            OnPropertyChanged(nameof(SelectedDate));
+
+            SelectedDateHour = Manager.Instance.CopiedWorkout.Date.Hour;
+            OnPropertyChanged(nameof(SelectedDateHour));
+
+            SelectedDateMinute = Manager.Instance.CopiedWorkout.Date.Minute;
+            OnPropertyChanged(nameof(SelectedDateMinute));
+
+            WorkoutTypeComboBox = Manager.Instance.CopiedWorkout.Type;
+            OnPropertyChanged(nameof(WorkoutTypeComboBox));
+
+            SelectedDurationHours = Manager.Instance.CopiedWorkout.Duration.Hours;
+            OnPropertyChanged(nameof(SelectedDurationHours));
+
+            SelectedDurationMinutes = Manager.Instance.CopiedWorkout.Duration.Minutes;
+            OnPropertyChanged(nameof(SelectedDurationMinutes));
+
+            CaloriesBurnedInput = Manager.Instance.CopiedWorkout.CaloriesBurned;
+            OnPropertyChanged(nameof(CaloriesBurnedInput));
+
+            NotesInput = Manager.Instance.CopiedWorkout.Notes;
+            OnPropertyChanged(nameof(NotesInput));
         }
     }
 }

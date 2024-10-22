@@ -1,6 +1,7 @@
 ﻿using Newton_Projektuppgift01_FitTrack.Model;
 using Newton_Projektuppgift01_FitTrack.MVVM;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Newton_Projektuppgift01_FitTrack.ViewModel
 {
@@ -43,6 +44,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public RelayCommand EditWorkoutCommand => new RelayCommand(execute => EditWorkout());
         public RelayCommand CancelEditCommand => new RelayCommand(execute => CancelEdit());
         public RelayCommand SaveWorkoutCommand => new RelayCommand(execute => SaveWorkout());
+        public RelayCommand CopyWorkoutCommand => new RelayCommand(execute => CopyWorkout());
 
         // KONSTRUKTOR ↓
         public WorkoutDetailsWindowViewModel()
@@ -99,7 +101,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
             else
             {
-                // Annars lägg till träning (Denna kod ska dock inte behövas..)
+                // Annars lägg till träning
                 User.UserWorkouts.Add(WorkoutEditable);
                 Manager.Instance.AllWorkouts.Add(WorkoutEditable);
             }
@@ -111,6 +113,12 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             IsEditDataGridEnabled = false;
 
             // KOD HÄR för att stänga fönstret
+        }
+
+        public void CopyWorkout()
+        {
+            Manager.Instance.CopiedWorkout = WorkoutEditable;
+            MessageBox.Show("Kopierat!");
         }
     }
 }

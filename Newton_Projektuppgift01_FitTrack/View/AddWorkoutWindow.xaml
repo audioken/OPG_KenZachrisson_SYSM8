@@ -25,6 +25,7 @@
         
         <Button Content="Save" Command="{Binding SaveCommand}"/>
         <Button Content="Cancel" Command="{Binding CancelCommand}"/>
+        <Button Content="Paste Workout" Command="{Binding PasteWorkoutCommand}"/>
 
     </StackPanel>
     

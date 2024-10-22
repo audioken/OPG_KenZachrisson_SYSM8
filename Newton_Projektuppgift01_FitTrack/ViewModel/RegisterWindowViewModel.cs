@@ -43,53 +43,57 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             if (!string.IsNullOrEmpty(UsernameInput) && !string.IsNullOrEmpty(PasswordInput) &&
                 !string.IsNullOrEmpty(ConfirmPasswordInput) && !string.IsNullOrEmpty(CountryComboBox))
             {
-                // Kontroll för tillgängligt användarnamn
-                bool isUserNameAvailable = true;
-
-                // Kollar om användarnamnet redan finns
-                foreach (User user in Manager.Instance.AllUsers)
+                if (UsernameInput.Length >= 3)
                 {
-                    if (user.Username == UsernameInput)
-                    {
-                        isUserNameAvailable = false; // Samma användarnamn finns redan
-                        break;
-                    }
-                }
+                    // Kontroll för tillgängligt användarnamn
+                    bool isUserNameAvailable = true;
 
-                // Om användarnamnet är ledigt
-                if (isUserNameAvailable)
-                {
-                    // Kontrollerar så lösenordet är starkt nog
-                    string specialCharacters = "!@#$%^&*()-_=+[{]};:’\"|\\,<.>/?"; // Mall för lösenordskontroll av specialtecken
-                    bool hasSpecial = PasswordInput.Any(c => specialCharacters.Contains(c)); // Innehåller det minst ett specialtecken?
-                    bool hasLength = PasswordInput.Length > 7; // Innehåller det minst åtta tecken?
-                    bool hasDigit = PasswordInput.Any(char.IsDigit); // Innehåller det minst en siffra?
-
-                    // Om lösenordet är starkt nog
-                    if (hasSpecial && hasLength && hasDigit)
+                    // Kollar om användarnamnet redan finns
+                    foreach (User user in Manager.Instance.AllUsers)
                     {
-                        // Om lösenord och bekräfta lösenord matchar
-                        if (PasswordInput == ConfirmPasswordInput)
+                        if (user.Username == UsernameInput)
                         {
-                            // Skapa ny användare baserat på den inmatade informationen
-                            User newUser = new User(UsernameInput, PasswordInput, CountryComboBox);
-
-                            // Lägg till ny användare i listan för alla användare
-                            Manager.Instance.AllUsers.Add(newUser);
-
-                            MessageBox.Show($"Tack {UsernameInput}! Din användarprofil har skapats. Var god logga in..");
-
-                            // Öppna MainWindow
-                            MainWindow mainWindow = new MainWindow(); // Kanske ska instansieras någon annanstans?
-                            mainWindow.Show();
-
-                            // KOD HÄR för att stänga detta fönster
+                            isUserNameAvailable = false; // Samma användarnamn finns redan
+                            break;
                         }
-                        else { MessageBox.Show("Lösenorden matchar inte!"); }
                     }
-                    else { MessageBox.Show("Minst en åtta tecken, en siffra och ett specieltecken!"); }
+
+                    // Om användarnamnet är ledigt
+                    if (isUserNameAvailable)
+                    {
+                        // Kontrollerar så lösenordet är starkt nog
+                        string specialCharacters = "!@#$%^&*()-_=+[{]};:’\"|\\,<.>/?"; // Mall för lösenordskontroll av specialtecken
+                        bool hasSpecial = PasswordInput.Any(c => specialCharacters.Contains(c)); // Innehåller det minst ett specialtecken?
+                        bool hasLength = PasswordInput.Length > 7; // Innehåller det minst åtta tecken?
+                        bool hasDigit = PasswordInput.Any(char.IsDigit); // Innehåller det minst en siffra?
+
+                        // Om lösenordet är starkt nog
+                        if (hasSpecial && hasLength && hasDigit)
+                        {
+                            // Om lösenord och bekräfta lösenord matchar
+                            if (PasswordInput == ConfirmPasswordInput)
+                            {
+                                // Skapa ny användare baserat på den inmatade informationen
+                                User newUser = new User(UsernameInput, PasswordInput, CountryComboBox);
+
+                                // Lägg till ny användare i listan för alla användare
+                                Manager.Instance.AllUsers.Add(newUser);
+
+                                MessageBox.Show($"Tack {UsernameInput}! Din användarprofil har skapats. Var god logga in..");
+
+                                // Öppna MainWindow
+                                MainWindow mainWindow = new MainWindow(); // Kanske ska instansieras någon annanstans?
+                                mainWindow.Show();
+
+                                // KOD HÄR för att stänga detta fönster
+                            }
+                            else { MessageBox.Show("Lösenorden matchar inte!"); }
+                        }
+                        else { MessageBox.Show("Minst en åtta tecken, en siffra och ett specieltecken!"); }
+                    }
+                    else { MessageBox.Show("Användarnamnet finns redan!"); }
                 }
-                else { MessageBox.Show("Användarnamnet finns redan!"); }
+                else { MessageBox.Show("Användarnamnet måste ha minst tre tecken!"); }
             }
             else { MessageBox.Show("Du måste fylla i all information!"); }
         }

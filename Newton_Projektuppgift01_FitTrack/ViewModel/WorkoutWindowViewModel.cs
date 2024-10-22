@@ -53,7 +53,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-
         // Relay-kommando som öppnar olika fönster vid klick
         public RelayCommand UserDetailsCommand => new RelayCommand(execute => OpenUserDetails());
         public RelayCommand AddWorkoutCommand => new RelayCommand(execute => AddWorkout());
@@ -84,7 +83,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             DurationFilter = 240;
 
             ApplySearchFilter();
-            ApplyDurationFilter();
+            //ApplyDurationFilter();
 
         }
 
@@ -114,6 +113,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                         {
                             user.UserWorkouts.Remove(SelectedWorkout);
                             OnPropertyChanged(nameof(user.UserWorkouts));
+                            ApplySearchFilter();
 
                             // TEST
                             MessageBox.Show("Vi är inne i if-satsen som kollar, if (user.UserWorkouts.Contains(SelectedWorkout)");
@@ -135,6 +135,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                         {
                             user.UserWorkouts.Remove(SelectedWorkout);
                             OnPropertyChanged(nameof(user.UserWorkouts));
+                            ApplySearchFilter();
 
                             // TEST
                             MessageBox.Show("Vi är inne i if-satsen som kollar, if (user.UserWorkouts.Contains(SelectedWorkout)");
@@ -198,21 +199,29 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // KOD HÄR för att stänga detta fönster
         }
 
-        // Fritt sökfilter
+        // Sökfilter med textruta för träningstyp och kommentarer
         public void ApplySearchFilter()
         {
+            // Rensa den tillfälliga listan för träningspass
             FilteredWorkoutList.Clear();
 
+            // Gå igenom alla träningar finns i "WorkoutList"
             foreach (var workout in WorkoutList)
             {
-                if (string.IsNullOrEmpty(Filter) || workout.Type.Contains(Filter) || workout.Notes.Contains(Filter))
+                // Om textrutan för sökfilter är tomt - visa alla träningar från orignallistan
+                // Matchar sökordet - lägg endast till de matchande träningarna från originallistan
+                if (string.IsNullOrEmpty(Filter))
+                {
+                    FilteredWorkoutList.Add(workout);
+                }
+                else if (workout.Type.Contains(Filter) || workout.Notes.Contains(Filter))
                 {
                     FilteredWorkoutList.Add(workout);
                 }
             }
         }
 
-        // Försök på duration-filter
+        // Sökfilter med slider för varaktighet
         public void ApplyDurationFilter()
         {
             FilteredWorkoutList.Clear();

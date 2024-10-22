@@ -21,6 +21,7 @@
         <Button Content="Edit Workout" Command="{Binding EditWorkoutCommand}"/>
         <Button Content="Cancel Edit" Command="{Binding CancelEditCommand}"/>
         <Button Content="Save Workout" Command="{Binding SaveWorkoutCommand}"/>
+        <Button Content="Copy Workout" Command="{Binding CopyWorkoutCommand}"/>
 
     </StackPanel>
 </Window>
