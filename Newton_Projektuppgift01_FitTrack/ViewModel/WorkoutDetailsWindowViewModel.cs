@@ -96,19 +96,34 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public void SaveWorkout()
         {
             // Hitta index för originalet av träningen som ändras
-            int indexUser = User.UserWorkouts.IndexOf(Workout);
+            int indexCurrentUser = Manager.Instance.CurrentUser.UserWorkouts.IndexOf(Workout);
             int indexManager = Manager.Instance.AllWorkouts.IndexOf(Workout);
 
-            if (indexUser >= 0 && indexManager >= 0)
+            if (User is User && indexCurrentUser >= 0 && indexManager >= 0)
             {
-                // Ersätt originalet med den redigerade träningen
-                User.UserWorkouts[indexUser] = WorkoutEditable;
+                // Ersätt originalet med uppdaterad träning för den inloggade användaren
+                Manager.Instance.CurrentUser.UserWorkouts[indexCurrentUser] = WorkoutEditable;
+
+                // Ersätt också originalet i admins lista av alla träningar
+                Manager.Instance.AllWorkouts[indexManager] = WorkoutEditable;
+            }
+            else if (User is AdminUser)
+            {
+                foreach (User user in Manager.Instance.AllUsers)
+                {
+                    if (user.UserWorkouts.Contains(Workout))
+                    {
+                        int indexUser = user.UserWorkouts.IndexOf(Workout);
+                        user.UserWorkouts[indexUser] = WorkoutEditable;
+                    }
+                }
+
                 Manager.Instance.AllWorkouts[indexManager] = WorkoutEditable;
             }
             else
             {
                 // Annars lägg till träning
-                User.UserWorkouts.Add(WorkoutEditable);
+                Manager.Instance.CurrentUser.UserWorkouts.Add(WorkoutEditable);
                 Manager.Instance.AllWorkouts.Add(WorkoutEditable);
             }
 
