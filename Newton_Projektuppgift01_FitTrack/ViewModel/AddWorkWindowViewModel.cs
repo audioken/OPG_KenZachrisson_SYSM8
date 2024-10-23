@@ -149,24 +149,24 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 // Kolla också så det finns en kommentar
                 if (!string.IsNullOrEmpty(NotesInput))
                 {
+                    // Deklarer variabel som träningen ska instansieras från
+                    Workout workout = null;
+
                     // Kolla sen vad det är för typ av träning för att instansiera rätt träningsklass
                     if (WorkoutTypeComboBox == "Strength Workout")
                     {
-                        // Skapar en ny styrketräning
-                        Workout strengthWorkout = new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0);
-
-                        // Lägger den nya styrketräningen i användarens och managers lista
-                        Manager.Instance.CurrentUser.UserWorkouts.Add(strengthWorkout);
+                        // Instansierar ny styrketräning
+                        workout = new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0);
 
                     }
                     else if (WorkoutTypeComboBox == "Cardio Workout")
                     {
-                        // Skapar en ny konditionsträning
-                        Workout cardioWorkout = new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0);
-
-                        // Lägger den nya konditionsträningen i användarens och managers lista
-                        Manager.Instance.CurrentUser.UserWorkouts.Add(cardioWorkout);
+                        // Instansierar ny konditionsträning
+                        workout = new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0);
                     }
+
+                    // Lägg till träningen i användarens träningslista
+                    Manager.Instance.CurrentUser.UserWorkouts.Add(workout);
 
                     MessageBox.Show($"Du har lagt till följande träning:\n{FullDateTime} {WorkoutTypeComboBox} {DurationInput} {CaloriesBurnedInput} {NotesInput}");
 
@@ -212,6 +212,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             OnPropertyChanged(nameof(NotesInput));
         }
 
+        // Gå tillbaka till tidigare fönster
         public void Cancel()
         {
             // Öppna WorkoutWindow
@@ -221,6 +222,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             _addWorkoutWindow.Close();
         }
 
+        // Öppnar WorkoutWindow
         public void OpenWorkoutWindow()
         {
             WorkoutWindow workoutWindow = new WorkoutWindow();

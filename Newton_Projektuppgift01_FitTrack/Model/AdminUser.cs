@@ -1,4 +1,6 @@
-﻿namespace Newton_Projektuppgift01_FitTrack.Model
+﻿using System.Collections.ObjectModel;
+
+namespace Newton_Projektuppgift01_FitTrack.Model
 {
     public class AdminUser : User
     {
@@ -7,8 +9,19 @@
         }
 
         // Möjliggör hantering av användares träningspass
-        public void ManageAllWorkouts()
+        public ObservableCollection<Workout> ManageAllWorkouts()
         {
+            ObservableCollection<Workout> WorkoutList = new ObservableCollection<Workout>();
+
+            foreach (User user in Manager.Instance.AllUsers)
+            {
+                foreach (Workout workout in user.UserWorkouts)
+                {
+                    WorkoutList.Add(workout);
+                }
+            }
+
+            return WorkoutList;
         }
     }
 }

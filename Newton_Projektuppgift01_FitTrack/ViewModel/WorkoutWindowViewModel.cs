@@ -75,11 +75,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             if (User is AdminUser admin)
             {
                 // Hämta alla användares träningspass
-                GetAllWorkouts();
+                WorkoutList = admin.ManageAllWorkouts();
             }
             else
             {
-                // Visa endast användarens egna träningspass
+                // Hämta endast användarens egna träningspass
                 WorkoutList = User.UserWorkouts;
             }
 
@@ -91,20 +91,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // METODER ↓
-        // Hämta alla användares träningspass
-        public void GetAllWorkouts()
-        {
-            WorkoutList = new ObservableCollection<Workout>();
-
-            foreach (User user in Manager.Instance.AllUsers)
-            {
-                foreach (Workout workout in user.UserWorkouts)
-                {
-                    WorkoutList.Add(workout);
-                }
-            }
-        }
-
         // Öppnar fönster för att kunna lägga till ett träningspass
         public void AddWorkout()
         {
