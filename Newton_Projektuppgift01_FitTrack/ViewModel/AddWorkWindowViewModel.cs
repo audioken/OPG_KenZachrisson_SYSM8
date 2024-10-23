@@ -157,7 +157,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
                         // Lägger den nya styrketräningen i användarens och managers lista
                         Manager.Instance.CurrentUser.UserWorkouts.Add(strengthWorkout);
-                        Manager.Instance.AllWorkouts.Add(strengthWorkout);
 
                     }
                     else if (WorkoutTypeComboBox == "Cardio Workout")
@@ -167,7 +166,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
                         // Lägger den nya konditionsträningen i användarens och managers lista
                         Manager.Instance.CurrentUser.UserWorkouts.Add(cardioWorkout);
-                        Manager.Instance.AllWorkouts.Add(cardioWorkout);
                     }
 
                     MessageBox.Show($"Du har lagt till följande träning:\n{FullDateTime} {WorkoutTypeComboBox} {DurationInput} {CaloriesBurnedInput} {NotesInput}");
@@ -179,7 +177,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     _addWorkoutWindow.Close();
 
                     // Oklart om man behöver använda dessa uppdateringar
-                    OnPropertyChanged(nameof(Manager.Instance.AllWorkouts));
                     OnPropertyChanged(nameof(Manager.Instance.CurrentUser.UserWorkouts));
                 }
                 else { MessageBox.Show("Du måste skriva en kommentar.."); }

@@ -116,6 +116,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             _userDetailsWindow.Close();
         }
 
+        // Öppnar WorkoutWindow
         public void OpenWorkoutWindow()
         {
             WorkoutWindow workoutWindow = new WorkoutWindow();

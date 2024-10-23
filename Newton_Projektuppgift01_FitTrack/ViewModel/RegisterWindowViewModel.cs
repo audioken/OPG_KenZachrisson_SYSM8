@@ -8,6 +8,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     public class RegisterWindowViewModel : ViewModelBase
     {
         // EGENSKAPER ↓
+        public Window _registerWindow { get; set; }
+
         // Spårar information vid registrering av nytt användarkonto
         public string UsernameInput { get; set; }
         public string PasswordInput { get; set; }
@@ -36,7 +38,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Relay-kommando som anropar metoden "RegisterNewUser" vid klick
         public RelayCommand RegisterNewUserCommand => new RelayCommand(execute => RegisterNewUser());
 
-        public Window _registerWindow { get; set; }
 
         // KONSTRUKTOR ↓
         public RegisterWindowViewModel(Window _registerWindow)
@@ -104,13 +105,12 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                                 User newUser = new User(UsernameInput, PasswordInput, CountryComboBox, SelectedSecurityQuestion, SecurityAnswerInput);
 
                                 // Lägg till ny användare i listan för alla användare
-                                Manager.Instance.AllUsers.Add(newUser);
+                                Manager.Instance.AddUser(newUser);
 
                                 MessageBox.Show($"Tack {UsernameInput}! Din användarprofil har skapats. Var god logga in..");
 
                                 // Öppna MainWindow
-                                MainWindow mainWindow = new MainWindow(); // Kanske ska instansieras någon annanstans?
-                                mainWindow.Show();
+                                OpenMainWindow();
 
                                 // Stäng RegisterWindow
                                 _registerWindow.Close();
@@ -124,6 +124,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 else { MessageBox.Show("Användarnamnet måste ha minst tre tecken!"); }
             }
             else { MessageBox.Show("Du måste fylla i all information!"); }
+        }
+
+        // Öppnar MainWindow
+        public void OpenMainWindow()
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
         }
     }
 }

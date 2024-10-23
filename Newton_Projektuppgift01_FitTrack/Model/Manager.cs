@@ -14,8 +14,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         public static Manager Instance => _instance ??= new Manager();
 
         // Deklarerar listor som lagrar alla användare och träningar
-        public ObservableCollection<User> AllUsers { get; private set; } = new ObservableCollection<User>(); // Readonly
-        public ObservableCollection<Workout> AllWorkouts { get; private set; } = new ObservableCollection<Workout>(); // Readonly
+        public ObservableCollection<User> AllUsers { get; private set; } // Readonly
 
         // Håller koll på inloggad användare
         public User CurrentUser { get; set; }
@@ -27,7 +26,12 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         {
             // Startanvändare redan inlagda för testning
             user = new User("user", "password", "Sweden", "What's your favourite pet?", "Fido");
-            admin = new AdminUser("admin", "password", "Sweden"); // BEHÖVER FIXAS SÅ MAN KAN VARA ADMIN
+            admin = new AdminUser("admin", "password", "Sweden");
+
+            AllUsers = new ObservableCollection<User>();
+
+            AddUser(user);
+            AddUser(admin);
 
             // Parametrar för förinlagda exempelträningar
             DateTime dateTime = DateTime.Now;
@@ -37,14 +41,14 @@ namespace Newton_Projektuppgift01_FitTrack.Model
             Workout userWorkout1 = new StrengthWorkout(dateTime, "Strength Workout", timeSpan, 200, "Tynglyftning", 5);
             Workout userWorkout2 = new CardioWorkout(dateTime, "Cardio Workout", timeSpan, 300, "Running", 5000);
 
-            // Lägger till träningarna i managerklassens lista över alla träningar
-            AllWorkouts = new ObservableCollection<Workout> { userWorkout1, userWorkout2 };
-
             // Lägger till träningarna i användarens träningslista
-            user.UserWorkouts = new ObservableCollection<Workout> { userWorkout1, userWorkout2 };
+            user.UserWorkouts.Add(userWorkout1);
+            user.UserWorkouts.Add(userWorkout2);
+        }
 
-            // Instansierar lista för alla användare samt lägger till de två test-användarna
-            AllUsers = new ObservableCollection<User> { user, admin };
+        public void AddUser(User user)
+        {
+            AllUsers.Add(user);
         }
     }
 }

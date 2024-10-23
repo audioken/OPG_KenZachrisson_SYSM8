@@ -10,20 +10,25 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         public string SecurityQuestion { get; set; }
         private string SecurityAnswer { get; set; }
 
-        public ObservableCollection<Workout> UserWorkouts { get; set; } = new ObservableCollection<Workout>();
+        public ObservableCollection<Workout> UserWorkouts { get; set; }
 
         // KONSTRUKTOR ↓
+        // Anropas vid inloggning
         public User(string Username, string Password, string Country) : base(Username, Password)
         {
             this.Country = Country;
+
+            UserWorkouts = new ObservableCollection<Workout>();
         }
 
-        // Anropas när all information om användaren ska med
+        // Anropas vid användarregistrering
         public User(string Username, string Password, string Country, string SecurityQuestion, string SecurityAnswer) : base(Username, Password)
         {
             this.Country = Country;
             this.SecurityQuestion = SecurityQuestion;
             this.SecurityAnswer = SecurityAnswer;
+
+            UserWorkouts = new ObservableCollection<Workout>();
         }
 
         // METODER ↓
@@ -34,7 +39,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         }
 
         // Återställ lösenordet för användaren
-        public void ResetPassword(string securityAnswer)         // OBS OTESTAD KOD
+        public void ResetPassword(string securityAnswer)
         {
             if (SecurityAnswer != null)
             {

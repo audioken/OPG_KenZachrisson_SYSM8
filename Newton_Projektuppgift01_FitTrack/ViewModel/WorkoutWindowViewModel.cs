@@ -74,8 +74,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // Visa träningspassen efter användare
             if (User is AdminUser admin)
             {
-                // Visa alla träningspass om admin är inloggad
-                WorkoutList = Manager.Instance.AllWorkouts;
+                // Hämta alla användares träningspass
+                GetAllWorkouts();
             }
             else
             {
@@ -86,12 +86,25 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // Sätter startvärdet för slidern så alla pass visas
             DurationFilter = 240;
 
+            // Uppdatera vyn
             ApplySearchFilter();
-            //ApplyDurationFilter();
-
         }
 
         // METODER ↓
+        // Hämta alla användares träningspass
+        public void GetAllWorkouts()
+        {
+            WorkoutList = new ObservableCollection<Workout>();
+
+            foreach (User user in Manager.Instance.AllUsers)
+            {
+                foreach (Workout workout in user.UserWorkouts)
+                {
+                    WorkoutList.Add(workout);
+                }
+            }
+        }
+
         // Öppnar fönster för att kunna lägga till ett träningspass
         public void AddWorkout()
         {
@@ -110,20 +123,19 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 // Uppdatera alla användares träningslistor som innehåller detta träningspass
                 foreach (var user in Manager.Instance.AllUsers)
                 {
-                    // Ta bort träningspass från listan som har alla träningar
-                    Manager.Instance.AllWorkouts.Remove(SelectedWorkout);
-
                     // Ta bort träningspass från användarens lista av träningspass
                     if (user.UserWorkouts.Contains(SelectedWorkout))
                     {
                         user.UserWorkouts.Remove(SelectedWorkout);
+                        WorkoutList.Remove(SelectedWorkout);
+
                         OnPropertyChanged(nameof(user.UserWorkouts));
 
                         // Kör filtret för att uppdatera vyn
                         ApplySearchFilter();
 
-                        // TEST
-                        MessageBox.Show("Vi är inne i if-satsen som kollar, if (user.UserWorkouts.Contains(SelectedWorkout)");
+                        // Behöver inte iterera igenom fler användare
+                        break;
                     }
                 }
 
@@ -189,7 +201,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // Rensa den tillfälliga listan för träningspass
             FilteredWorkoutList.Clear();
 
-            // Gå igenom alla träningar finns i "WorkoutList"
+            // Gå igenom alla träningar som finns i "WorkoutList"
             foreach (var workout in WorkoutList)
             {
                 // Om textrutan för sökfilter är tomt - visa alla träningar från orignallistan
@@ -219,24 +231,22 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Öppnar olika fönster
         public void OpenUserDetailsWindow()
         {
             UserDetailsWindow userDetailsWindow = new UserDetailsWindow();
             userDetailsWindow.Show();
         }
-
         public void OpenWorkoutDetailsWindow()
         {
             WorkoutDetailsWindow workoutDetailsWindow = new WorkoutDetailsWindow();
             workoutDetailsWindow.Show();
         }
-
         public void OpenMainWindow()
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
         }
-
         public void OpenAddWorkoutWindow()
         {
             AddWorkoutWindow addWorkoutWindow = new AddWorkoutWindow();

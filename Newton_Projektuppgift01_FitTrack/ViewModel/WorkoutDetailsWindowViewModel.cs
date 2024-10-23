@@ -96,35 +96,37 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public void SaveWorkout()
         {
             // Hitta index för originalet av träningen som ändras
-            int indexCurrentUser = Manager.Instance.CurrentUser.UserWorkouts.IndexOf(Workout);
-            int indexManager = Manager.Instance.AllWorkouts.IndexOf(Workout);
+            int indexOfWorkout = Manager.Instance.CurrentUser.UserWorkouts.IndexOf(Workout);
 
-            if (User is User && indexCurrentUser >= 0 && indexManager >= 0)
+            // Kontrollera så det är en användare som är inloggad samt att index finns
+            if (User is User && indexOfWorkout >= 0)
             {
                 // Ersätt originalet med uppdaterad träning för den inloggade användaren
-                Manager.Instance.CurrentUser.UserWorkouts[indexCurrentUser] = WorkoutEditable;
-
-                // Ersätt också originalet i admins lista av alla träningar
-                Manager.Instance.AllWorkouts[indexManager] = WorkoutEditable;
+                Manager.Instance.CurrentUser.UserWorkouts[indexOfWorkout] = WorkoutEditable;
             }
+            // Kontrollera om det är en Admin som är inloggad
             else if (User is AdminUser)
             {
+                // Kolla igenom alla användare i listan AllUsers
                 foreach (User user in Manager.Instance.AllUsers)
                 {
+                    // Om en användare har den aktuella träningen som ska uppdateras
                     if (user.UserWorkouts.Contains(Workout))
                     {
+                        // Kolla dess index
                         int indexUser = user.UserWorkouts.IndexOf(Workout);
+
+                        // Ersätt med den redigerade klonen
                         user.UserWorkouts[indexUser] = WorkoutEditable;
+
+                        break;
                     }
                 }
-
-                Manager.Instance.AllWorkouts[indexManager] = WorkoutEditable;
             }
             else
             {
                 // Annars lägg till träning
                 Manager.Instance.CurrentUser.UserWorkouts.Add(WorkoutEditable);
-                Manager.Instance.AllWorkouts.Add(WorkoutEditable);
             }
 
             // Tror inte denna behövs?
@@ -161,7 +163,5 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             WorkoutWindow workoutWindow = new WorkoutWindow();
             workoutWindow.Show();
         }
-
-
     }
 }

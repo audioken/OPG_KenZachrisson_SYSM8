@@ -12,7 +12,7 @@
         <Label Content="{Binding User.Username}"/>
         <Button Content="User Details" Command="{Binding UserDetailsCommand}"/>
         <Button Content="Add Workout" Command="{Binding AddWorkoutCommand}"/>
-        <TextBox Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" IsEnabled="false"/>
+        <TextBox Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"/>
         <Slider Value="{Binding DurationFilter, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="240"/>
         <Label Content="{Binding DurationFilter}"/>
 
