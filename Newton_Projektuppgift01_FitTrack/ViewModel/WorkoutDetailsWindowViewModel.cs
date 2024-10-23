@@ -20,13 +20,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public Workout WorkoutEditable { get; set; }
 
         // Kontroll för om DataGrid går att redigera eller ej
-        private bool isEditDataGridEnabled;
-        public bool IsEditDataGridEnabled
+        private bool isDataGridReadOnly;
+        public bool IsDataGridReadOnly
         {
-            get { return isEditDataGridEnabled; }
+            get { return isDataGridReadOnly; }
             set
             {
-                isEditDataGridEnabled = value;
+                isDataGridReadOnly = value;
                 OnPropertyChanged();
             }
         }
@@ -61,6 +61,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // Referens till den valda träningen
             Workout = Manager.Instance.CurrentWorkout;
 
+            // Gör en beräkning av brända kalorier med den valda träningens metod
+            Workout.CaloriesBurned = Workout.CalculateCaloriesBurned();
+
             // Klonar träning som backup för återställning vid klick på cancel
             WorkoutEditable = Workout.Clone();
 
@@ -68,7 +71,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             WorkoutList = new ObservableCollection<Workout> { WorkoutEditable };
 
             // Avaktiverar DataGrid för att initiellt förhindra redigering
-            IsEditDataGridEnabled = false;
+            IsDataGridReadOnly = true;
         }
 
         // METODER ↓
@@ -76,7 +79,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public void EditWorkout()
         {
             // Aktiverar redigering av DataGrid som visar Workout
-            IsEditDataGridEnabled = true;
+            IsDataGridReadOnly = false;
         }
 
         // Avbryter redigering och återställer värdena
@@ -89,7 +92,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             WorkoutList = new ObservableCollection<Workout> { WorkoutEditable };
 
             // Stänger av möjligheten att redigera träning i DataGrid
-            IsEditDataGridEnabled = false;
+            IsDataGridReadOnly = true;
         }
 
         // Sparar ändringar
@@ -133,7 +136,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             Manager.Instance.CurrentWorkout = WorkoutEditable;
 
             // Avvaktivera möjlighet till redigering i DataGrid
-            IsEditDataGridEnabled = false;
+            IsDataGridReadOnly = true;
 
             // Öppna WorkoutWindow
             OpenWorkoutWindow();

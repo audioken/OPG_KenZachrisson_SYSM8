@@ -18,6 +18,7 @@
 
         <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding CountryComboBox}"/>
         <Button Content="Register" Command="{Binding RegisterNewUserCommand}"/>
+        <Button Content="Cancel" Command="{Binding CancelCommand}"/>
         
     </StackPanel>
 </Window>

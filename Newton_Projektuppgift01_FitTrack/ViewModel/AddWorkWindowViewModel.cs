@@ -56,7 +56,19 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Type
-        public string WorkoutTypeComboBox { get; set; }
+        //public string WorkoutTypeComboBox { get; set; }
+
+        private string workoutTypeComboBox;
+        public string WorkoutTypeComboBox
+        {
+            get { return workoutTypeComboBox; }
+            set
+            {
+                workoutTypeComboBox = value;
+                OnPropertyChanged();
+                UpdateVisibility();
+            }
+        }
 
         // Duration
         private TimeSpan durationInput;
@@ -94,8 +106,66 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Distance
+        private string distanceVisibility;
+        public string DistanceVisibility
+        {
+            get { return distanceVisibility; }
+            set
+            {
+                distanceVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int distanceInput;
+        public int DistanceInput
+        {
+            get { return distanceInput; }
+            set
+            {
+                distanceInput = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        // Repetition
+        private string repetitionVisibility;
+        public string RepetitionVisibility
+        {
+            get { return repetitionVisibility; }
+            set
+            {
+                repetitionVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int repetitionInput;
+        public int RepetitionInput
+        {
+            get { return repetitionInput; }
+            set
+            {
+                repetitionInput = value;
+                OnPropertyChanged();
+            }
+        }
+
         // CaloriesBurned
         public int CaloriesBurnedInput { get; set; }
+
+        private int calculateCaloriesBurned;
+        public int CalculateCaloriesBurned
+        {
+            get { return calculateCaloriesBurned; }
+            set
+            {
+                calculateCaloriesBurned = value;
+                OnPropertyChanged();
+            }
+        }
 
         // Notes
         public string NotesInput { get; set; }
@@ -137,6 +207,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             SelectedDurationMinutes = 30;
             CaloriesBurnedInput = 200;
             NotesInput = "Weightlifting";
+            RepetitionInput = 0;
+            DistanceInput = 0;
         }
 
         // METODER ↓
@@ -156,13 +228,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     if (WorkoutTypeComboBox == "Strength Workout")
                     {
                         // Instansierar ny styrketräning
-                        workout = new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0);
+                        workout = new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, RepetitionInput);
 
                     }
                     else if (WorkoutTypeComboBox == "Cardio Workout")
                     {
                         // Instansierar ny konditionsträning
-                        workout = new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, 0);
+                        workout = new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, DistanceInput);
                     }
 
                     // Lägg till träningen i användarens träningslista
@@ -210,6 +282,20 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
             NotesInput = Manager.Instance.CopiedWorkout.Notes;
             OnPropertyChanged(nameof(NotesInput));
+        }
+
+        private void UpdateVisibility()
+        {
+            if (WorkoutTypeComboBox == "Cardio Workout")
+            {
+                DistanceVisibility = "Visible";
+                RepetitionVisibility = "Collapsed";
+            }
+            else if (WorkoutTypeComboBox == "Strength Workout")
+            {
+                DistanceVisibility = "Collapsed";
+                RepetitionVisibility = "Visible";
+            }
         }
 
         // Gå tillbaka till tidigare fönster

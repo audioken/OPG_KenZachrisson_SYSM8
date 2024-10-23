@@ -37,6 +37,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
         // Relay-kommando som anropar metoden "RegisterNewUser" vid klick
         public RelayCommand RegisterNewUserCommand => new RelayCommand(execute => RegisterNewUser());
+        public RelayCommand CancelCommand => new RelayCommand(execute => Cancel());
 
 
         // KONSTRUKTOR ↓
@@ -124,6 +125,15 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 else { MessageBox.Show("Användarnamnet måste ha minst tre tecken!"); }
             }
             else { MessageBox.Show("Du måste fylla i all information!"); }
+        }
+
+        public void Cancel()
+        {
+            // Öppna MainWindow
+            OpenMainWindow();
+
+            // Stäng RegisterWindow
+            _registerWindow.Close();
         }
 
         // Öppnar MainWindow

@@ -16,7 +16,7 @@
         <Slider Value="{Binding DurationFilter, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="240"/>
         <Label Content="{Binding DurationFilter}"/>
 
-        <DataGrid ItemsSource="{Binding FilteredWorkoutList}" SelectedItem="{Binding SelectedWorkout}" AutoGenerateColumns="False">
+        <DataGrid ItemsSource="{Binding FilteredWorkoutList}" SelectedItem="{Binding SelectedWorkout}" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
                 <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
