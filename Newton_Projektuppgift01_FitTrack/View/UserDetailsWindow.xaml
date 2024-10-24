@@ -11,9 +11,9 @@
 
         <TextBox Text="{Binding NewUsernameInput}"/>
         <TextBox Text="{Binding NewPasswordInput}"/>
-
-        <!-- För VG -->
         <TextBox Text="{Binding ConfirmNewPasswordInput}"/>
+        <ComboBox ItemsSource="{Binding SecurityQuestions}" SelectedItem="{Binding SelectedSecurityQuestion}"/>
+        <TextBox Text="{Binding SecurityAnswerInput}"/>
 
         <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding CountryComboBox}"/>
         <Button Content="Save" Command="{Binding SaveUserDetailsCommand}"/>

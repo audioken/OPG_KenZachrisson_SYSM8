@@ -9,18 +9,29 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     public class UserDetailsWindowViewModel : ViewModelBase
     {
         // EGENSKAPER ↓
-
         public Window _userDetailsWindow { get; set; }
 
         // Spårar information vid registrering av nytt användarkonto
-        public string NewUsernameInput { get; set; } = Manager.Instance.CurrentUser.Username;
-        public string NewPasswordInput { get; set; } = Manager.Instance.CurrentUser.Password;
-        public string ConfirmNewPasswordInput { get; set; } = Manager.Instance.CurrentUser.Password;
+        public string NewUsernameInput { get; set; }
+        public string NewPasswordInput { get; set; }
+        public string ConfirmNewPasswordInput { get; set; }
+        private string selectedSecurityQuestion;
+        public string SelectedSecurityQuestion
+        {
+            get { return selectedSecurityQuestion; }
+            set
+            {
+                selectedSecurityQuestion = value;
+                OnPropertyChanged();
+            }
+        }
+        public string SecurityAnswerInput { get; set; }
+        public string CountryComboBox { get; set; }
 
-        // Spårar användarens valda land från "Countries" för lagring i användarkonto
-        public string CountryComboBox { get; set; } = Manager.Instance.CurrentUser.Country;
+        // Lagrar alla säkerhetsfrågor
+        public ObservableCollection<string> SecurityQuestions { get; set; }
 
-        // Lista där användaren väljer land och som speglas i ComboBox
+        // Lagrar alla möjliga landsval
         public ObservableCollection<string> Countries { get; set; }
 
         // Relay-kommando som anropar metoden "RegisterNewUser" vid klick
@@ -32,13 +43,30 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             _userDetailsWindow = userDetailsWindow;
 
-            // Initierar "Countries" med en lista av länder
+            // Förifylld information för att underlätta
+            NewUsernameInput = Manager.Instance.CurrentUser.Username;
+            NewPasswordInput = Manager.Instance.CurrentUser.Password;
+            ConfirmNewPasswordInput = Manager.Instance.CurrentUser.Password;
+            SelectedSecurityQuestion = Manager.Instance.CurrentUser.SecurityQuestion;
+            SecurityAnswerInput = Manager.Instance.CurrentUser.SecurityAnswer;
+            CountryComboBox = Manager.Instance.CurrentUser.Country;
+
+            // Instansierar och tilldelar listan med länder
             Countries = new ObservableCollection<string>
             {
                 "Sweden",
                 "Denmark",
                 "Norway",
                 "Finland"
+            };
+
+            // Instansierar och tilldelar listan med säkerhetsfrågor
+            SecurityQuestions = new ObservableCollection<string>
+            {
+                "The name of your favourite pet?",
+                "What was the name of your first car?",
+                "What was the name of your childhood best friend?",
+                "What city were your mother born in?"
             };
         }
 
@@ -47,7 +75,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             // Kontrollerar så alla inputs har inmatning
             if (!string.IsNullOrEmpty(NewUsernameInput) && !string.IsNullOrEmpty(NewPasswordInput) &&
-                !string.IsNullOrEmpty(ConfirmNewPasswordInput) && !string.IsNullOrEmpty(CountryComboBox))
+                !string.IsNullOrEmpty(ConfirmNewPasswordInput) && !string.IsNullOrEmpty(CountryComboBox) &&
+                !string.IsNullOrEmpty(SelectedSecurityQuestion) && !string.IsNullOrEmpty(SecurityAnswerInput))
             {
                 if (NewUsernameInput.Length >= 3)
                 {
@@ -87,6 +116,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                                 Manager.Instance.CurrentUser.Username = NewUsernameInput;
                                 Manager.Instance.CurrentUser.Password = NewPasswordInput;
                                 Manager.Instance.CurrentUser.Country = CountryComboBox;
+                                Manager.Instance.CurrentUser.SecurityQuestion = SelectedSecurityQuestion;
+                                Manager.Instance.CurrentUser.SecurityAnswer = SecurityAnswerInput;
 
                                 MessageBox.Show($"Tack {NewUsernameInput}! Din användarprofil har uppdaterats..");
 

@@ -14,13 +14,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public string UsernameInput { get; set; }
         public string PasswordInput { get; set; }
         public string ConfirmPasswordInput { get; set; }
-        public string SecurityAnswerInput { get; set; }
-
-        // Spårar användarens valda land från "Countries" för lagring i användarkonto
-        public string CountryComboBox { get; set; }
-
-        // Lista där användaren väljer land och som speglas i ComboBox
-        public ObservableCollection<string> Countries { get; set; }
 
         public ObservableCollection<string> SecurityQuestions { get; set; }
 
@@ -34,6 +27,16 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        public string SecurityAnswerInput { get; set; }
+
+        // Spårar användarens valda land från "Countries" för lagring i användarkonto
+        public string CountryComboBox { get; set; }
+
+        // Lista där användaren väljer land och som speglas i ComboBox
+        public ObservableCollection<string> Countries { get; set; }
+
+
 
         // Relay-kommando som anropar metoden "RegisterNewUser" vid klick
         public RelayCommand RegisterNewUserCommand => new RelayCommand(execute => RegisterNewUser());

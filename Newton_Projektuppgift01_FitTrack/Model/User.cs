@@ -8,7 +8,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         // EGENSKAPER ↓
         public string Country { get; set; }
         public string SecurityQuestion { get; set; }
-        private string SecurityAnswer { get; set; }
+        public string SecurityAnswer { get; set; }
 
         public ObservableCollection<Workout> UserWorkouts { get; set; }
 
