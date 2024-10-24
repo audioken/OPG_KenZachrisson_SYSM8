@@ -4,26 +4,65 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack"
+        xmlns:UserControls="clr-namespace:Newton_Projektuppgift01_FitTrack.View.UserControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    
-    <!-- Enkel meny under testning -->
-    <StackPanel>
+        Title="MainWindow" Height="500" Width="400">
+
+    <Grid>
         
-        <Label Content="{Binding LabelTitle}"/>
-        <TextBox Text="{Binding UsernameInput}"/>
-        <TextBox Text="{Binding PasswordInput}"/>
-        <TextBox Text="{Binding TwoFAInput}"/>
-        <Button Content="Send 2FA-code via E-mail" Command="{Binding SendTwoFACommand}"/>
-        <Label Content="{Binding SecurityQuestion, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SecurityQuestionVisibility}"/>
-        <TextBox Text="{Binding SecurityAnswerInput}" Visibility="{Binding SecurityAnswerVisibility}"/>
-        <Button Height="20" Content="Sign in" Command="{Binding SignInCommand}"/>
-        <Button Height="20" Content="Register" Command="{Binding RegisterCommand}"/>
-        
-        <!-- För VG -->
-        <Button Height="20" Content="Forgot Password" Command="{Binding ForgotPasswordCommand}"/>
-        <Button Height="20" Content="Generate New Password" Command="{Binding GenerateNewPasswordCommand}" Visibility="{Binding GenerateNewPasswordVisibility}"/>
-        
-    </StackPanel>
-    
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle Grid.Row="0" Fill="Crimson"/>
+
+        <Label Grid.Row="1" Content="Fit" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
+               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,120,0"/>
+        <Label Grid.Row="1" Content="Track" FontSize="50" FontWeight="UltraBlack"  Foreground="Crimson" 
+               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="65,0,0,0"/>
+
+        <StackPanel Grid.Row="2">
+
+            <Label Content="Sign in or create a new account.." FontSize="20" HorizontalAlignment="Center" Foreground="Crimson"/>
+
+            <TextBox Text="{Binding UsernameInput}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="30" 
+                     VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
+
+            <TextBox Text="{Binding PasswordInput}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="30" 
+                     VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
+
+            <Button Content="Forgot Password?" Command="{Binding ForgotPasswordCommand}" BorderThickness="0" Background="Transparent"
+                    Height="20" Width="100" Margin="100,0,0,0" Foreground="Crimson"/>
+
+            <Label Content="{Binding SecurityQuestion, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SecurityQuestionVisibility}"/>
+            <TextBox Text="{Binding SecurityAnswerInput}" Visibility="{Binding SecurityAnswerVisibility}"/>
+
+            <TextBox Text="{Binding TwoFAInput}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="30" 
+                     VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
+
+            <Button Content="Send 2FA-code via SMS" Command="{Binding SendTwoFACommand}" BorderThickness="0" Background="Transparent"
+                    Height="20" Width="140" Margin="70,0,0,0" Foreground="Crimson"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
+                <Button Content="Sign in" Command="{Binding SignInCommand}" Background="Transparent" BorderBrush="Crimson"
+                Foreground="Crimson" Width="70" Height="35" FontSize="16"/>
+                <Label Content="or" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0" Foreground="Crimson"/>
+                <Button Content="Create New Account" Command="{Binding RegisterCommand}" Background="Transparent" BorderBrush="Crimson"
+                Foreground="Crimson" Width="160" Height="35" FontSize="16"/>
+            </StackPanel>
+            
+            <Button Height="20" Content="Generate New Password" Command="{Binding GenerateNewPasswordCommand}" Visibility="{Binding GenerateNewPasswordVisibility}"/>
+
+        </StackPanel>
+
+        <Rectangle Grid.Row="3" Fill="Crimson"/>
+
+    </Grid>
+
 </Window>

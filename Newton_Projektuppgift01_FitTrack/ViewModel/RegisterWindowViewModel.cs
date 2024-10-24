@@ -36,8 +36,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Lista där användaren väljer land och som speglas i ComboBox
         public ObservableCollection<string> Countries { get; set; }
 
-
-
         // Relay-kommando som anropar metoden "RegisterNewUser" vid klick
         public RelayCommand RegisterNewUserCommand => new RelayCommand(execute => RegisterNewUser());
         public RelayCommand CancelCommand => new RelayCommand(execute => Cancel());
