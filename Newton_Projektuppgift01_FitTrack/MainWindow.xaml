@@ -8,8 +8,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="400">
 
+    <!-- START -->
     <Grid>
         
+        <!-- Definig grid rows -->
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
             <RowDefinition Height="100"/>
@@ -17,52 +19,99 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
+        <!-- Colored Header -->
         <Rectangle Grid.Row="0" Fill="Crimson"/>
 
+        <!-- Logo -->
         <Label Grid.Row="1" Content="Fit" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,120,0"/>
         <Label Grid.Row="1" Content="Track" FontSize="50" FontWeight="UltraBlack"  Foreground="Crimson" 
                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="65,0,0,0"/>
 
+        <!-- Main View -->
         <StackPanel Grid.Row="2">
 
-            <Label Content="Sign in or create a new account.." FontSize="20" HorizontalAlignment="Center" Foreground="Crimson"/>
+            <!-- Instructions -->
+            <Label Content="Sign in or create a new account.." FontSize="20" HorizontalAlignment="Center" Foreground="Crimson" Margin="0,0,0,30"/>
 
-            <TextBox Text="{Binding UsernameInput}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="30" 
-                     VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <!-- Username Input -->
+            <Grid>
+                <Label Content="Username.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
+                       Visibility="{Binding PHUsernameVisibility}"/>
+
+                <TextBox Text="{Binding UsernameInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
+                     VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5"/>
+            </Grid>
+            
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
 
-            <TextBox Text="{Binding PasswordInput}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="30" 
-                     VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <!-- Password Input -->
+            <Grid>
+                <Label Content="Password.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
+                       Visibility="{Binding PHPasswordVisibility}"/>
+                
+                <TextBox Text="{Binding PasswordInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5"/>
+            </Grid>
+            
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
 
+
+            <!-- Forgot Password Button -->
             <Button Content="Forgot Password?" Command="{Binding ForgotPasswordCommand}" BorderThickness="0" Background="Transparent"
                     Height="20" Width="100" Margin="100,0,0,0" Foreground="Crimson"/>
 
-            <Label Content="{Binding SecurityQuestion, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SecurityQuestionVisibility}"/>
-            <TextBox Text="{Binding SecurityAnswerInput}" Visibility="{Binding SecurityAnswerVisibility}"/>
+            <!-- Security Question and Answer -->
+            <Label Content="{Binding SecurityQuestion, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SecurityVisibility}" 
+                   Height="35" Width="200" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Crimson" FontSize="16"/>
+            <TextBox Text="{Binding SecurityAnswerInput, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SecurityVisibility}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5"/>
+            <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200" Visibility="{Binding SecurityVisibility}"/>
 
-            <TextBox Text="{Binding TwoFAInput}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="30" 
-                     VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-            <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
+            <!-- Generate New Password Button -->
+            <Button Content="Generate New Password" Command="{Binding GenerateNewPasswordCommand}" Visibility="{Binding GenerateNewPasswordVisibility}"
+                    Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" Width="200" Height="35" FontSize="16" Margin="0,10,0,0"/>
 
-            <Button Content="Send 2FA-code via SMS" Command="{Binding SendTwoFACommand}" BorderThickness="0" Background="Transparent"
-                    Height="20" Width="140" Margin="70,0,0,0" Foreground="Crimson"/>
+            <Button Content="Cancel" Command="{Binding CancelNewPasswordCommand}" Visibility="{Binding CancelNewPasswordVisibility}"
+                    Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" Width="200" Height="35" FontSize="16" Margin="0,10,0,0"/>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
-                <Button Content="Sign in" Command="{Binding SignInCommand}" Background="Transparent" BorderBrush="Crimson"
-                Foreground="Crimson" Width="70" Height="35" FontSize="16"/>
-                <Label Content="or" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0" Foreground="Crimson"/>
-                <Button Content="Create New Account" Command="{Binding RegisterCommand}" Background="Transparent" BorderBrush="Crimson"
-                Foreground="Crimson" Width="160" Height="35" FontSize="16"/>
-            </StackPanel>
+            <!-- 2FA Input -->
+            <Grid>
+                <Label Content="2FA.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
+                       Visibility="{Binding PHTwoFAVisibility}"/>
+
+                <TextBox Text="{Binding TwoFAInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
+                     VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Visibility="{Binding TwoFAVisibility}" Padding="5"/>
+            </Grid>
             
-            <Button Height="20" Content="Generate New Password" Command="{Binding GenerateNewPasswordCommand}" Visibility="{Binding GenerateNewPasswordVisibility}"/>
+
+            <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"  Visibility="{Binding TwoFAVisibility}"/>
+
+            <!-- Send 2FA Button -->
+            <Button Content="Send 2FA-code via SMS" Command="{Binding SendTwoFACommand}" BorderThickness="0" Background="Transparent"
+                    Height="20" Width="140" Margin="70,0,0,0" Foreground="Crimson" Visibility="{Binding TwoFAVisibility}"/>
+
+            <!-- Horizontal view for Sign In and Create New Account Button -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
+
+                <!-- Sign In Button -->
+                <Button Content="Sign in" Command="{Binding SignInCommand}" Visibility="{Binding SignInVisibility}" Background="Transparent" BorderBrush="Crimson"
+                Foreground="Crimson" Width="70" Height="35" FontSize="16"/>
+
+                <Label Content="or" Visibility="{Binding SignInVisibility}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0" Foreground="Crimson"/>
+
+                <!-- Create New Account Button -->
+                <Button Content="Create New Account" Command="{Binding RegisterCommand}" Visibility="{Binding SignInVisibility}" Background="Transparent" BorderBrush="Crimson"
+                Foreground="Crimson" Width="160" Height="35" FontSize="16"/>
+
+            </StackPanel>
 
         </StackPanel>
 
+        <!-- Colored Footer -->
         <Rectangle Grid.Row="3" Fill="Crimson"/>
 
     </Grid>
+    <!-- END -->
 
 </Window>

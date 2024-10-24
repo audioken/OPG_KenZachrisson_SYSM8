@@ -12,10 +12,70 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public string LabelTitle { get; set; } = "FitTrack";
 
         // Spårar inloggningsuppgifter för kontroll
-        public string UsernameInput { get; set; } = "user"; // Tillfälligt för att logga in snabbare
-        public string PasswordInput { get; set; } = "password"; // Tillfälligt för att logga in snabbare
-        public string TwoFAInput { get; set; } = "123456";
-        public string TwoFACode { get; set; } = "123456";
+        //public string UsernameInput { get; set; }
+
+        private string usernameInput;
+        public string UsernameInput
+        {
+            get { return usernameInput; }
+            set
+            {
+                usernameInput = value;
+                OnPropertyChanged();
+
+                if (string.IsNullOrEmpty(UsernameInput))
+                {
+                    PHUsernameVisibility = "Visible";
+                }
+                else
+                {
+                    PHUsernameVisibility = "Collapsed";
+                }
+            }
+        }
+
+        private string passwordInput;
+        public string PasswordInput
+        {
+            get { return passwordInput; }
+            set
+            {
+                passwordInput = value;
+                OnPropertyChanged();
+
+                if (string.IsNullOrEmpty(PasswordInput))
+                {
+                    PHPasswordVisibility = "Visible";
+                }
+                else
+                {
+                    PHPasswordVisibility = "Collapsed";
+                }
+            }
+        }
+
+        private string twoFAInput;
+        public string TwoFAInput
+        {
+            get { return twoFAInput; }
+            set
+            {
+                twoFAInput = value;
+                OnPropertyChanged();
+
+                if (string.IsNullOrEmpty(TwoFAInput))
+                {
+                    PHTwoFAVisibility = "Visible";
+                }
+                else
+                {
+                    PHTwoFAVisibility = "Collapsed";
+                }
+            }
+        }
+
+        public string TwoFACode { get; set; }
+
         private string securityQuestion;
         public string SecurityQuestion
         {
@@ -26,26 +86,37 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 OnPropertyChanged();
             }
         }
-        public string SecurityAnswerInput { get; set; }
 
-        // Visas när användaren klickar på knappen "Forgot Password"
-        private string securityQuestionVisibility;
-        public string SecurityQuestionVisibility
+        private string securityAnswerInput;
+        public string SecurityAnswerInput
         {
-            get { return securityQuestionVisibility; }
+            get { return securityAnswerInput; }
             set
             {
-                securityQuestionVisibility = value;
+                securityAnswerInput = value;
                 OnPropertyChanged();
+
+                if (string.IsNullOrEmpty(securityAnswerInput))
+                {
+                    GenerateNewPasswordVisibility = "Collapsed";
+                    CancelNewPasswordVisibility = "Visible";
+                }
+                else
+                {
+                    GenerateNewPasswordVisibility = "Visible";
+                    CancelNewPasswordVisibility = "Collapsed";
+                }
             }
         }
-        private string securityAnswerVisibility;
-        public string SecurityAnswerVisibility
+
+        // Visas när användaren klickar på knappen "Forgot Password"
+        private string securityVisibility;
+        public string SecurityVisibility
         {
-            get { return securityAnswerVisibility; }
+            get { return securityVisibility; }
             set
             {
-                securityAnswerVisibility = value;
+                securityVisibility = value;
                 OnPropertyChanged();
             }
         }
@@ -62,20 +133,94 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Dölj medan användaren försöker återställa lösenordet
+        private string twoFAVisibility;
+        public string TwoFAVisibility
+        {
+            get { return twoFAVisibility; }
+            set
+            {
+                twoFAVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string pHUsernameVisibility;
+        public string PHUsernameVisibility
+        {
+            get { return pHUsernameVisibility; }
+            set
+            {
+                pHUsernameVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string pHPasswordVisibility;
+        public string PHPasswordVisibility
+        {
+            get { return pHPasswordVisibility; }
+            set
+            {
+                pHPasswordVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string pHTwoFAVisibility;
+        public string PHTwoFAVisibility
+        {
+            get { return pHTwoFAVisibility; }
+            set
+            {
+                pHTwoFAVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string signInVisibility;
+        public string SignInVisibility
+        {
+            get { return signInVisibility; }
+            set
+            {
+                signInVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string cancelNewPasswordVisibility;
+        public string CancelNewPasswordVisibility
+        {
+            get { return cancelNewPasswordVisibility; }
+            set
+            {
+                cancelNewPasswordVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         // Relay-kommand som anropar olika metoder för inloggning och registrering vid klick
         public RelayCommand SignInCommand => new RelayCommand(execute => SignIn());
         public RelayCommand RegisterCommand => new RelayCommand(execute => Register());
         public RelayCommand ForgotPasswordCommand => new RelayCommand(execute => ForgotPassword());
         public RelayCommand GenerateNewPasswordCommand => new RelayCommand(execute => GenerateNewPassword());
         public RelayCommand SendTwoFACommand => new RelayCommand(execute => SendTwoFA());
+        public RelayCommand CancelNewPasswordCommand => new RelayCommand(execute => Cancel());
 
         // KONSTRUKTOR ↓
         public MainWindowViewModel()
         {
+            // Tillfälligt för snabbare inlogg vid testning
+            UsernameInput = "";
+            PasswordInput = "";
+            TwoFAInput = "";
+            TwoFACode = "123456";
+
             // Döljer label, knapp och textbox som dyker upp först när användaren klickar på Forgot Password
-            SecurityQuestionVisibility = "Collapsed";
-            SecurityAnswerVisibility = "Collapsed";
+            SecurityVisibility = "Collapsed";
             GenerateNewPasswordVisibility = "Collapsed";
+            CancelNewPasswordVisibility = "Collapsed";
         }
 
         // METODER ↓
@@ -145,6 +290,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Möjliggör återställning av lösenord
         public void ForgotPassword()
         {
+            bool didUsernameExist = false;
+
             // Kolla så text är inmatad för användarnamn
             if (!string.IsNullOrEmpty(UsernameInput))
             {
@@ -158,14 +305,21 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                         SecurityQuestion = user.SecurityQuestion;
 
                         // Visa knapp och textbox som behövs för återställning av lösenord
-                        SecurityQuestionVisibility = "Visible";
-                        SecurityAnswerVisibility = "Visible";
-                        GenerateNewPasswordVisibility = "Visible";
+                        SecurityVisibility = "Visible";
+                        TwoFAVisibility = "Collapsed";
+                        PHTwoFAVisibility = "Collapsed";
+                        SignInVisibility = "Collapsed";
+                        CancelNewPasswordVisibility = "Visible";
 
                         // Se till att det är rätt användares profil som ändras
                         Manager.Instance.CurrentUser = user;
+
+                        didUsernameExist = true;
+
+                        break;
                     }
                 }
+                if (!didUsernameExist) { MessageBox.Show("Användarnamnet finns tyvärr inte!"); }
             }
             else { MessageBox.Show("Du måste skriva in ett giltigt användarnamn!"); }
         }
@@ -174,7 +328,29 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public void GenerateNewPassword()
         {
             // Skickar användarens svar på säkerhetsfrågan till metoden för återställning i User-objektet
-            Manager.Instance.CurrentUser.ResetPassword(SecurityAnswerInput);
+            bool isPasswordChanged = Manager.Instance.CurrentUser.ResetPassword(SecurityAnswerInput);
+
+            if (isPasswordChanged)
+            {
+                SecurityAnswerInput = "";
+                TwoFAInput = "";
+
+                TwoFAVisibility = "Visible";
+                PHTwoFAVisibility = "Visible";
+                SecurityVisibility = "Collapsed";
+                GenerateNewPasswordVisibility = "Collapsed";
+                SignInVisibility = "Visible";
+                CancelNewPasswordVisibility = "Collapsed";
+            }
+            //else
+            //{
+            //    TwoFAVisibility = "Collapsed";
+            //    PHTwoFAVisibility = "Collapsed";
+            //    SecurityVisibility = "Visible";
+            //    GenerateNewPasswordVisibility = "Visible";
+            //    SignInVisibility = "Collapsed";
+            //    CancelNewPasswordVisibility = "Visible";
+            //}
         }
 
         // Generera en slumpad 2FA-kod som lagras för att kontrollera så att användarens inmatade kod är korrekt
@@ -187,6 +363,25 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             TwoFACode = random.Next(100000, 1000000).ToString();
 
             MessageBox.Show($"Din 2FA-kod är {TwoFACode}");
+        }
+
+        public void Cancel()
+        {
+            TwoFAVisibility = "Visible";
+
+            if (string.IsNullOrEmpty(TwoFAInput))
+            {
+                PHTwoFAVisibility = "Visible";
+            }
+            else
+            {
+                PHTwoFAVisibility = "Collapsed";
+            }
+
+            SecurityVisibility = "Collapsed";
+            GenerateNewPasswordVisibility = "Collapsed";
+            SignInVisibility = "Visible";
+            CancelNewPasswordVisibility = "Collapsed";
         }
     }
 }
