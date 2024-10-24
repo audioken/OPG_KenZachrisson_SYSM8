@@ -9,7 +9,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     public class AddWorkWindowViewModel : ViewModelBase
     {
         // EGENSKAPER ↓
-
         public Window _addWorkoutWindow { get; set; }
 
         // Håller koll på inloggad användare
@@ -56,8 +55,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Type
-        //public string WorkoutTypeComboBox { get; set; }
-
         private string workoutTypeComboBox;
         public string WorkoutTypeComboBox
         {
@@ -128,7 +125,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 OnPropertyChanged();
             }
         }
-
 
         // Repetition
         private string repetitionVisibility;
@@ -277,6 +273,18 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             SelectedDurationMinutes = Manager.Instance.CopiedWorkout.Duration.Minutes;
             OnPropertyChanged(nameof(SelectedDurationMinutes));
 
+            // Kontrollera vilken träningstyp som är kopierad för att tilldela rätt extravärde
+            if (Manager.Instance.CopiedWorkout is StrengthWorkout copiedStrengthWorkout)
+            {
+                RepetitionInput = copiedStrengthWorkout.Repetition;
+                OnPropertyChanged(nameof(RepetitionInput));
+            }
+            else if (Manager.Instance.CopiedWorkout is CardioWorkout copiedCardioWorkout)
+            {
+                DistanceInput = copiedCardioWorkout.Distance;
+                OnPropertyChanged(nameof(DistanceInput));
+            }
+
             CaloriesBurnedInput = Manager.Instance.CopiedWorkout.CaloriesBurned;
             OnPropertyChanged(nameof(CaloriesBurnedInput));
 
@@ -284,6 +292,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             OnPropertyChanged(nameof(NotesInput));
         }
 
+        // Kontrollerar vilken knapp och vilken inputruta som syns beroende på träningstyp
         private void UpdateVisibility()
         {
             if (WorkoutTypeComboBox == "Cardio Workout")
