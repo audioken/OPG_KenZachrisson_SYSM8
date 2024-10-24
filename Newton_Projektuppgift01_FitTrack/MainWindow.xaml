@@ -15,7 +15,7 @@
         <TextBox Text="{Binding PasswordInput}"/>
         <TextBox Text="{Binding TwoFAInput}"/>
         <Button Content="Send 2FA-code via E-mail" Command="{Binding SendTwoFACommand}"/>
-        <!--<Label Content="{Binding User.SecurityQuestion}"/>-->
+        <Label Content="{Binding SecurityQuestion, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SecurityQuestionVisibility}"/>
         <TextBox Text="{Binding SecurityAnswerInput}" Visibility="{Binding SecurityAnswerVisibility}"/>
         <Button Height="20" Content="Sign in" Command="{Binding SignInCommand}"/>
         <Button Height="20" Content="Register" Command="{Binding RegisterCommand}"/>

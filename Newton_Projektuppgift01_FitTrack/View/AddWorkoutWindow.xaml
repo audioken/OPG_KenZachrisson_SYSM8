@@ -19,7 +19,7 @@
         <ComboBox ItemsSource="{Binding DurationHours}" SelectedItem="{Binding SelectedDurationHours}"/>
         <ComboBox ItemsSource="{Binding DurationMinutes}" SelectedItem="{Binding SelectedDurationMinutes}"/>
 
-        <TextBox Text="{Binding CalculateCaloriesBurned, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Text="{Binding CalculateCaloriesBurned, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
         
         <TextBox Text="{Binding DistanceInput, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding DistanceVisibility}"/>
         <TextBox Text="{Binding RepetitionInput, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding RepetitionVisibility}"/>

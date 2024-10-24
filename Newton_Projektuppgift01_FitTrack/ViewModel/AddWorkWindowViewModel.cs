@@ -149,7 +149,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // CaloriesBurned
+        // CaloriesBurned (Funderar på att skippa denna helt för inmatning eftersom kalorier räknas ut när man kollar detaljer)
         public int CaloriesBurnedInput { get; set; }
 
         private int calculateCaloriesBurned;
@@ -201,7 +201,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             WorkoutTypeComboBox = "Strength Workout";
             SelectedDurationHours = 1;
             SelectedDurationMinutes = 30;
-            CaloriesBurnedInput = 200;
+            CaloriesBurnedInput = 0;
             NotesInput = "Weightlifting";
             RepetitionInput = 0;
             DistanceInput = 0;

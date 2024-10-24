@@ -16,9 +16,29 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public string PasswordInput { get; set; } = "password"; // Tillfälligt för att logga in snabbare
         public string TwoFAInput { get; set; } = "123456";
         public string TwoFACode { get; set; } = "123456";
+        private string securityQuestion;
+        public string SecurityQuestion
+        {
+            get { return securityQuestion; }
+            set
+            {
+                securityQuestion = value;
+                OnPropertyChanged();
+            }
+        }
         public string SecurityAnswerInput { get; set; }
 
         // Visas när användaren klickar på knappen "Forgot Password"
+        private string securityQuestionVisibility;
+        public string SecurityQuestionVisibility
+        {
+            get { return securityQuestionVisibility; }
+            set
+            {
+                securityQuestionVisibility = value;
+                OnPropertyChanged();
+            }
+        }
         private string securityAnswerVisibility;
         public string SecurityAnswerVisibility
         {
@@ -52,7 +72,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // KONSTRUKTOR ↓
         public MainWindowViewModel()
         {
-            // Döljer knapp och textbox som dyker upp först när användaren klickar på Forgot Password
+            // Döljer label, knapp och textbox som dyker upp först när användaren klickar på Forgot Password
+            SecurityQuestionVisibility = "Collapsed";
             SecurityAnswerVisibility = "Collapsed";
             GenerateNewPasswordVisibility = "Collapsed";
         }
@@ -133,7 +154,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     // Kontrollerar så det matchar en användarprofil
                     if (UsernameInput == user.Username)
                     {
+                        // Hämta användarens säkerhetsfråga
+                        SecurityQuestion = user.SecurityQuestion;
+
                         // Visa knapp och textbox som behövs för återställning av lösenord
+                        SecurityQuestionVisibility = "Visible";
                         SecurityAnswerVisibility = "Visible";
                         GenerateNewPasswordVisibility = "Visible";
 
