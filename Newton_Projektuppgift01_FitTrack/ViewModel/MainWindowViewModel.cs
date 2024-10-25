@@ -212,9 +212,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public MainWindowViewModel()
         {
             // Tillfälligt för snabbare inlogg vid testning
-            UsernameInput = "";
-            PasswordInput = "";
-            TwoFAInput = "";
+            UsernameInput = "user";
+            PasswordInput = "password";
+            TwoFAInput = "123456";
             TwoFACode = "123456";
 
             // Döljer label, knapp och textbox som dyker upp först när användaren klickar på Forgot Password

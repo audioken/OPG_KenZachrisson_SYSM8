@@ -31,13 +31,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public Workout Workout { get; set; }
         public Workout SelectedWorkout { get; set; }
 
-        private string filter;
-        public string Filter
+        private string searchFilter;
+        public string SearchFilter
         {
-            get { return filter; }
+            get { return searchFilter; }
             set
             {
-                filter = value;
+                searchFilter = value;
                 OnPropertyChanged();
                 ApplySearchFilter();
             }
@@ -192,11 +192,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             {
                 // Om textrutan för sökfilter är tomt - visa alla träningar från orignallistan
                 // Matchar sökordet - lägg endast till de matchande träningarna från originallistan
-                if (string.IsNullOrEmpty(Filter))
+                if (string.IsNullOrEmpty(SearchFilter))
                 {
                     FilteredWorkoutList.Add(workout);
                 }
-                else if (workout.Type.Contains(Filter) || workout.Notes.Contains(Filter))
+                else if (workout.Type.Contains(SearchFilter) || workout.Notes.Contains(SearchFilter))
                 {
                     FilteredWorkoutList.Add(workout);
                 }

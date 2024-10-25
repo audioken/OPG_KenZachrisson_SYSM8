@@ -32,7 +32,8 @@
         <StackPanel Grid.Row="2">
 
             <!-- Instructions -->
-            <Label Content="Sign in or create a new account.." FontSize="20" HorizontalAlignment="Center" Foreground="Crimson" Margin="0,0,0,30"/>
+            <Label Content="Sign in or create a new account.." FontSize="20" Width="400" Foreground="Crimson" Margin="0,0,0,30"
+                   HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
 
             <!-- Username Input -->
             <Grid>
@@ -55,7 +56,6 @@
             </Grid>
             
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
-
 
             <!-- Forgot Password Button -->
             <Button Content="Forgot Password?" Command="{Binding ForgotPasswordCommand}" BorderThickness="0" Background="Transparent"

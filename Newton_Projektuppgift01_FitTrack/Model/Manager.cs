@@ -38,12 +38,16 @@ namespace Newton_Projektuppgift01_FitTrack.Model
             TimeSpan timeSpan = TimeSpan.FromMinutes(30);
 
             // Förinlagda träningar för profilen "user"
-            Workout userWorkout1 = new StrengthWorkout(dateTime, "Strength Workout", timeSpan, 200, "Tynglyftning", 20);
-            Workout userWorkout2 = new CardioWorkout(dateTime, "Cardio Workout", timeSpan, 300, "Running", 10);
+            Workout w1 = new StrengthWorkout(dateTime, "Strength Workout", timeSpan, 200, "Tynglyftning", 20);
+            Workout w2 = new CardioWorkout(dateTime, "Cardio Workout", timeSpan, 300, "Row", 12);
+            Workout w3 = new CardioWorkout(dateTime, "Cardio Workout", timeSpan, 300, "Marathon", 42);
+            Workout w4 = new CardioWorkout(dateTime, "Cardio Workout", timeSpan, 300, "Running", 10);
 
             // Lägger till träningarna i användarens träningslista
-            user.UserWorkouts.Add(userWorkout1);
-            user.UserWorkouts.Add(userWorkout2);
+            user.UserWorkouts.Add(w1);
+            user.UserWorkouts.Add(w2);
+            user.UserWorkouts.Add(w3);
+            user.UserWorkouts.Add(w4);
         }
 
         public void AddUser(User user)
