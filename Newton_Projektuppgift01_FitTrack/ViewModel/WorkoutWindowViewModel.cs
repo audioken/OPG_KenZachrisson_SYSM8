@@ -40,6 +40,15 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 searchFilter = value;
                 OnPropertyChanged();
                 ApplySearchFilter();
+
+                if (string.IsNullOrEmpty(searchFilter))
+                {
+                    PHSearchVisibility = "Visible";
+                }
+                else
+                {
+                    PHSearchVisibility = "Collapsed";
+                }
             }
         }
 
@@ -54,6 +63,20 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 ApplyDurationFilter();
             }
         }
+
+        private string pHSearchVisibility;
+        public string PHSearchVisibility
+        {
+            get { return pHSearchVisibility; }
+            set
+            {
+                pHSearchVisibility = value;
+                OnPropertyChanged();
+
+
+            }
+        }
+
 
         // Relay-kommando som öppnar olika fönster vid klick
         public RelayCommand UserDetailsCommand => new RelayCommand(execute => OpenUserDetails());
@@ -84,7 +107,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
 
             // Sätter startvärdet för slidern så alla pass visas
-            DurationFilter = 240;
+            DurationFilter = 0;
 
             // Uppdatera vyn
             ApplySearchFilter();
@@ -210,7 +233,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
             foreach (var workout in WorkoutList)
             {
-                if (workout.Duration.TotalMinutes < DurationFilter)
+                if (workout.Duration.TotalMinutes >= DurationFilter)
                 {
                     FilteredWorkoutList.Add(workout);
                 }

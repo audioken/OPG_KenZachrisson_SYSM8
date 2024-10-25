@@ -13,7 +13,7 @@
         <!-- Definig grid rows -->
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="100"/>
             <RowDefinition/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
@@ -21,54 +21,76 @@
         <!-- Colored Header -->
         <Rectangle Grid.Row="0" Fill="Crimson"/>
 
-        <Label Grid.Row="1" Content="Your Workouts" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
-               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Height="60" VerticalAlignment="Top" Margin="0,0,0,0">
+
+            <Label Content="Signed in as: " Width="75" Height="30" VerticalAlignment="Top" Foreground="Crimson" Margin="0,0,0,0"/>
+
+            <!-- Keep track of who is logged in -->
+            <Label Content="{Binding User.Username}" Width="auto" Height="25" VerticalAlignment="Top" Foreground="PaleGreen"/>
+
+            <!-- User Details Button -->
+            <Button Content="User Profile" Command="{Binding UserDetailsCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
+                Width="75" Height="25" VerticalAlignment="Top"/>
+            <Button Content="Info" Command="{Binding AppInfoCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
+                Width="35" Height="25" Margin="10,0,0,0" VerticalAlignment="Top"/>
+            <!-- Sign Out Button -->
+            <Button Content="Sign Out" Command="{Binding SignOutCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
+                Width="60" Height="25" Margin="10,0,0,0" VerticalAlignment="Top"/>
+
+            <!-- App Info Button -->
+
+        </StackPanel>
+
+
+        <Label Grid.Row="1" Content="your workouts.." FontSize="40" FontWeight="UltraLight"  Foreground="Crimson" 
+               HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,60,0"/>
 
         <!-- Main Layout -->
         <StackPanel Grid.Row="2">
 
-            <Grid>
-                <!-- Keep track of who is logged in -->
-                <Label Content="{Binding User.Username}" Width="100"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,0">
 
-                <!-- User Details Button -->
-                <Button Content="User Profile" Command="{Binding UserDetailsCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
-                Width="100" Height="25" FontSize="16" Margin="200,0,0,0"/>
+                <Label Content="Duration: " Width="58" Height="29" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"
+                       Foreground="Crimson" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="250,0,0,-16" Padding="-5"/>
 
-            </Grid>
+                <Label Content="{Binding DurationFilter}" Width="auto" Height="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"
+                       Foreground="Crimson" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,-16" Padding="-5"/>
 
+                <Label Content="min" Width="26" Height="29" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"
+                       Foreground="Crimson" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5,0,0,-15" Padding="0"/>
 
+            </StackPanel>
 
             <!-- Filters -->
             <Grid>
                 <!-- Search Filter -->
                 <Label Content="Search.." Foreground="LightGray" Width="100" Height="28" FontSize="16" VerticalContentAlignment="Top" 
-                        HorizontalAlignment="Center" Margin="3,0,250,3" 
+                        HorizontalAlignment="Center" Margin="3,0,230,3" 
                     Visibility="{Binding PHSearchVisibility}"/>
-                <TextBox Text="{Binding SearchFilter, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="100" Height="auto" 
-                    VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Margin="0,0,250,0" HorizontalAlignment="Center"/>
+                <TextBox Text="{Binding SearchFilter, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="150" Height="auto" 
+                    VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Margin="0,0,180,0" HorizontalAlignment="Center"/>
 
                 <!-- Duration Filter -->
-                <Label Content="{Binding DurationFilter}" Width="35" Height="29" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"
-                       Foreground="Crimson" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="320,2,0,0"/>
-                <Slider Value="{Binding DurationFilter, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="180" Width="70" 
-                            VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="210,0,0,2"/>
+
+                <Slider Value="{Binding DurationFilter, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="180" Width="150" 
+                            VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="190,0,0,-3"/>
             </Grid>
 
-            <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" HorizontalAlignment="Center" Width="100" Margin="0,-5,250,10"/>
+            <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" HorizontalAlignment="Center" Width="150" Margin="0,0,180,10"/>
 
             <!-- List of Workouts -->
             <DataGrid ItemsSource="{Binding FilteredWorkoutList}" SelectedItem="{Binding SelectedWorkout}" AutoGenerateColumns="False" IsReadOnly="True"
-                  Width="350" BorderThickness="0" Background="Crimson" CanUserResizeRows="False" CanUserResizeColumns="False">
+                  Width="350" BorderThickness="0" Background="Crimson" CanUserResizeRows="False" CanUserResizeColumns="False" FontWeight="UltraLight"
+                      Foreground="Black" FontSize="15">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="4*"/>
-                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="3*"/>
-                    <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" Width="3*"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:yy/MM/dd HH:mm}}" Width="4*" Foreground="Crimson"/>
+                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="4*" Foreground="Crimson"/>
+                    <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" Width="2*" Foreground="Crimson"/>
                 </DataGrid.Columns>
             </DataGrid>
 
             <Grid>
-                
+
                 <!-- Add Workout Button -->
                 <Button Content="Add" Command="{Binding AddWorkoutCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
                 Width="25" Height="20" BorderThickness="0" Margin="0,0,310,0" VerticalAlignment="Top"/>
@@ -82,17 +104,11 @@
                 Width="90" Height="20" BorderThickness="0" Margin="250,0,0,0"/>
 
             </Grid>
-                     
-            <!-- App Info Button -->
-            <Button Content="Info" Command="{Binding AppInfoCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
-                Width="200" Height="35" FontSize="16" Margin="0,10,0,0"/>
 
-            <!-- Sign Out Button -->
-            <Button Content="Sign Out" Command="{Binding SignOutCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
-                Width="200" Height="35" FontSize="16" Margin="0,10,0,0"/>
+
 
         </StackPanel>
-        
+
         <!-- Colored Footer -->
         <Rectangle Grid.Row="3" Fill="Crimson"/>
 
