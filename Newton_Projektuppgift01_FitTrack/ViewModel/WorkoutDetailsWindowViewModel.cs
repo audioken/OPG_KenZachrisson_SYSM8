@@ -31,6 +31,28 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        private Visibility distanceVisibility;
+        public Visibility DistanceVisibility
+        {
+            get { return distanceVisibility; }
+            set
+            {
+                distanceVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility repetitionVisibility;
+        public Visibility RepetitionVisibility
+        {
+            get { return repetitionVisibility; }
+            set
+            {
+                repetitionVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         // Tillfällig lista för att möjliggöra visning av träning i DataGrid
         private ObservableCollection<Workout> workoutList;
         public ObservableCollection<Workout> WorkoutList
@@ -61,6 +83,17 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // Referens till den valda träningen
             Workout = Manager.Instance.CurrentWorkout;
 
+            if (Workout is StrengthWorkout)
+            {
+                DistanceVisibility = Visibility.Collapsed;
+                RepetitionVisibility = Visibility.Visible;
+            }
+            else if (Workout is CardioWorkout)
+            {
+                DistanceVisibility = Visibility.Visible;
+                RepetitionVisibility = Visibility.Collapsed;
+            }
+
             // Gör en beräkning av brända kalorier med den valda träningens metod
             Workout.CaloriesBurned = Workout.CalculateCaloriesBurned();
 
@@ -72,6 +105,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
             // Avaktiverar DataGrid för att initiellt förhindra redigering
             IsDataGridReadOnly = true;
+
+
+
         }
 
         // METODER ↓

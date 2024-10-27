@@ -5,28 +5,76 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View"
         mc:Ignorable="d"
-        Title="WorkoutDetailsWindow" Height="450" Width="800">
+        Title="WorkoutDetailsWindow" Height="500" Width="400">
+
+    <Grid>
+
+        <!-- Definig grid rows -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="160"/>
+            <RowDefinition/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <!-- Colored Header -->
+        <Rectangle Grid.Row="0" Fill="Crimson"/>
+
+        <Label Grid.Row="1" Content="Edit Workout" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
+               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0"/>
+        <!-- Instructions -->
+        <Label Grid.Row="1" Content="Press Edit to modify you workout.." FontSize="20" Width="400" Foreground="Crimson" Margin="0,0,0,0"
+                   HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+
+        <StackPanel Grid.Row="2" Margin="0,20,0,0">
+
+            <DataGrid ItemsSource="{Binding WorkoutList}" AutoGenerateColumns="False" IsReadOnly="{Binding IsDataGridReadOnly}"
+                  Width="340" BorderThickness="0" Background="Crimson" CanUserResizeRows="False" CanUserResizeColumns="False" 
+                  FontWeight="UltraLight" Foreground="Black" FontSize="15" Padding="2" GridLinesVisibility="None">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:yy/MM/dd HH:mm}}" Foreground="Crimson"/>
+                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" IsReadOnly="True" Foreground="Crimson"/>
+                    <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" Foreground="Crimson"/>
+                    <DataGridTextColumn Header="Distance" Binding="{Binding Distance, UpdateSourceTrigger=PropertyChanged}" Foreground="Crimson"/>
+                    <DataGridTextColumn Header="Reps" Binding="{Binding Repetition, UpdateSourceTrigger=PropertyChanged}" Foreground="Crimson"/>
+                    <DataGridTextColumn Header="Calories Burned" Binding="{Binding CaloriesBurned, UpdateSourceTrigger=PropertyChanged}" Foreground="Crimson"/>
+                    <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" Foreground="Crimson"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,170,0">
+
+                <Button Content="Edit" Command="{Binding EditWorkoutCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
+                Width="50" Height="30" BorderThickness="0" FontSize="16"/>
+
+                <Button Content="Copy" Command="{Binding CopyWorkoutCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
+                Width="50" Height="30" BorderThickness="0" FontSize="16"/>
+
+                <Button Content="Restore" Command="{Binding AbortEditCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
+                Width="80" Height="30" BorderThickness="0" FontSize="16"/>
+
+
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
+
+                <Button Content="Cancel" Command="{Binding CancelCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
+                Foreground="White" Width="90" Height="35" FontSize="16" Margin="10"/>
+                
+                <Button Content="Save" Command="{Binding SaveWorkoutCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
+                Foreground="White" Width="70" Height="35" FontSize="16" Margin="10"/>
+
+            </StackPanel>
+
+
+        </StackPanel>
+
+        <Rectangle Grid.Row="3" Fill="Crimson"/>
+
+
+    </Grid>
     
-    <StackPanel>
 
-        <DataGrid ItemsSource="{Binding WorkoutList}" AutoGenerateColumns="False" IsReadOnly="{Binding IsDataGridReadOnly}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
-                <DataGridTextColumn Header="Type" Binding="{Binding Type}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
-                <DataGridTextColumn Header="Distance" Binding="{Binding Distance, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Repetition" Binding="{Binding Repetition, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Calories Burned" Binding="{Binding CaloriesBurned, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Notes" Binding="{Binding Notes}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-
-        <Button Content="Edit Workout" Command="{Binding EditWorkoutCommand}"/>
-        <Button Content="Cancel Edit" Command="{Binding AbortEditCommand}"/>
-        <Button Content="Save Workout" Command="{Binding SaveWorkoutCommand}"/>
-        <Button Content="Copy Workout" Command="{Binding CopyWorkoutCommand}"/>
-        <Button Content="Cancel" Command="{Binding CancelCommand}"/>
-
-    </StackPanel>
     
 </Window>

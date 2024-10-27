@@ -95,14 +95,14 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
 
                 <!-- Sign In Button -->
-                <Button Content="Sign in" Command="{Binding SignInCommand}" Visibility="{Binding SignInVisibility}" Background="Transparent" BorderBrush="Crimson"
-                Foreground="Crimson" Width="70" Height="35" FontSize="16"/>
+                <Button Content="Sign in" Command="{Binding SignInCommand}" Visibility="{Binding SignInVisibility}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
+                Foreground="White" Width="70" Height="35" FontSize="16"/>
 
                 <Label Content="or" Visibility="{Binding SignInVisibility}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0" Foreground="Crimson"/>
 
                 <!-- Create New Account Button -->
-                <Button Content="Create New Account" Command="{Binding RegisterCommand}" Visibility="{Binding SignInVisibility}" Background="Transparent" BorderBrush="Crimson"
-                Foreground="Crimson" Width="160" Height="35" FontSize="16"/>
+                <Button Content="Create New Account" Command="{Binding RegisterCommand}" Visibility="{Binding SignInVisibility}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
+                Foreground="White" Width="160" Height="35" FontSize="16"/>
 
             </StackPanel>
 

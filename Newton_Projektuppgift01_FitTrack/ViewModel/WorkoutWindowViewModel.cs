@@ -78,6 +78,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
 
+
+
         // Relay-kommando som öppnar olika fönster vid klick
         public RelayCommand UserDetailsCommand => new RelayCommand(execute => OpenUserDetails());
         public RelayCommand AddWorkoutCommand => new RelayCommand(execute => AddWorkout());
