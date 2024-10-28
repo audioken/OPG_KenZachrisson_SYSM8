@@ -1,0 +1,49 @@
+﻿<Window x:Class="Newton_Projektuppgift01_FitTrack.View.CompanyInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View"
+        mc:Ignorable="d"
+        Title="CompanyInfoWindow" Height="400" Width="400">
+
+    <!-- START -->
+    <Grid>
+
+        <!-- Definig grid rows -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <!-- Colored Header -->
+        <Rectangle Grid.Row="0" Fill="Crimson"/>
+
+        <!-- Logo -->
+        <Label Grid.Row="1" Content="Fit" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
+            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,120,0"/>
+        <Label Grid.Row="1" Content="Track" FontSize="50" FontWeight="UltraBlack"  Foreground="Crimson" 
+            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="65,0,0,0"/>
+
+        <StackPanel Grid.Row="2">
+            <TextBlock Text="FitTrack is a global brand with a focus on health and training. We are located in 80+ countries all over the world." 
+                   HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="16" Width="300" Margin="0,10,0,0"
+                   Foreground="Crimson" FontWeight="UltraLight"/>
+
+            <TextBlock Text="We made this app for you to easily log your trainings and calculate the calories burned. Join a global community and become a FitTracker today!" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="16" Width="300"
+                   Foreground="Crimson" FontWeight="UltraLight" Margin="0,10,0,0"/>
+
+            <Button Content="Close" Command="{Binding CloseCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
+                Foreground="White" Width="70" Height="35" FontSize="16" Margin="0,30,0,0"/>
+        </StackPanel>
+        
+
+
+        <Rectangle Grid.Row="4" Fill="Crimson"/>
+    </Grid>
+    <!-- SLUT -->
+    
+</Window>

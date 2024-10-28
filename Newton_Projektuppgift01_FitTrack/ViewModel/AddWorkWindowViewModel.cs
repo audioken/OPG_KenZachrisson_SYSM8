@@ -137,7 +137,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
         // CaloriesBurned (Funderar på att skippa denna helt för inmatning eftersom kalorier räknas ut när man kollar detaljer)
         public int CaloriesBurnedInput { get; set; }
-
         private int calculateCaloriesBurned;
         public int CalculateCaloriesBurned
         {

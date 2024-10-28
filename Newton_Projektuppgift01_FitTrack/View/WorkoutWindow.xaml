@@ -86,7 +86,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:yy/MM/dd HH:mm}}" Width="4*" Foreground="Crimson"/>
                     <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="4*" Foreground="Crimson"/>
-                    <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" Width="2*" Foreground="Crimson"/>
+                    <DataGridTextColumn Header="Dur (min)" Binding="{Binding Duration, StringFormat={}{0:mm}}" Width="3*" Foreground="Crimson"/>
                 </DataGrid.Columns>
             </DataGrid>
 

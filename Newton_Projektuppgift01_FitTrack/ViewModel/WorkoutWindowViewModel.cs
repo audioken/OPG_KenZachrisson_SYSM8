@@ -77,9 +77,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-
-
-
         // Relay-kommando som öppnar olika fönster vid klick
         public RelayCommand UserDetailsCommand => new RelayCommand(execute => OpenUserDetails());
         public RelayCommand AddWorkoutCommand => new RelayCommand(execute => AddWorkout());
@@ -193,7 +190,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Öppnar en popup med information om företaget och appen
         public void AppInfo()
         {
-            // KOD HÄR för att öppna en ny ruta eller ett fönster med företagets och appens info
+            CompanyInfoWindow companyInfoWindow = new CompanyInfoWindow();
+            companyInfoWindow.Show();
         }
 
         // Logga ut och återgå till MainWindow
