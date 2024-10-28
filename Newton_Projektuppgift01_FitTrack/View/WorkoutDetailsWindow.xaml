@@ -7,9 +7,10 @@
         mc:Ignorable="d"
         Title="WorkoutDetailsWindow" Height="600" Width="600">
 
+    <!-- START -->
     <Grid>
 
-        <!-- Definig grid rows -->
+        <!-- Ställ in antal rader -->
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
             <RowDefinition Height="200"/>
@@ -17,24 +18,28 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
-        <!-- Colored Header -->
+        <!-- Färgat sidhuvud -->
         <Rectangle Grid.Row="0" Fill="Crimson"/>
 
+        <!-- Fönstertitel -->
         <Label Grid.Row="1" Content="Edit Workout" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
-               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0"/>
-        <!-- Instructions -->
-        <Label Grid.Row="1" Content="Press Edit to modify you workout.." FontSize="20" Width="400" Foreground="Crimson" Margin="0,0,0,0"
-                   HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        
+        <!-- Instruktioner -->
+        <Label Grid.Row="1" Content="Press Edit to modify you workout.." FontSize="20" Width="400" Foreground="Crimson"
+               HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
 
+        <!-- Layout för redigering av träningsinformation -->
         <StackPanel Grid.Row="2" Margin="0,20,0,0">
 
+            <!-- Den valda träningens information -->
             <DataGrid ItemsSource="{Binding WorkoutList}" AutoGenerateColumns="False" IsReadOnly="{Binding IsDataGridReadOnly}"
                   Width="580" BorderThickness="0" Background="Crimson" CanUserResizeRows="False" CanUserResizeColumns="False" 
                   FontWeight="UltraLight" Foreground="Black" FontSize="15" Padding="2" GridLinesVisibility="None">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:yy/MM/dd HH:mm}}" Foreground="Crimson" Width="20*"/>
                     <DataGridTextColumn Header="Type" Binding="{Binding Type}" IsReadOnly="True" Foreground="Crimson" Width="25*"/>
-                    <DataGridTextColumn Header="Dur. (min)" Binding="{Binding Duration, StringFormat={}{0:mm}}" Foreground="Crimson" Width="15*"/>
+                    <DataGridTextColumn Header="Duration" Binding="{Binding Duration, StringFormat={}{0:hh\\:mm}}" Foreground="Crimson" Width="15*"/>
                     <DataGridTextColumn Header="Dis. (km)" Binding="{Binding Distance, UpdateSourceTrigger=PropertyChanged}" Foreground="Crimson" Width="15*"/>
                     <DataGridTextColumn Header="Reps" Binding="{Binding Repetition, UpdateSourceTrigger=PropertyChanged}" Foreground="Crimson" Width="10*"/>
                     <DataGridTextColumn Header="Calories" Binding="{Binding CaloriesBurned, UpdateSourceTrigger=PropertyChanged}" Foreground="Crimson" Width="15*"/>
@@ -42,37 +47,42 @@
                 </DataGrid.Columns>
             </DataGrid>
 
+            <!-- Knappar för redigering -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,170,0">
 
+                <!-- Knapp för att möjliggöra redigering -->
                 <Button Content="Edit" Command="{Binding EditWorkoutCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
                 Width="50" Height="30" BorderThickness="0" FontSize="16"/>
 
+                <!-- Knapp för att kopiera träningen -->
                 <Button Content="Copy" Command="{Binding CopyWorkoutCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
                 Width="50" Height="30" BorderThickness="0" FontSize="16"/>
 
+                <!-- Knapp för att återställa ändringar som skett i den valda träningen -->
                 <Button Content="Restore" Command="{Binding AbortEditCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
                 Width="80" Height="30" BorderThickness="0" FontSize="16"/>
 
             </StackPanel>
 
+            <!-- Save och Cancelknapp -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
 
+                <!-- Knapp för att avbryta redigering och gå tillbaka till WorkoutWindow -->
                 <Button Content="Cancel" Command="{Binding CancelCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
                 Foreground="White" Width="90" Height="35" FontSize="16" Margin="10"/>
-                
+
+                <!-- Knapp för spara ändringarna och gå tillbaka till WorkoutWindow -->
                 <Button Content="Save" Command="{Binding SaveWorkoutCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
                 Foreground="White" Width="70" Height="35" FontSize="16" Margin="10"/>
 
             </StackPanel>
 
-
         </StackPanel>
 
+        <!-- Färgad sidfot -->
         <Rectangle Grid.Row="3" Fill="Crimson"/>
 
-
     </Grid>
-    
-
+    <!-- SLUT -->
     
 </Window>

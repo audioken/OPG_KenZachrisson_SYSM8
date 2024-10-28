@@ -136,17 +136,17 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // CaloriesBurned (Funderar på att skippa denna helt för inmatning eftersom kalorier räknas ut när man kollar detaljer)
-        public int CaloriesBurnedInput { get; set; }
-        private int calculateCaloriesBurned;
-        public int CalculateCaloriesBurned
-        {
-            get { return calculateCaloriesBurned; }
-            set
-            {
-                calculateCaloriesBurned = value;
-                OnPropertyChanged();
-            }
-        }
+        //public int CaloriesBurnedInput { get; set; }
+        //private int calculateCaloriesBurned;
+        //public int CalculateCaloriesBurned
+        //{
+        //    get { return calculateCaloriesBurned; }
+        //    set
+        //    {
+        //        calculateCaloriesBurned = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         // Notes
         private string notesInput;
@@ -178,7 +178,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 OnPropertyChanged();
             }
         }
-
 
         // Listor som gör inmatningen enklare för användaren
         public ObservableCollection<string> WorkoutTypes { get; set; }
@@ -221,85 +220,89 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Spara träningspasset
         public void SaveWorkout()
         {
-            // Kolla så kalorier inte är negativt
-            if (CaloriesBurnedInput >= 0)
+            // Kolla också så det finns en kommentar
+            if (!string.IsNullOrEmpty(NotesInput))
             {
-                // Kolla också så det finns en kommentar
-                if (!string.IsNullOrEmpty(NotesInput))
+                // Deklarer variabel som träningen ska instansieras från
+                Workout workout = null;
+
+                // Kolla sen vad det är för typ av träning för att instansiera rätt träningsklass
+                if (WorkoutTypeComboBox == "Strength Workout")
                 {
-                    // Deklarer variabel som träningen ska instansieras från
-                    Workout workout = null;
+                    // Instansierar ny styrketräning
+                    workout = new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, 0, NotesInput, SelectedRepetitionSlider);
 
-                    // Kolla sen vad det är för typ av träning för att instansiera rätt träningsklass
-                    if (WorkoutTypeComboBox == "Strength Workout")
-                    {
-                        // Instansierar ny styrketräning
-                        workout = new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, 0, NotesInput, SelectedRepetitionSlider);
-
-                    }
-                    else if (WorkoutTypeComboBox == "Cardio Workout")
-                    {
-                        // Instansierar ny konditionsträning
-                        workout = new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, 0, NotesInput, SelectedDistanceSlider);
-                    }
-
-                    // Lägg till träningen i användarens träningslista
-                    Manager.Instance.CurrentUser.UserWorkouts.Add(workout);
-
-                    MessageBox.Show($"Du har lagt till följande träning:\n{FullDateTime} {WorkoutTypeComboBox} {SelectedDurationSlider} {CaloriesBurnedInput} {NotesInput}");
-
-                    // Öppna WorkoutWindow
-                    OpenWorkoutWindow();
-
-                    // Stäng AddWorkoutWindow
-                    _addWorkoutWindow.Close();
-
-                    // Oklart om man behöver använda dessa uppdateringar
-                    OnPropertyChanged(nameof(Manager.Instance.CurrentUser.UserWorkouts));
                 }
-                else { MessageBox.Show("Du måste skriva en kommentar.."); }
+                else if (WorkoutTypeComboBox == "Cardio Workout")
+                {
+                    // Instansierar ny konditionsträning
+                    workout = new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, 0, NotesInput, SelectedDistanceSlider);
+                }
+
+                // Lägg till träningen i användarens träningslista
+                Manager.Instance.CurrentUser.UserWorkouts.Add(workout);
+
+                MessageBox.Show($"Vald träningstyp: {WorkoutTypeComboBox}\nTidpunkt: {FullDateTime}\nVaraktighet: {SelectedDurationSlider} min\nÖvriga kommenterar: {NotesInput}");
+
+                // Öppna WorkoutWindow
+                OpenWorkoutWindow();
+
+                // Stäng AddWorkoutWindow
+                _addWorkoutWindow.Close();
+
+                // Oklart om man behöver använda dessa uppdateringar
+                OnPropertyChanged(nameof(Manager.Instance.CurrentUser.UserWorkouts));
             }
-            else { MessageBox.Show("Antal brända kalorier måste minst vara 0.."); }
+            else { MessageBox.Show("Du måste skriva en kommentar.."); }
         }
 
         // Infoga alla parametrar från träningspasset som kopierades i WorkoutDetailsWindow
         public void PasteWorkout()
         {
-            SelectedDate = Manager.Instance.CopiedWorkout.Date;
-            OnPropertyChanged(nameof(SelectedDate));
-
-            SelectedDateHour = Manager.Instance.CopiedWorkout.Date.Hour;
-            OnPropertyChanged(nameof(SelectedDateHour));
-
-            SelectedDateMinute = Manager.Instance.CopiedWorkout.Date.Minute;
-            OnPropertyChanged(nameof(SelectedDateMinute));
-
-            WorkoutTypeComboBox = Manager.Instance.CopiedWorkout.Type;
-            OnPropertyChanged(nameof(WorkoutTypeComboBox));
-
-            //SelectedDurationHours = Manager.Instance.CopiedWorkout.Duration.Hours;
-            //OnPropertyChanged(nameof(SelectedDurationHours));
-
-            //SelectedDurationMinutes = Manager.Instance.CopiedWorkout.Duration.Minutes;
-            //OnPropertyChanged(nameof(SelectedDurationMinutes));
-
-            // Kontrollera vilken träningstyp som är kopierad för att tilldela rätt extravärde
-            if (Manager.Instance.CopiedWorkout is StrengthWorkout copiedStrengthWorkout)
+            // Kolla så det finns en kopierad träning
+            if (Manager.Instance.CopiedWorkout != null)
             {
-                SelectedRepetitionSlider = copiedStrengthWorkout.Repetition;
-                OnPropertyChanged(nameof(SelectedRepetitionSlider));
+                // Hämta datum och tid
+                SelectedDate = Manager.Instance.CopiedWorkout.Date;
+                OnPropertyChanged(nameof(SelectedDate));
+                SelectedDateHour = Manager.Instance.CopiedWorkout.Date.Hour;
+                OnPropertyChanged(nameof(SelectedDateHour));
+                SelectedDateMinute = Manager.Instance.CopiedWorkout.Date.Minute;
+                OnPropertyChanged(nameof(SelectedDateMinute));
+
+                // Hämta träningstyp
+                WorkoutTypeComboBox = Manager.Instance.CopiedWorkout.Type;
+                OnPropertyChanged(nameof(WorkoutTypeComboBox));
+
+                // Hämta varaktighet i minuter
+                SelectedDurationSlider = ConvertTimeSpanToMinutes();
+                OnPropertyChanged(nameof(SelectedDurationSlider));
+
+                // Kontrollera vilken träningstyp som är kopierad för att tilldela rätt extravärde
+                if (Manager.Instance.CopiedWorkout is StrengthWorkout copiedStrengthWorkout)
+                {
+                    // Hämta repetitioner
+                    SelectedRepetitionSlider = copiedStrengthWorkout.Repetition;
+                    OnPropertyChanged(nameof(SelectedRepetitionSlider));
+                }
+                else if (Manager.Instance.CopiedWorkout is CardioWorkout copiedCardioWorkout)
+                {
+                    // Hämta distans
+                    SelectedDistanceSlider = copiedCardioWorkout.Distance;
+                    OnPropertyChanged(nameof(SelectedDistanceSlider));
+                }
+
+                //// Hämta 
+                //CaloriesBurnedInput = Manager.Instance.CopiedWorkout.CaloriesBurned;
+                //OnPropertyChanged(nameof(CaloriesBurnedInput));
+
+                NotesInput = Manager.Instance.CopiedWorkout.Notes;
+                OnPropertyChanged(nameof(NotesInput));
             }
-            else if (Manager.Instance.CopiedWorkout is CardioWorkout copiedCardioWorkout)
+            else
             {
-                SelectedDistanceSlider = copiedCardioWorkout.Distance;
-                OnPropertyChanged(nameof(SelectedDistanceSlider));
+                MessageBox.Show("Det finns ingen kopierad träning..");
             }
-
-            CaloriesBurnedInput = Manager.Instance.CopiedWorkout.CaloriesBurned;
-            OnPropertyChanged(nameof(CaloriesBurnedInput));
-
-            NotesInput = Manager.Instance.CopiedWorkout.Notes;
-            OnPropertyChanged(nameof(NotesInput));
         }
 
         // Kontrollerar vilken knapp och vilken inputruta som syns beroende på träningstyp
@@ -327,14 +330,20 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             _addWorkoutWindow.Close();
         }
 
+        // Konverterar konstant DurationSliders minutvärde till TimeSpan
         public int GetHours()
         {
             return SelectedDurationSlider / 60;
         }
-
         public int GetMinutes()
         {
             return SelectedDurationSlider % 60;
+        }
+
+        // Konverterar TimeSpan till minuter när man klistrar in en träning
+        public int ConvertTimeSpanToMinutes()
+        {
+            return (int)Manager.Instance.CopiedWorkout.Duration.TotalMinutes;
         }
 
         // Öppnar WorkoutWindow

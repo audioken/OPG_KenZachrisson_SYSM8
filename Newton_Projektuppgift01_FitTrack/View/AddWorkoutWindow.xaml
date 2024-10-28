@@ -10,7 +10,7 @@
     <!-- START -->
     <Grid>
 
-        <!-- Defining grid rows -->
+        <!-- Ställer in antal rader -->
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
             <RowDefinition Height="200"/>
@@ -21,14 +21,15 @@
         <!-- Färgat Sidhuvud -->
         <Rectangle Grid.Row="0" Fill="Crimson"/>
 
+        <!-- Fönstertitel -->
         <Label Grid.Row="1" Content="Add Workout" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0"/>
         
-        <!-- Instructions -->
+        <!-- Instruktioner -->
         <Label Grid.Row="1" Content="Define your workout and add it to your list.." FontSize="20" Width="400" Foreground="Crimson" Margin="0,0,0,0"
                    HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
 
-        <!-- Huvudlayout -->
+        <!-- Layout för att lägga till träning -->
         <StackPanel Grid.Row="2" Margin="0,20,0,0">
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -69,7 +70,7 @@
                     <Slider Value="{Binding SelectedDistanceSlider, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="100" Width="150" 
                             VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,18,0,0" Visibility="{Binding DistanceSliderVisibility}"/>
 
-                    <!-- Textutskrift för repetioner -->
+                    <!-- Text för repetioner -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,-10,0,0" Visibility="{Binding RepetitionSliderVisibility}">
                         <Label Content="Repetitions: " Width="70" Height="15" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"
                        Foreground="Crimson" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="30,0,0,-16" Padding="-5"/>
@@ -85,27 +86,27 @@
                     <Slider Value="{Binding SelectedRepetitionSlider, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="100" Width="150" 
                             VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,18,0,0" Visibility="{Binding RepetitionSliderVisibility}"/>
 
-            <!-- Text för varaktighet -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,-10,0,0">
-                <Label Content="Duration: " Width="58" Height="15" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"
+                    <!-- Text för varaktighet -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,-10,0,0">
+                        <Label Content="Duration: " Width="58" Height="15" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"
                        Foreground="Crimson" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="45,0,0,-16" Padding="-5"/>
 
-                <Label Content="{Binding SelectedDurationSlider}" Width="auto" Height="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"
+                        <Label Content="{Binding SelectedDurationSlider}" Width="auto" Height="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"
                        Foreground="Crimson" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,-16" Padding="-5"/>
 
-                <Label Content="min" Width="17" Height="15" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"
+                        <Label Content="min" Width="17" Height="15" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"
                        Foreground="Crimson" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5,0,0,-16" Padding="0"/>
-            </StackPanel>
+                    </StackPanel>
 
-            <!-- Slider för varaktighet -->
-            <Slider Value="{Binding SelectedDurationSlider, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="100" Width="150" 
+                    <!-- Slider för varaktighet -->
+                    <Slider Value="{Binding SelectedDurationSlider, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="100" Width="150" 
                             VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,18,0,0"/>
 
                 </StackPanel>
 
             </StackPanel>
 
-            <!-- Kommentar -->
+            <!-- Skriv in en kommentar -->
             <Grid Margin="0,10,120,0">
                 <Label Content="Notes.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
                        Visibility="{Binding PHNotesVisibility}"/>
@@ -115,7 +116,7 @@
             </Grid>
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="325"/>
 
-            <!-- Spara och avbrytknappar -->
+            <!-- Knappar för att spara, klistra in och avbryta -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
 
                 <!-- Avbryt -->
@@ -134,7 +135,7 @@
 
         </StackPanel>
 
-        <!-- Färgad Sidfot -->
+        <!-- Färgad sidfot -->
         <Rectangle Grid.Row="3" Fill="Crimson"/>
 
     </Grid>

@@ -10,7 +10,7 @@
     <!-- START -->
     <Grid>
 
-        <!-- Definerar rader -->
+        <!-- Ställer in rader -->
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
             <RowDefinition Height="200"/>
@@ -18,10 +18,10 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
-        <!-- Colored Header -->
+        <!-- Färgat sidhuvud -->
         <Rectangle Grid.Row="0" Fill="Crimson"/>
 
-        <!-- Titel -->
+        <!-- Fönstertitel -->
         <Label Grid.Row="1" Content="User Profile" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0"/>
         
@@ -29,9 +29,10 @@
         <Label Grid.Row="1" Content="Change username, password and more.." FontSize="20" Width="400" Foreground="Crimson" Margin="0,0,0,0"
                    HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
 
+        <!-- Layout för redigering av användarprofil -->
         <StackPanel Grid.Row="2" Margin="0,20,0,0">
            
-            <!-- SKriv in användarnamn -->
+            <!-- Skriv in nytt användarnamn -->
             <Grid>
                 <Label Content="New Username.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
                        Visibility="{Binding PHNewUsernameVisibility, UpdateSourceTrigger=PropertyChanged}"/>
@@ -51,7 +52,7 @@
             </Grid>
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
 
-            <!-- Bekräfta lösenord -->
+            <!-- Bekräfta nytt lösenord -->
             <Grid>
                 <Label Content="Confirm Password.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
                        Visibility="{Binding PHConfirmNewPasswordVisibility}"/>
@@ -65,7 +66,7 @@
             <ComboBox ItemsSource="{Binding SecurityQuestions}" SelectedItem="{Binding SelectedSecurityQuestion}" Width="200" FontSize="16" 
                       FontWeight="UltraLight" Foreground="Crimson" Margin="0,10,0,0"/>
 
-            <!-- Säkerhetssvar -->
+            <!-- Välj svar på vald säkerhetsfråga -->
             <Grid>
                 <Label Content="Security Answer.." Foreground="LightGray" Width="200" Height="32" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,-1" 
                        Visibility="{Binding PHSecurityAnswerVisibility}"/>
@@ -79,20 +80,21 @@
             <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding CountryComboBox}" Width="200" FontSize="16" 
                       FontWeight="UltraLight" Foreground="Crimson" Margin="0,10,0,0"/>
 
-            <!-- Spara och Cancelknapp-->
+            <!-- Spara och Cancelknapp -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
                 
-                <!-- Cancelknapp -->
+                <!-- Knapp för att avbryta och gå tillbaka -->
                 <Button Content="Cancel" Command="{Binding CancelCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
                 Foreground="White" Width="90" Height="35" FontSize="16" Margin="10"/>
 
-                <!-- Sparaknapp -->
+                <!-- Knapp för att spara ändringar -->
                 <Button Content="Save" Command="{Binding SaveUserDetailsCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
                 Foreground="White" Width="70" Height="35" FontSize="16" Margin="10"/>
             </StackPanel>
 
         </StackPanel>
 
+        <!-- Färgad sidfot -->
         <Rectangle Grid.Row="3" Fill="Crimson"/>
 
     </Grid>
