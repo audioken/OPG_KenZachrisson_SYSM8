@@ -5,20 +5,97 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View"
         mc:Ignorable="d"
-        Title="UserDetailsWindow" Height="450" Width="800">
-    
-    <StackPanel>
+        Title="UserDetailsWindow" Height="600" Width="600">
 
-        <TextBox Text="{Binding NewUsernameInput}"/>
-        <TextBox Text="{Binding NewPasswordInput}"/>
-        <TextBox Text="{Binding ConfirmNewPasswordInput}"/>
-        <ComboBox ItemsSource="{Binding SecurityQuestions}" SelectedItem="{Binding SelectedSecurityQuestion}"/>
-        <TextBox Text="{Binding SecurityAnswerInput}"/>
+    <!-- START -->
+    <Grid>
 
-        <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding CountryComboBox}"/>
-        <Button Content="Save" Command="{Binding SaveUserDetailsCommand}"/>
-        <Button Content="Cancel" Command="{Binding CancelCommand}"/>
+        <!-- Definerar rader -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
 
-    </StackPanel>
+        <!-- Colored Header -->
+        <Rectangle Grid.Row="0" Fill="Crimson"/>
+
+        <!-- Titel -->
+        <Label Grid.Row="1" Content="User Profile" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
+               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0"/>
+        
+        <!-- Instruktioner -->
+        <Label Grid.Row="1" Content="Change username, password and more.." FontSize="20" Width="400" Foreground="Crimson" Margin="0,0,0,0"
+                   HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+
+        <StackPanel Grid.Row="2" Margin="0,20,0,0">
+           
+            <!-- SKriv in användarnamn -->
+            <Grid>
+                <Label Content="New Username.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
+                       Visibility="{Binding PHNewUsernameVisibility, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBox Text="{Binding NewUsernameInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
+                     VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Foreground="Crimson" FontWeight="UltraLight"/>
+            </Grid>
+            <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
+
+            <!-- Skriv in nytt lösenord -->
+            <Grid>
+                <Label Content="New Password.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
+                       Visibility="{Binding PHNewPasswordVisibility}"/>
+
+                <TextBox Text="{Binding NewPasswordInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Foreground="Crimson" FontWeight="UltraLight"/>
+            </Grid>
+            <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
+
+            <!-- Bekräfta lösenord -->
+            <Grid>
+                <Label Content="Confirm Password.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
+                       Visibility="{Binding PHConfirmNewPasswordVisibility}"/>
+
+                <TextBox Text="{Binding ConfirmNewPasswordInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Foreground="Crimson" FontWeight="UltraLight"/>
+            </Grid>
+            <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
+
+            <!-- Lista med säkerhetsfrågor -->
+            <ComboBox ItemsSource="{Binding SecurityQuestions}" SelectedItem="{Binding SelectedSecurityQuestion}" Width="200" FontSize="16" 
+                      FontWeight="UltraLight" Foreground="Crimson" Margin="0,10,0,0"/>
+
+            <!-- Säkerhetssvar -->
+            <Grid>
+                <Label Content="Security Answer.." Foreground="LightGray" Width="200" Height="32" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,-1" 
+                       Visibility="{Binding PHSecurityAnswerVisibility}"/>
+
+                <TextBox Text="{Binding SecurityAnswerInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Foreground="Crimson" FontWeight="UltraLight"/>
+            </Grid>
+            <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
+
+            <!-- Lista med landsval -->
+            <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding CountryComboBox}" Width="200" FontSize="16" 
+                      FontWeight="UltraLight" Foreground="Crimson" Margin="0,10,0,0"/>
+
+            <!-- Spara och Cancelknapp-->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                
+                <!-- Cancelknapp -->
+                <Button Content="Cancel" Command="{Binding CancelCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
+                Foreground="White" Width="90" Height="35" FontSize="16" Margin="10"/>
+
+                <!-- Sparaknapp -->
+                <Button Content="Save" Command="{Binding SaveUserDetailsCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
+                Foreground="White" Width="70" Height="35" FontSize="16" Margin="10"/>
+            </StackPanel>
+
+        </StackPanel>
+
+        <Rectangle Grid.Row="3" Fill="Crimson"/>
+
+    </Grid>
+    <!-- SLUT -->
     
 </Window>

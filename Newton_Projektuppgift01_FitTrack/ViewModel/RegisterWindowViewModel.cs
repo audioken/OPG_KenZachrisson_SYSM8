@@ -8,15 +8,104 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     public class RegisterWindowViewModel : ViewModelBase
     {
         // EGENSKAPER ↓
+        // Möjliggör stängning av detta fönster
         public Window _registerWindow { get; set; }
 
-        // Spårar information vid registrering av nytt användarkonto
-        public string UsernameInput { get; set; }
-        public string PasswordInput { get; set; }
-        public string ConfirmPasswordInput { get; set; }
+        // Användarnamn
+        private string usernameInput;
+        public string UsernameInput
+        {
+            get { return usernameInput; }
+            set
+            {
+                usernameInput = value;
+                OnPropertyChanged();
 
+                if (string.IsNullOrEmpty(usernameInput))
+                {
+                    PHUsernameVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    PHUsernameVisibility = Visibility.Collapsed;
+                }
+            }
+        }
+        private Visibility pHUsernameVisibility;
+        public Visibility PHUsernameVisibility
+        {
+            get { return pHUsernameVisibility; }
+            set
+            {
+                pHUsernameVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Lösenord
+        private string passwordInput;
+        public string PasswordInput
+        {
+            get { return passwordInput; }
+            set
+            {
+                passwordInput = value;
+                OnPropertyChanged();
+
+                if (string.IsNullOrEmpty(passwordInput))
+                {
+                    PHPasswordVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    PHPasswordVisibility = Visibility.Collapsed;
+                }
+            }
+        }
+        private Visibility pHPasswordVisibility;
+        public Visibility PHPasswordVisibility
+        {
+            get { return pHPasswordVisibility; }
+            set
+            {
+                pHPasswordVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Bekräfta lösenord
+        private string confirmPasswordInput;
+        public string ConfirmPasswordInput
+        {
+            get { return confirmPasswordInput; }
+            set
+            {
+                confirmPasswordInput = value;
+                OnPropertyChanged();
+
+                if (string.IsNullOrEmpty(confirmPasswordInput))
+                {
+                    PHConfirmPasswordVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    PHConfirmPasswordVisibility = Visibility.Collapsed;
+                }
+            }
+        }
+        private Visibility pHConfirmPasswordVisibility;
+        public Visibility PHConfirmPasswordVisibility
+        {
+            get { return pHConfirmPasswordVisibility; }
+            set
+            {
+                pHConfirmPasswordVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Säkerhetsfrågor
         public ObservableCollection<string> SecurityQuestions { get; set; }
-
         private string selectedSecurityQuestion;
         public string SelectedSecurityQuestion
         {
@@ -28,25 +117,51 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        public string SecurityAnswerInput { get; set; }
+        // Säkerhetssvar
+        private string securityAnswerInput;
+        public string SecurityAnswerInput
+        {
+            get { return securityAnswerInput; }
+            set
+            {
+                securityAnswerInput = value;
+                OnPropertyChanged();
 
-        // Spårar användarens valda land från "Countries" för lagring i användarkonto
+                if (string.IsNullOrEmpty(securityAnswerInput))
+                {
+                    PHSecurityAnswerVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    PHSecurityAnswerVisibility = Visibility.Collapsed;
+                }
+            }
+        }
+        private Visibility pHSecurityAnswerVisibility;
+        public Visibility PHSecurityAnswerVisibility
+        {
+            get { return pHSecurityAnswerVisibility; }
+            set
+            {
+                pHSecurityAnswerVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Länder
+        public ObservableCollection<string> Countries { get; set; }
         public string CountryComboBox { get; set; }
 
-        // Lista där användaren väljer land och som speglas i ComboBox
-        public ObservableCollection<string> Countries { get; set; }
-
-        // Relay-kommando som anropar metoden "RegisterNewUser" vid klick
+        // Relaykommandon vid klick på knappar
         public RelayCommand RegisterNewUserCommand => new RelayCommand(execute => RegisterNewUser());
         public RelayCommand CancelCommand => new RelayCommand(execute => Cancel());
-
 
         // KONSTRUKTOR ↓
         public RegisterWindowViewModel(Window _registerWindow)
         {
             this._registerWindow = _registerWindow;
 
-            // Initierar "Countries" med en lista av länder
+            // Instansierar alla länder
             Countries = new ObservableCollection<string>
             {
                 "Sweden",
@@ -55,6 +170,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 "Finland"
             };
 
+            // Instansierar alla säkerhetsfrågor
             SecurityQuestions = new ObservableCollection<string>
             {
                 "The name of your favourite pet?",

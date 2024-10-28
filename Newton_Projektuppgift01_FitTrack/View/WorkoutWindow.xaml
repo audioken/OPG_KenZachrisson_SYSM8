@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View" 
         mc:Ignorable="d"
-        Title="WorkoutWindow" Height="500" Width="400">
+        Title="WorkoutWindow" Height="600" Width="600">
 
     <!-- START -->
     <Grid>
-
+        
         <!-- Definig grid rows -->
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
-            <RowDefinition Height="160"/>
+            <RowDefinition Height="200"/>
             <RowDefinition/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
@@ -22,40 +22,37 @@
         <Rectangle Grid.Row="0" Fill="Crimson"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Height="25" VerticalAlignment="Top" Margin="0,5,0,0">
-
-            <!-- App Info Button -->
+            <!-- App Info Knapp -->
             <Button Content="Info" Command="{Binding AppInfoCommand}" Background="Crimson" BorderBrush="Crimson" Foreground="White" 
                 Width="35" Height="25" Margin="0,0,0,0" VerticalAlignment="Top" BorderThickness="0"/>
-            
-            <Label Content="Signed in as: " Width="75" Height="30" VerticalAlignment="Top" Foreground="Crimson" Margin="50,0,0,0"/>
 
-            <!-- Keep track of who is logged in -->
-            <Label Content="{Binding User.Username}" Width="auto" Height="auto" VerticalAlignment="Top" Foreground="PaleGreen" 
-                   VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="5,-5,10,0" FontSize="16"/>
+            <!-- Håller koll på nuvarande användare -->
+            <Label Content="{Binding User.Username}" Width="auto" Height="30" VerticalAlignment="Top" Foreground="White" Margin="10,0,0,0"
+                   Background="LightGray"/>
 
-            <!-- User Details Button -->
+            <!-- User Details Knapp -->
             <Button Content="User Profile" Command="{Binding UserDetailsCommand}" Background="Crimson" BorderBrush="Crimson" Foreground="White" 
                 Width="75" Height="25" VerticalAlignment="Top" BorderThickness="0"/>
 
-            <!-- Sign Out Button -->
+            <!-- Sign Out Knapp -->
             <Button Content="Sign Out" Command="{Binding SignOutCommand}" Background="Crimson" BorderBrush="Crimson" Foreground="White" 
                 Width="60" Height="25" Margin="10,0,0,0" VerticalAlignment="Top" BorderThickness="0"/>
-
-
         </StackPanel>
 
 
+        <!-- Titel -->
         <Label Grid.Row="1" Content="Your Workouts" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0"/>
-        <!-- Instructions -->
+        
+        <!-- Instruktioner -->
         <Label Grid.Row="1" Content="Add, remove or edit a workout.." FontSize="20" Width="400" Foreground="Crimson" Margin="0,0,0,0"
                    HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
 
-        <!-- Main Layout -->
-        <StackPanel Grid.Row="2">
+        <!-- Huvudlayout -->
+        <StackPanel Grid.Row="2" Margin="0,20,0,0">
 
+            <!-- Textutskrift för varaktighetsfiltret -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,0">
-
                 <Label Content="Duration: " Width="58" Height="29" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"
                        Foreground="Crimson" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="250,0,0,-16" Padding="-5"/>
 
@@ -64,27 +61,25 @@
 
                 <Label Content="min" Width="26" Height="29" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"
                        Foreground="Crimson" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5,0,0,-15" Padding="0"/>
-
             </StackPanel>
 
             <!-- Filters -->
             <Grid>
-                <!-- Search Filter -->
+                <!-- Sökfilter -->
                 <Label Content="Search.." Foreground="LightGray" Width="100" Height="28" FontSize="16" VerticalContentAlignment="Top" 
                         HorizontalAlignment="Center" Margin="3,0,230,3" 
                     Visibility="{Binding PHSearchVisibility}"/>
                 <TextBox Text="{Binding SearchFilter, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="150" Height="auto" 
                     VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Margin="0,0,180,0" HorizontalAlignment="Center"/>
 
-                <!-- Duration Filter -->
-
+                <!-- Varaktighetsfilter -->
                 <Slider Value="{Binding DurationFilter, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="180" Width="150" 
                             VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="190,0,0,-3"/>
             </Grid>
 
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" HorizontalAlignment="Center" Width="150" Margin="0,0,180,10"/>
 
-            <!-- List of Workouts -->
+            <!-- Träningslistan -->
             <DataGrid ItemsSource="{Binding FilteredWorkoutList}" SelectedItem="{Binding SelectedWorkout}" AutoGenerateColumns="False" IsReadOnly="True"
                   Width="340" BorderThickness="0" Background="Crimson" CanUserResizeRows="False" CanUserResizeColumns="False" FontWeight="UltraLight"
                       Foreground="Black" FontSize="15" Padding="2" GridLinesVisibility="None">
@@ -96,28 +91,24 @@
             </DataGrid>
 
             <Grid>
-
-                <!-- Add Workout Button -->
+                <!-- Add Workout Knapp -->
                 <Button Content="Add" Command="{Binding AddWorkoutCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
                 Width="25" Height="20" BorderThickness="0" Margin="0,0,310,0" VerticalAlignment="Top"/>
 
-                <!-- Remove Workout Button -->
+                <!-- Remove Workout Knapp -->
                 <Button Content="Remove" Command="{Binding RemoveWorkoutCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
                 Width="45" Height="20" BorderThickness="0" Margin="0,0,230,0" VerticalAlignment="Top"/>
 
-                <!-- Workout Details Button -->
+                <!-- Workout Details Knapp -->
                 <Button Content="Workout Details" Command="{Binding OpenDetailsCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
                 Width="90" Height="20" BorderThickness="0" Margin="250,0,0,0"/>
-
             </Grid>
-
-
-
+            
         </StackPanel>
 
         <!-- Colored Footer -->
         <Rectangle Grid.Row="3" Fill="Crimson"/>
-
+        
     </Grid>
     <!-- END -->
 

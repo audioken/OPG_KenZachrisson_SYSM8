@@ -12,9 +12,96 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public Window _userDetailsWindow { get; set; }
 
         // Spårar information vid registrering av nytt användarkonto
-        public string NewUsernameInput { get; set; }
-        public string NewPasswordInput { get; set; }
-        public string ConfirmNewPasswordInput { get; set; }
+        private string newUsernameInput;
+        public string NewUsernameInput
+        {
+            get { return newUsernameInput; }
+            set
+            {
+                newUsernameInput = value;
+                OnPropertyChanged();
+
+                if (string.IsNullOrEmpty(NewUsernameInput))
+                {
+                    PHNewUsernameVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    PHNewUsernameVisibility = Visibility.Collapsed;
+                }
+            }
+        }
+        private Visibility pHNewUsernameVisibility;
+        public Visibility PHNewUsernameVisibility
+        {
+            get { return pHNewUsernameVisibility; }
+            set
+            {
+                pHNewUsernameVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string newPasswordInput;
+        public string NewPasswordInput
+        {
+            get { return newPasswordInput; }
+            set
+            {
+                newPasswordInput = value;
+                OnPropertyChanged();
+
+                if (string.IsNullOrEmpty(NewPasswordInput))
+                {
+                    PHNewPasswordVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    PHNewPasswordVisibility = Visibility.Collapsed;
+                }
+            }
+        }
+        private Visibility pHNewPasswordVisibility;
+        public Visibility PHNewPasswordVisibility
+        {
+            get { return pHNewPasswordVisibility; }
+            set
+            {
+                pHNewPasswordVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string confirmNewPasswordInput;
+        public string ConfirmNewPasswordInput
+        {
+            get { return confirmNewPasswordInput; }
+            set
+            {
+                confirmNewPasswordInput = value;
+                OnPropertyChanged();
+
+                if (string.IsNullOrEmpty(ConfirmNewPasswordInput))
+                {
+                    PHConfirmNewPasswordVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    PHConfirmNewPasswordVisibility = Visibility.Collapsed;
+                }
+            }
+        }
+        private Visibility pHConfirmNewPasswordVisibility;
+        public Visibility PHConfirmNewPasswordVisibility
+        {
+            get { return pHConfirmNewPasswordVisibility; }
+            set
+            {
+                pHConfirmNewPasswordVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string selectedSecurityQuestion;
         public string SelectedSecurityQuestion
         {
@@ -25,7 +112,37 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 OnPropertyChanged();
             }
         }
-        public string SecurityAnswerInput { get; set; }
+
+        private string securityAnswerInput;
+        public string SecurityAnswerInput
+        {
+            get { return securityAnswerInput; }
+            set
+            {
+                securityAnswerInput = value;
+                OnPropertyChanged();
+
+                if (string.IsNullOrEmpty(SecurityAnswerInput))
+                {
+                    PHSecurityAnswerVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    PHSecurityAnswerVisibility = Visibility.Collapsed;
+                }
+            }
+        }
+        private Visibility pHSecurityAnswerVisibility;
+        public Visibility PHSecurityAnswerVisibility
+        {
+            get { return pHSecurityAnswerVisibility; }
+            set
+            {
+                pHSecurityAnswerVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string CountryComboBox { get; set; }
 
         // Lagrar alla säkerhetsfrågor
@@ -42,14 +159,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public UserDetailsWindowViewModel(Window userDetailsWindow)
         {
             _userDetailsWindow = userDetailsWindow;
-
-            // Förifylld information för att underlätta
-            NewUsernameInput = Manager.Instance.CurrentUser.Username;
-            NewPasswordInput = Manager.Instance.CurrentUser.Password;
-            ConfirmNewPasswordInput = Manager.Instance.CurrentUser.Password;
-            SelectedSecurityQuestion = Manager.Instance.CurrentUser.SecurityQuestion;
-            SecurityAnswerInput = Manager.Instance.CurrentUser.SecurityAnswer;
-            CountryComboBox = Manager.Instance.CurrentUser.Country;
 
             // Instansierar och tilldelar listan med länder
             Countries = new ObservableCollection<string>
@@ -68,6 +177,14 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 "What was the name of your childhood best friend?",
                 "What city were your mother born in?"
             };
+
+            // Förifylld information för att underlätta
+            NewUsernameInput = Manager.Instance.CurrentUser.Username;
+            NewPasswordInput = Manager.Instance.CurrentUser.Password;
+            ConfirmNewPasswordInput = Manager.Instance.CurrentUser.Password;
+            SelectedSecurityQuestion = Manager.Instance.CurrentUser.SecurityQuestion;
+            SecurityAnswerInput = Manager.Instance.CurrentUser.SecurityAnswer;
+            CountryComboBox = Manager.Instance.CurrentUser.Country;
         }
 
         // METOD ↓

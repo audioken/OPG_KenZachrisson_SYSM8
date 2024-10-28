@@ -5,20 +5,111 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View"
         mc:Ignorable="d"
-        Title="RegisterWindow" Height="450" Width="800">
-    
-    <StackPanel>
+        Title="RegisterWindow" Height="600" Width="600">
+
+    <!-- START -->
+    <Grid>
+
+        <!-- Definerar rader -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <!-- Colored Header -->
+        <Rectangle Grid.Row="0" Fill="Crimson"/>
+
+        <!-- Titel -->
+        <Label Grid.Row="1" Content="New User" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
+               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0"/>
+
+        <!-- Instruktioner -->
+        <Label Grid.Row="1" Content="Register a new user profile. Fill in your details below.." FontSize="20" Width="500" Foreground="Crimson" Margin="0,0,0,0"
+                   HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+
+        <StackPanel Grid.Row="2" Margin="0,20,0,0">
+
+            <!-- SKriv in användarnamn -->
+            <Grid>
+                <Label Content="Username.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
+                       Visibility="{Binding PHUsernameVisibility}"/>
+
+                <TextBox Text="{Binding UsernameInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
+                     VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Foreground="Crimson" FontWeight="UltraLight"/>
+            </Grid>
+            <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
+
+            <!-- Skriv in nytt lösenord -->
+            <Grid>
+                <Label Content="Password.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
+                       Visibility="{Binding PHPasswordVisibility}"/>
+
+                <TextBox Text="{Binding PasswordInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Foreground="Crimson" FontWeight="UltraLight"/>
+            </Grid>
+            <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
+
+            <!-- Bekräfta lösenord -->
+            <Grid>
+                <Label Content="Confirm Password.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
+                       Visibility="{Binding PHConfirmPasswordVisibility}"/>
+
+                <TextBox Text="{Binding ConfirmPasswordInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Foreground="Crimson" FontWeight="UltraLight"/>
+            </Grid>
+            <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
+
+            <!-- Lista med säkerhetsfrågor -->
+            <ComboBox ItemsSource="{Binding SecurityQuestions}" SelectedItem="{Binding SelectedSecurityQuestion}" Width="200" FontSize="16" 
+                      FontWeight="UltraLight" Foreground="Crimson" Margin="0,10,0,0"/>
+
+            <!-- Säkerhetssvar -->
+            <Grid>
+                <Label Content="Security Answer.." Foreground="LightGray" Width="200" Height="32" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,-1" 
+                       Visibility="{Binding PHSecurityAnswerVisibility}"/>
+
+                <TextBox Text="{Binding SecurityAnswerInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Foreground="Crimson" FontWeight="UltraLight"/>
+            </Grid>
+            <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
+
+            <!-- Lista med landsval -->
+            <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding CountryComboBox}" Width="200" FontSize="16" 
+                      FontWeight="UltraLight" Foreground="Crimson" Margin="0,10,0,0"/>
+
+            <!-- Spara och Cancelknapp-->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+
+                <!-- Cancelknapp -->
+                <Button Content="Cancel" Command="{Binding CancelCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
+                Foreground="White" Width="90" Height="35" FontSize="16" Margin="10"/>
+
+                <!-- Sparaknapp -->
+                <Button Content="Save" Command="{Binding RegisterNewUserCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
+                Foreground="White" Width="70" Height="35" FontSize="16" Margin="10"/>
+            </StackPanel>
+
+        </StackPanel>
+
+        <Rectangle Grid.Row="3" Fill="Crimson"/>
+
+    </Grid>
+    <!-- SLUT -->
+
+    <!--<StackPanel>
         
-        <TextBox Text="{Binding UsernameInput}"/>
-        <TextBox Text="{Binding PasswordInput}"/>
-        <TextBox Text="{Binding ConfirmPasswordInput}"/>
-        <ComboBox ItemsSource="{Binding SecurityQuestions}" SelectedItem="{Binding SelectedSecurityQuestion}"/>
-        <TextBox Text="{Binding SecurityAnswerInput}"/>
+        --><!--<TextBox Text="{Binding UsernameInput}"/>-->
+        <!--<TextBox Text="{Binding PasswordInput}"/>-->
+        <!--<TextBox Text="{Binding ConfirmPasswordInput}"/>-->
+        <!--<ComboBox ItemsSource="{Binding SecurityQuestions}" SelectedItem="{Binding SelectedSecurityQuestion}"/>-->
+        <!--<TextBox Text="{Binding SecurityAnswerInput}"/>-->
 
 
-        <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding CountryComboBox}"/>
-        <Button Content="Register" Command="{Binding RegisterNewUserCommand}"/>
-        <Button Content="Cancel" Command="{Binding CancelCommand}"/>
+        <!--<ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding CountryComboBox}"/>-->
+        <!--<Button Content="Register" Command="{Binding RegisterNewUserCommand}"/>-->
+        <!--<Button Content="Cancel" Command="{Binding CancelCommand}"/>--><!--
         
-    </StackPanel>
+    </StackPanel>-->
 </Window>

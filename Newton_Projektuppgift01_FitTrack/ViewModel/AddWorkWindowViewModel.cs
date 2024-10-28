@@ -68,6 +68,18 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Duration
+        private int selectedDurationSlider;
+        public int SelectedDurationSlider
+        {
+            get { return selectedDurationSlider; }
+            set
+            {
+                selectedDurationSlider = value;
+                OnPropertyChanged();
+
+                DurationInput = new TimeSpan(GetHours(), GetMinutes(), 0);
+            }
+        }
         private TimeSpan durationInput;
         public TimeSpan DurationInput
         {
@@ -79,72 +91,46 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        private int selectedDurationHours;
-        public int SelectedDurationHours
-        {
-            get { return selectedDurationHours; }
-            set
-            {
-                selectedDurationHours = value;
-                DurationInput = new TimeSpan(selectedDurationHours, selectedDurationMinutes, 0);
-                OnPropertyChanged();
-            }
-        }
-
-        private int selectedDurationMinutes;
-        public int SelectedDurationMinutes
-        {
-            get { return selectedDurationMinutes; }
-            set
-            {
-                selectedDurationMinutes = value;
-                DurationInput = new TimeSpan(selectedDurationHours, selectedDurationMinutes, 0);
-                OnPropertyChanged();
-            }
-        }
-
         // Distance
-        private string distanceVisibility;
-        public string DistanceVisibility
+        private int selectedDistanceSlider;
+        public int SelectedDistanceSlider
         {
-            get { return distanceVisibility; }
+            get { return selectedDistanceSlider; }
             set
             {
-                distanceVisibility = value;
+                selectedDistanceSlider = value;
                 OnPropertyChanged();
             }
         }
-
-        private int distanceInput;
-        public int DistanceInput
+        private Visibility distanceSliderVisibility;
+        public Visibility DistanceSliderVisibility
         {
-            get { return distanceInput; }
+            get { return distanceSliderVisibility; }
             set
             {
-                distanceInput = value;
+                distanceSliderVisibility = value;
                 OnPropertyChanged();
             }
         }
 
         // Repetition
-        private string repetitionVisibility;
-        public string RepetitionVisibility
+        private int selectedRepetitionSlider;
+        public int SelectedRepetitionSlider
         {
-            get { return repetitionVisibility; }
+            get { return selectedRepetitionSlider; }
             set
             {
-                repetitionVisibility = value;
+                selectedRepetitionSlider = value;
                 OnPropertyChanged();
             }
         }
-
-        private int repetitionInput;
-        public int RepetitionInput
+        private Visibility repetitionSliderVisibility;
+        public Visibility RepetitionSliderVisibility
         {
-            get { return repetitionInput; }
+            get { return repetitionSliderVisibility; }
             set
             {
-                repetitionInput = value;
+                repetitionSliderVisibility = value;
                 OnPropertyChanged();
             }
         }
@@ -164,7 +150,36 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Notes
-        public string NotesInput { get; set; }
+        private string notesInput;
+        public string NotesInput
+        {
+            get { return notesInput; }
+            set
+            {
+                notesInput = value;
+                OnPropertyChanged();
+
+                if (string.IsNullOrEmpty(notesInput))
+                {
+                    PHNotesVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    PHNotesVisibility = Visibility.Collapsed;
+                }
+            }
+        }
+        private Visibility pHNotesVisibility;
+        public Visibility PHNotesVisibility
+        {
+            get { return pHNotesVisibility; }
+            set
+            {
+                pHNotesVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         // Listor som gör inmatningen enklare för användaren
         public ObservableCollection<string> WorkoutTypes { get; set; }
@@ -175,7 +190,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
         // Relay-kommandon
         public RelayCommand SaveCommand => new RelayCommand(execute => SaveWorkout());
-        public RelayCommand PasteWorkoutCommand => new RelayCommand(execute => PasteWorkout());
+        public RelayCommand PasteCommand => new RelayCommand(execute => PasteWorkout());
         public RelayCommand CancelCommand => new RelayCommand(execute => Cancel());
 
         // KONSTRUKTOR ↓
@@ -190,21 +205,17 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             WorkoutTypes = new ObservableCollection<string> { "Cardio Workout", "Strength Workout" };
             AvailableDateHours = new ObservableCollection<int> { 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
             AvailableDateMinutes = new ObservableCollection<int> { 00, 15, 30, 45 };
-            DurationHours = new ObservableCollection<int> { 0, 1, 2, 3 };
-            DurationMinutes = new ObservableCollection<int> { 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55 };
 
-            // Instansierar värden för alla inputs för att det ska finnas något förifyllt
-            DateTime now = DateTime.Now; // Hämtar aktuellt datum
-            SelectedDate = now; // Tilldelar aktuellt datum
+            // Tilldelar värden för alla inputs för att det ska finnas något förifyllt
+            //DateTime now = DateTime.Now; // Hämtar aktuellt datum
+            SelectedDate = DateTime.Now; // Tilldelar aktuellt datum
             SelectedDateHour = 10;
             SelectedDateMinute = 00;
             WorkoutTypeComboBox = "Strength Workout";
-            SelectedDurationHours = 1;
-            SelectedDurationMinutes = 30;
-            CaloriesBurnedInput = 0;
-            NotesInput = "Weightlifting";
-            RepetitionInput = 0;
-            DistanceInput = 0;
+            SelectedDurationSlider = 0;
+            SelectedRepetitionSlider = 0;
+            SelectedDistanceSlider = 0;
+            NotesInput = "";
         }
 
         // METODER ↓
@@ -224,19 +235,19 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     if (WorkoutTypeComboBox == "Strength Workout")
                     {
                         // Instansierar ny styrketräning
-                        workout = new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, RepetitionInput);
+                        workout = new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, 0, NotesInput, SelectedRepetitionSlider);
 
                     }
                     else if (WorkoutTypeComboBox == "Cardio Workout")
                     {
                         // Instansierar ny konditionsträning
-                        workout = new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, CaloriesBurnedInput, NotesInput, DistanceInput);
+                        workout = new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, 0, NotesInput, SelectedDistanceSlider);
                     }
 
                     // Lägg till träningen i användarens träningslista
                     Manager.Instance.CurrentUser.UserWorkouts.Add(workout);
 
-                    MessageBox.Show($"Du har lagt till följande träning:\n{FullDateTime} {WorkoutTypeComboBox} {DurationInput} {CaloriesBurnedInput} {NotesInput}");
+                    MessageBox.Show($"Du har lagt till följande träning:\n{FullDateTime} {WorkoutTypeComboBox} {SelectedDurationSlider} {CaloriesBurnedInput} {NotesInput}");
 
                     // Öppna WorkoutWindow
                     OpenWorkoutWindow();
@@ -267,22 +278,22 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             WorkoutTypeComboBox = Manager.Instance.CopiedWorkout.Type;
             OnPropertyChanged(nameof(WorkoutTypeComboBox));
 
-            SelectedDurationHours = Manager.Instance.CopiedWorkout.Duration.Hours;
-            OnPropertyChanged(nameof(SelectedDurationHours));
+            //SelectedDurationHours = Manager.Instance.CopiedWorkout.Duration.Hours;
+            //OnPropertyChanged(nameof(SelectedDurationHours));
 
-            SelectedDurationMinutes = Manager.Instance.CopiedWorkout.Duration.Minutes;
-            OnPropertyChanged(nameof(SelectedDurationMinutes));
+            //SelectedDurationMinutes = Manager.Instance.CopiedWorkout.Duration.Minutes;
+            //OnPropertyChanged(nameof(SelectedDurationMinutes));
 
             // Kontrollera vilken träningstyp som är kopierad för att tilldela rätt extravärde
             if (Manager.Instance.CopiedWorkout is StrengthWorkout copiedStrengthWorkout)
             {
-                RepetitionInput = copiedStrengthWorkout.Repetition;
-                OnPropertyChanged(nameof(RepetitionInput));
+                SelectedRepetitionSlider = copiedStrengthWorkout.Repetition;
+                OnPropertyChanged(nameof(SelectedRepetitionSlider));
             }
             else if (Manager.Instance.CopiedWorkout is CardioWorkout copiedCardioWorkout)
             {
-                DistanceInput = copiedCardioWorkout.Distance;
-                OnPropertyChanged(nameof(DistanceInput));
+                SelectedDistanceSlider = copiedCardioWorkout.Distance;
+                OnPropertyChanged(nameof(SelectedDistanceSlider));
             }
 
             CaloriesBurnedInput = Manager.Instance.CopiedWorkout.CaloriesBurned;
@@ -297,13 +308,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             if (WorkoutTypeComboBox == "Cardio Workout")
             {
-                DistanceVisibility = "Visible";
-                RepetitionVisibility = "Collapsed";
+                DistanceSliderVisibility = Visibility.Visible;
+                RepetitionSliderVisibility = Visibility.Collapsed;
             }
             else if (WorkoutTypeComboBox == "Strength Workout")
             {
-                DistanceVisibility = "Collapsed";
-                RepetitionVisibility = "Visible";
+                DistanceSliderVisibility = Visibility.Collapsed;
+                RepetitionSliderVisibility = Visibility.Visible;
             }
         }
 
@@ -315,6 +326,16 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
             // Stäng AddWorkoutWindow
             _addWorkoutWindow.Close();
+        }
+
+        public int GetHours()
+        {
+            return SelectedDurationSlider / 60;
+        }
+
+        public int GetMinutes()
+        {
+            return SelectedDurationSlider % 60;
         }
 
         // Öppnar WorkoutWindow

@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View"
         mc:Ignorable="d"
-        Title="WorkoutDetailsWindow" Height="500" Width="400">
+        Title="WorkoutDetailsWindow" Height="600" Width="600">
 
     <Grid>
 
         <!-- Definig grid rows -->
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
-            <RowDefinition Height="160"/>
+            <RowDefinition Height="200"/>
             <RowDefinition/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
@@ -29,16 +29,16 @@
         <StackPanel Grid.Row="2" Margin="0,20,0,0">
 
             <DataGrid ItemsSource="{Binding WorkoutList}" AutoGenerateColumns="False" IsReadOnly="{Binding IsDataGridReadOnly}"
-                  Width="340" BorderThickness="0" Background="Crimson" CanUserResizeRows="False" CanUserResizeColumns="False" 
+                  Width="580" BorderThickness="0" Background="Crimson" CanUserResizeRows="False" CanUserResizeColumns="False" 
                   FontWeight="UltraLight" Foreground="Black" FontSize="15" Padding="2" GridLinesVisibility="None">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:yy/MM/dd HH:mm}}" Foreground="Crimson"/>
-                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" IsReadOnly="True" Foreground="Crimson"/>
-                    <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" Foreground="Crimson"/>
-                    <DataGridTextColumn Header="Distance" Binding="{Binding Distance, UpdateSourceTrigger=PropertyChanged}" Foreground="Crimson"/>
-                    <DataGridTextColumn Header="Reps" Binding="{Binding Repetition, UpdateSourceTrigger=PropertyChanged}" Foreground="Crimson"/>
-                    <DataGridTextColumn Header="Calories Burned" Binding="{Binding CaloriesBurned, UpdateSourceTrigger=PropertyChanged}" Foreground="Crimson"/>
-                    <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" Foreground="Crimson"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:yy/MM/dd HH:mm}}" Foreground="Crimson" Width="15*"/>
+                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" IsReadOnly="True" Foreground="Crimson" Width="15*"/>
+                    <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" Foreground="Crimson" Width="15*"/>
+                    <DataGridTextColumn Header="Distance" Binding="{Binding Distance, UpdateSourceTrigger=PropertyChanged}" Foreground="Crimson" Width="15*"/>
+                    <DataGridTextColumn Header="Reps" Binding="{Binding Repetition, UpdateSourceTrigger=PropertyChanged}" Foreground="Crimson" Width="10*"/>
+                    <DataGridTextColumn Header="Calories" Binding="{Binding CaloriesBurned, UpdateSourceTrigger=PropertyChanged}" Foreground="Crimson" Width="15*"/>
+                    <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" Foreground="Crimson" Width="15*"/>
                 </DataGrid.Columns>
             </DataGrid>
 

@@ -25,7 +25,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         private Manager()
         {
             // Startanvändare redan inlagda för testning
-            user = new User("user", "password", "Sweden", "What's your favourite pet?", "Fido");
+            user = new User("user", "password", "Sweden", "The name of your favourite pet?", "Fido");
             admin = new AdminUser("admin", "password", "Sweden");
 
             AllUsers = new ObservableCollection<User>();

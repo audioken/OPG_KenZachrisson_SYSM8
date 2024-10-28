@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack"
         xmlns:UserControls="clr-namespace:Newton_Projektuppgift01_FitTrack.View.UserControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="400">
+        Title="MainWindow" Height="600" Width="600">
 
     <!-- START -->
     <Grid>
@@ -14,7 +14,7 @@
         <!-- Definig grid rows -->
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="150"/>
             <RowDefinition/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
@@ -41,7 +41,7 @@
                        Visibility="{Binding PHUsernameVisibility}"/>
 
                 <TextBox Text="{Binding UsernameInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
-                     VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5"/>
+                     VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
             </Grid>
             
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
@@ -52,7 +52,7 @@
                        Visibility="{Binding PHPasswordVisibility}"/>
                 
                 <TextBox Text="{Binding PasswordInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
-                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5"/>
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
             </Grid>
             
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
@@ -63,17 +63,17 @@
 
             <!-- Security Question and Answer -->
             <Label Content="{Binding SecurityQuestion, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SecurityVisibility}" 
-                   Height="35" Width="200" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Crimson" FontSize="16"/>
+                   Height="35" Width="400" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Crimson" FontSize="16"/>
             <TextBox Text="{Binding SecurityAnswerInput, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SecurityVisibility}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
-                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5"/>
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200" Visibility="{Binding SecurityVisibility}"/>
 
             <!-- Generate New Password Button -->
             <Button Content="Generate New Password" Command="{Binding GenerateNewPasswordCommand}" Visibility="{Binding GenerateNewPasswordVisibility}"
-                    Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" Width="200" Height="35" FontSize="16" Margin="0,10,0,0"/>
+                    Background="Crimson" BorderBrush="Crimson" BorderThickness="0" Foreground="White" Width="200" Height="35" FontSize="16" Margin="0,10,0,0"/>
 
             <Button Content="Cancel" Command="{Binding CancelNewPasswordCommand}" Visibility="{Binding CancelNewPasswordVisibility}"
-                    Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" Width="200" Height="35" FontSize="16" Margin="0,10,0,0"/>
+                    Background="Crimson" BorderBrush="Crimson" BorderThickness="0" Foreground="White" Width="200" Height="35" FontSize="16" Margin="0,10,0,0"/>
 
             <!-- 2FA Input -->
             <Grid>
@@ -81,7 +81,7 @@
                        Visibility="{Binding PHTwoFAVisibility}"/>
 
                 <TextBox Text="{Binding TwoFAInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
-                     VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Visibility="{Binding TwoFAVisibility}" Padding="5"/>
+                     VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Visibility="{Binding TwoFAVisibility}" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
             </Grid>
             
 
