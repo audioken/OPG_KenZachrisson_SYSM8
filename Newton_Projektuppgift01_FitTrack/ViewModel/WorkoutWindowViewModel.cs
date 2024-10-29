@@ -12,6 +12,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Möjliggör stängning av detta fönster
         public Window _workoutWindow { get; set; }
 
+        // För att visa inloggad användare
+        public User User { get; set; }
+
         // Den valda träningen från listan
         public Workout SelectedWorkout { get; set; }
 
@@ -87,6 +90,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public WorkoutWindowViewModel(Window _workoutWindow)
         {
             this._workoutWindow = _workoutWindow;
+
+            // Endast för att kunna vem som är inloggad
+            User = Manager.Instance.CurrentUser;
 
             // Instansierar den temporära listan
             FilteredWorkoutList = new ObservableCollection<Workout>();

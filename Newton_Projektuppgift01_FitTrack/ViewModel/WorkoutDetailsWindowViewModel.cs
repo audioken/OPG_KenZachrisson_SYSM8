@@ -12,15 +12,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Möjliggör stängning av detta fönster
         public Window _workoutDetailsWindow { get; set; }
 
-        public User User { get; set; }
-
-        // Används för att lagra den valda träningen
-        public Workout Workout { get; set; }
-
-        // Ska klona Workout för att möjligöra redigering
+        // Ska klona vald träning
         public Workout WorkoutEditable { get; set; }
 
-        // Kontroll för om DataGrid går att redigera eller ej
+        // Aktivererar eller avaktiverar redigering
         private bool isDataGridReadOnly;
         public bool IsDataGridReadOnly
         {
@@ -32,29 +27,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        private Visibility distanceVisibility;
-        public Visibility DistanceVisibility
-        {
-            get { return distanceVisibility; }
-            set
-            {
-                distanceVisibility = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private Visibility repetitionVisibility;
-        public Visibility RepetitionVisibility
-        {
-            get { return repetitionVisibility; }
-            set
-            {
-                repetitionVisibility = value;
-                OnPropertyChanged();
-            }
-        }
-
-        // Tillfällig lista för att möjliggöra visning av träning i DataGrid
+        // Lista som visar det valda träningspasset
         private ObservableCollection<Workout> workoutList;
         public ObservableCollection<Workout> WorkoutList
         {
@@ -66,7 +39,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Relay-kommandon
+        // Relaykommandon som representerar knappklick
         public RelayCommand EditWorkoutCommand => new RelayCommand(execute => EditWorkout());
         public RelayCommand AbortEditCommand => new RelayCommand(execute => AbortEdit());
         public RelayCommand SaveWorkoutCommand => new RelayCommand(execute => SaveWorkout());
@@ -78,85 +51,72 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             this._workoutDetailsWindow = _workoutDetailsWindow;
 
-            // Referens till inloggad användare
-            User = Manager.Instance.CurrentUser;
+            // Klonar vald träning för att möjliggöra redigering och återställning ändringar
+            WorkoutEditable = Manager.Instance.CurrentWorkout.Clone();
 
-            // Referens till den valda träningen
-            Workout = Manager.Instance.CurrentWorkout;
-
-            // Gör en beräkning av brända kalorier med den valda träningens metod
-            Workout.CaloriesBurned = Workout.CalculateCaloriesBurned();
-
-            // Klonar träning som backup för återställning vid klick på cancel
-            WorkoutEditable = Workout.Clone();
+            // Beräknar brända kalorier för träningen
+            Manager.Instance.CurrentWorkout.CaloriesBurned = Manager.Instance.CurrentWorkout.CalculateCaloriesBurned();
 
             // Lägger in träningen i lista för att kunna visas i DataGrid
             WorkoutList = new ObservableCollection<Workout> { WorkoutEditable };
 
-            // Avaktiverar DataGrid för att initiellt förhindra redigering
+            // Avaktiverar redigering initiellt
             IsDataGridReadOnly = true;
         }
 
         // METODER ↓
-        // Möjliggör redigering av valt träningspass
+        // Aktivera redigering av träning
         public void EditWorkout()
         {
-            // Aktiverar redigering av DataGrid som visar Workout
+            // Ta bort skrivskydded från DataGrid
             IsDataGridReadOnly = false;
         }
 
-        // Avbryter redigering och återställer värdena
+        // Avbryter redigering och återställer värden
         public void AbortEdit()
         {
             // Klonar originalet för att återställa värdena
-            WorkoutEditable = Workout.Clone();
+            WorkoutEditable = Manager.Instance.CurrentWorkout.Clone();
 
-            // Lägger in den klonade träningen i listan
+            // Lägger in den klonade träningen och ersätter listan
             WorkoutList = new ObservableCollection<Workout> { WorkoutEditable };
 
-            // Stänger av möjligheten att redigera träning i DataGrid
+            // Avaktiverar redigering
             IsDataGridReadOnly = true;
         }
 
         // Sparar ändringar
         public void SaveWorkout()
         {
-            // Hitta index för originalet av träningen som ändras
-            int indexOfWorkout = Manager.Instance.CurrentUser.UserWorkouts.IndexOf(Workout);
+            // Hitta index för originalet av träningen som ändrats
+            int indexOfWorkout = Manager.Instance.CurrentUser.UserWorkouts.IndexOf(Manager.Instance.CurrentWorkout);
 
-            // Kontrollera så det är en användare som är inloggad samt att index finns
-            if (User is User && indexOfWorkout >= 0)
+            // Kontrollera så det är en vanlig användare samt att index för träningen finns
+            if (Manager.Instance.CurrentUser is User && indexOfWorkout >= 0)
             {
-                // Ersätt originalet med uppdaterad träning för den inloggade användaren
+                // Ersätt originalet med uppdaterad träning för användaren
                 Manager.Instance.CurrentUser.UserWorkouts[indexOfWorkout] = WorkoutEditable;
             }
-            // Kontrollera om det är en Admin som är inloggad
-            else if (User is AdminUser)
+            // Kontrollera om det är en admin som är inloggad
+            else if (Manager.Instance.CurrentUser is AdminUser)
             {
                 // Kolla igenom alla användare i listan AllUsers
                 foreach (User user in Manager.Instance.AllUsers)
                 {
                     // Om en användare har den aktuella träningen som ska uppdateras
-                    if (user.UserWorkouts.Contains(Workout))
+                    if (user.UserWorkouts.Contains(Manager.Instance.CurrentWorkout))
                     {
-                        // Kolla dess index
-                        int indexUser = user.UserWorkouts.IndexOf(Workout);
+                        // Hitta index
+                        int indexUserWorkout = user.UserWorkouts.IndexOf(Manager.Instance.CurrentWorkout);
 
                         // Ersätt med den redigerade klonen
-                        user.UserWorkouts[indexUser] = WorkoutEditable;
+                        user.UserWorkouts[indexUserWorkout] = WorkoutEditable;
 
                         break;
                     }
                 }
             }
-            else
-            {
-                // Annars lägg till träning
-                Manager.Instance.CurrentUser.UserWorkouts.Add(WorkoutEditable);
-            }
-
-            // Tror inte denna behövs?
-            Manager.Instance.CurrentWorkout = WorkoutEditable;
+            else { MessageBox.Show("Något gick fel! Träningen kunde inte sparas.."); }
 
             // Avvaktivera möjlighet till redigering i DataGrid
             IsDataGridReadOnly = true;
@@ -171,7 +131,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Kopiera träning
         public void CopyWorkout()
         {
+            // Hämta värdena och lagra i Managerklassen för enkel åtkomst
             Manager.Instance.CopiedWorkout = WorkoutEditable;
+
             MessageBox.Show("Kopierat!");
         }
 

@@ -150,7 +150,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
         // Lista med länder och valt land
         public ObservableCollection<string> Countries { get; set; }
-        public string CountryComboBox { get; set; }
+        public string SelectedCountry { get; set; }
 
         // Relaykommandon som representerar knappklick
         public RelayCommand RegisterNewUserCommand => new RelayCommand(execute => RegisterNewUser());
@@ -186,7 +186,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             // Kontrollerar så alla inputs har inmatning
             if (!string.IsNullOrEmpty(UsernameInput) && !string.IsNullOrEmpty(PasswordInput) &&
-                !string.IsNullOrEmpty(ConfirmPasswordInput) && !string.IsNullOrEmpty(CountryComboBox) &&
+                !string.IsNullOrEmpty(ConfirmPasswordInput) && !string.IsNullOrEmpty(SelectedCountry) &&
                 !string.IsNullOrEmpty(SecurityAnswerInput) && !string.IsNullOrEmpty(selectedSecurityQuestion))
             {
                 if (UsernameInput.Length >= 3)
@@ -224,7 +224,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                             if (PasswordInput == ConfirmPasswordInput)
                             {
                                 // Skapa användare baserat på inmatad information
-                                User newUser = new User(UsernameInput, PasswordInput, CountryComboBox, SelectedSecurityQuestion, SecurityAnswerInput);
+                                User newUser = new User(UsernameInput, PasswordInput, SelectedCountry, SelectedSecurityQuestion, SecurityAnswerInput);
 
                                 // Lägg till ny användare i listan för alla användare
                                 Manager.Instance.AddUser(newUser);
