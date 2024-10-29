@@ -139,16 +139,34 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 // Visar knappar beroende på inmatning
                 if (string.IsNullOrEmpty(securityAnswerInput))
                 {
+                    // Visar placeholdertext
+                    PHSecurityAnswerVisibility = Visibility.Visible;
+
                     // Utan inmatning visas Cancel
                     GenerateNewPasswordVisibility = Visibility.Collapsed;
                     CancelNewPasswordVisibility = Visibility.Visible;
                 }
                 else
                 {
+                    // Döljer placeholdertext
+                    PHSecurityAnswerVisibility = Visibility.Collapsed;
+
                     // Med inmatning visas Generate New Password
                     GenerateNewPasswordVisibility = Visibility.Visible;
                     CancelNewPasswordVisibility = Visibility.Collapsed;
                 }
+            }
+        }
+
+        // Döljer eller visar säkerhetsfråga och inmatning av svar
+        private Visibility pHSecurityAnswerVisibility;
+        public Visibility PHSecurityAnswerVisibility
+        {
+            get { return pHSecurityAnswerVisibility; }
+            set
+            {
+                pHSecurityAnswerVisibility = value;
+                OnPropertyChanged();
             }
         }
 
@@ -356,6 +374,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
             // Dölj alla element relaterade till säkerhetsfrågan
             SecurityVisibility = Visibility.Collapsed;
+            PHSecurityAnswerVisibility = Visibility.Collapsed;
             GenerateNewPasswordVisibility = Visibility.Collapsed;
             CancelNewPasswordVisibility = Visibility.Collapsed;
         }
@@ -363,6 +382,15 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Visa säkerhetsfråga
         private void ShowSecurityQuestion()
         {
+            if (string.IsNullOrEmpty(SecurityAnswerInput))
+            {
+                PHSecurityAnswerVisibility = Visibility.Visible;
+            }
+            else
+            {
+                PHSecurityAnswerVisibility = Visibility.Collapsed;
+            }
+
             // Visa alla element relaterade till säkerhetsfrågan
             SecurityVisibility = Visibility.Visible;
             CancelNewPasswordVisibility = Visibility.Visible;

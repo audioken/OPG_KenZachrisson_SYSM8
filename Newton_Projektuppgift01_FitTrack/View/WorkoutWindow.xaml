@@ -13,7 +13,7 @@
         <!-- Ställer in rader -->
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="130"/>
             <RowDefinition/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
