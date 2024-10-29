@@ -110,8 +110,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Lista med säkerhetsfrågor och vald säkerhetsfråga
-        public ObservableCollection<string> SecurityQuestions { get; set; }
+        // Lista med säkerhetsfrågor som får sina värden i konstruktorn
+        public ObservableCollection<string> SecurityQuestions { get; } // Read-only
+
+        // Den valda säkerhetsfrågan
         private string selectedSecurityQuestion;
         public string SelectedSecurityQuestion
         {
@@ -156,8 +158,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Lista med länder och valt land
-        public ObservableCollection<string> Countries { get; set; }
+        // Lista med länder som får sina värden i konstruktorn
+        public ObservableCollection<string> Countries { get; } // Read-only
+
+        // Det valda landet
         public string SelectedCountry { get; set; }
 
         // Relaykommandon som representerar knappklick
@@ -190,7 +194,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
         // METOD ↓
         // Registrera ny användare baserad på inmatad information
-        public void RegisterNewUser()
+        private void RegisterNewUser()
         {
             // Kontrollerar så alla inputs har inmatning
             if (!string.IsNullOrEmpty(UsernameInput) && !string.IsNullOrEmpty(PasswordInput) &&
@@ -257,7 +261,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Avbryt registrering och återgå till MainWindow
-        public void Cancel()
+        private void Cancel()
         {
             // Öppna MainWindow
             OpenMainWindow();
@@ -267,7 +271,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Öppnar MainWindow
-        public void OpenMainWindow()
+        private void OpenMainWindow()
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
