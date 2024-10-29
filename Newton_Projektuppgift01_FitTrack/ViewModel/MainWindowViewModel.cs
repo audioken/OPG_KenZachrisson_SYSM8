@@ -382,6 +382,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Visa säkerhetsfråga
         private void ShowSecurityQuestion()
         {
+            // Kontroll så stödtext visas rätt
             if (string.IsNullOrEmpty(SecurityAnswerInput))
             {
                 PHSecurityAnswerVisibility = Visibility.Visible;
