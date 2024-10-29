@@ -9,12 +9,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     public class WorkoutWindowViewModel : ViewModelBase
     {
         // EGENSKAPER ↓
-
+        // Möjliggör stängning av detta fönster
         public Window _workoutWindow { get; set; }
 
-        public User User { get; set; } // Håller koll på inloggad användare
-        public AdminUser AdminUser { get; set; } // Håller koll på inloggad admin
+        // Den valda träningen från listan
+        public Workout SelectedWorkout { get; set; }
 
+        // Listan med träningspass
         private ObservableCollection<Workout> workoutList;
         public ObservableCollection<Workout> WorkoutList
         {
@@ -26,11 +27,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        public ObservableCollection<Workout> FilteredWorkoutList { get; set; } = new ObservableCollection<Workout>();
+        // Tillfällig lista för att möjliggöra filtrering
+        public ObservableCollection<Workout> FilteredWorkoutList { get; set; }
 
-        public Workout Workout { get; set; }
-        public Workout SelectedWorkout { get; set; }
-
+        // Sökfiltret
         private string searchFilter;
         public string SearchFilter
         {
@@ -43,15 +43,16 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
                 if (string.IsNullOrEmpty(searchFilter))
                 {
-                    PHSearchVisibility = "Visible";
+                    PHSearchVisibility = Visibility.Visible;
                 }
                 else
                 {
-                    PHSearchVisibility = "Collapsed";
+                    PHSearchVisibility = Visibility.Collapsed;
                 }
             }
         }
 
+        // Varaktighetsfiltret
         private int durationFilter;
         public int DurationFilter
         {
@@ -64,16 +65,15 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        private string pHSearchVisibility;
-        public string PHSearchVisibility
+        // Döljer eller visar stödtext för sökfiltret
+        private Visibility pHSearchVisibility;
+        public Visibility PHSearchVisibility
         {
             get { return pHSearchVisibility; }
             set
             {
                 pHSearchVisibility = value;
                 OnPropertyChanged();
-
-
             }
         }
 
@@ -90,11 +90,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             this._workoutWindow = _workoutWindow;
 
-            // Håller koll på nuvarande användare
-            User = Manager.Instance.CurrentUser;
+            // Instansierar den temporära listan
+            FilteredWorkoutList = new ObservableCollection<Workout>();
 
-            // Visa träningspassen efter användare
-            if (User is AdminUser admin)
+            // Kolla om admin är inloggad
+            if (Manager.Instance.CurrentUser is AdminUser admin)
             {
                 // Hämta alla användares träningspass
                 WorkoutList = admin.ManageAllWorkouts();
@@ -102,7 +102,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             else
             {
                 // Hämta endast användarens egna träningspass
-                WorkoutList = User.UserWorkouts;
+                WorkoutList = Manager.Instance.CurrentUser.UserWorkouts;
             }
 
             // Sätter startvärdet för slidern så alla pass visas
@@ -128,35 +128,43 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             if (SelectedWorkout != null)
             {
-                // Uppdatera alla användares träningslistor som innehåller detta träningspass
+                // Håller koll på om träningen raderats
+                bool wasWorkoutRemoved = false;
+
+                // Kolla igenom alla användare
                 foreach (var user in Manager.Instance.AllUsers)
                 {
-                    // Ta bort träningspass från användarens lista av träningspass
+                    // Leta efter träningen
                     if (user.UserWorkouts.Contains(SelectedWorkout))
                     {
+                        // Ta bort från användarens träningar
                         user.UserWorkouts.Remove(SelectedWorkout);
-                        WorkoutList.Remove(SelectedWorkout);
 
-                        OnPropertyChanged(nameof(user.UserWorkouts));
+                        // Träningen raderades
+                        wasWorkoutRemoved = true;
 
-                        // Kör filtret för att uppdatera vyn
-                        ApplySearchFilter();
-
-                        // Behöver inte iterera igenom fler användare
+                        // Avbryter iterering
                         break;
                     }
                 }
 
-                // Uppdatera listan
-                OnPropertyChanged(nameof(WorkoutList));
+                // Om träningen är raderad
+                if (wasWorkoutRemoved)
+                {
+                    // Ta bort från träningslista
+                    WorkoutList.Remove(SelectedWorkout);
+
+                    // Uppdatera träningslista
+                    OnPropertyChanged(nameof(WorkoutList));
+
+                    // Uppdatera vyn
+                    ApplySearchFilter();
+                }
             }
-            else
-            {
-                MessageBox.Show("Du måste välja något i listan!");
-            }
+            else { MessageBox.Show("Du måste välja något i listan!"); }
         }
 
-        // Öppna fönster för att hämta mer information av det valda träningspasset
+        // Öppna fönstret för detaljerad information om valt träningspass
         public void OpenWorkoutDetails()
         {
             // Om något är valt i listan
@@ -165,16 +173,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 // Tillfällig lagring av vald träning i managerklassen
                 Manager.Instance.CurrentWorkout = SelectedWorkout;
 
-                // Öppnar WorkoutDetailsWindow
+                // Öppna WorkoutDetailsWindow
                 OpenWorkoutDetailsWindow();
 
-                // Stänger WorkoutWindow
+                // Stäng WorkoutWindow
                 _workoutWindow.Close();
             }
-            else
-            {
-                MessageBox.Show("Du måste välja något i listan!");
-            }
+            else { MessageBox.Show("Du måste välja något i listan!"); }
         }
 
         // Öppna fönster för användarens profilinställningar
@@ -197,6 +202,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Logga ut och återgå till MainWindow
         public void SignOut()
         {
+            // Rensar spårning av inloggad användare
+            Manager.Instance.CurrentUser = null;
+
             // Öppnar MainWindow
             OpenMainWindow();
 
@@ -210,15 +218,15 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // Rensa den tillfälliga listan för träningspass
             FilteredWorkoutList.Clear();
 
-            // Gå igenom alla träningar som finns i "WorkoutList"
+            // Hämta relevanta träningar från originallistan
             foreach (var workout in WorkoutList)
             {
-                // Om textrutan för sökfilter är tomt - visa alla träningar från orignallistan
-                // Matchar sökordet - lägg endast till de matchande träningarna från originallistan
+                // Hämta och visa alla träningar vid tom inmatning
                 if (string.IsNullOrEmpty(SearchFilter))
                 {
                     FilteredWorkoutList.Add(workout);
                 }
+                // Hämta och visa de träningar som inkluderar inmatad söktext
                 else if (workout.Type.Contains(SearchFilter) || workout.Notes.Contains(SearchFilter))
                 {
                     FilteredWorkoutList.Add(workout);
@@ -229,10 +237,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Sökfilter med slider för varaktighet
         public void ApplyDurationFilter()
         {
+            // Rensa den tillfälliga listan för träningspass
             FilteredWorkoutList.Clear();
 
+            // Hämta relevanta träningar från originallistan
             foreach (var workout in WorkoutList)
             {
+                // Hämta och visa de träningar som överstiger eller är samma som sökvärdet
                 if (workout.Duration.TotalMinutes >= DurationFilter)
                 {
                     FilteredWorkoutList.Add(workout);

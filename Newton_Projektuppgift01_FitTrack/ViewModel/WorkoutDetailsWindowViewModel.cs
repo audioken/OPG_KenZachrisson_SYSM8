@@ -9,6 +9,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     public class WorkoutDetailsWindowViewModel : ViewModelBase
     {
         // EGENSKAPER ↓
+        // Möjliggör stängning av detta fönster
         public Window _workoutDetailsWindow { get; set; }
 
         public User User { get; set; }
