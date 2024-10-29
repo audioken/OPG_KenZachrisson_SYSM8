@@ -111,8 +111,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Lista med säkerhetsfrågor och vald säkerhetsfråga
-        public ObservableCollection<string> SecurityQuestions { get; set; }
+        // Lista med säkerhetsfrågor som får sina värden i konstruktorn
+        public ObservableCollection<string> SecurityQuestions { get; } // Read-only
+
+        // Den valda säkerhetsfrågan
         private string selectedSecurityQuestion;
         public string SelectedSecurityQuestion
         {
@@ -157,9 +159,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Lista med länder och valt land
-        public ObservableCollection<string> Countries { get; set; }
-        public string CountryComboBox { get; set; }
+        // Lista med länder som får sina värden i konstruktorn
+        public ObservableCollection<string> Countries { get; } // Read-only
+
+        // Det valda landet
+        public string SelectedCountry { get; set; }
 
         // Relaykommandon som representerar knappklick
         public RelayCommand SaveUserDetailsCommand => new RelayCommand(execute => SaveUserDetails());
@@ -194,15 +198,15 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             ConfirmNewPasswordInput = Manager.Instance.CurrentUser.Password;
             SelectedSecurityQuestion = Manager.Instance.CurrentUser.SecurityQuestion;
             SecurityAnswerInput = Manager.Instance.CurrentUser.SecurityAnswer;
-            CountryComboBox = Manager.Instance.CurrentUser.Country;
+            SelectedCountry = Manager.Instance.CurrentUser.Country;
         }
 
         // METOD ↓
-        public void SaveUserDetails()
+        private void SaveUserDetails()
         {
             // Kontrollerar så alla inputs har inmatning
             if (!string.IsNullOrEmpty(NewUsernameInput) && !string.IsNullOrEmpty(NewPasswordInput) &&
-                !string.IsNullOrEmpty(ConfirmNewPasswordInput) && !string.IsNullOrEmpty(CountryComboBox) &&
+                !string.IsNullOrEmpty(ConfirmNewPasswordInput) && !string.IsNullOrEmpty(SelectedCountry) &&
                 !string.IsNullOrEmpty(SelectedSecurityQuestion) && !string.IsNullOrEmpty(SecurityAnswerInput))
             {
                 // Kontrollerar längden på användarnamn
@@ -242,7 +246,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                                 // Skriv över den gamla användarinformationen
                                 Manager.Instance.CurrentUser.Username = NewUsernameInput;
                                 Manager.Instance.CurrentUser.Password = NewPasswordInput;
-                                Manager.Instance.CurrentUser.Country = CountryComboBox;
+                                Manager.Instance.CurrentUser.Country = SelectedCountry;
                                 Manager.Instance.CurrentUser.SecurityQuestion = SelectedSecurityQuestion;
                                 Manager.Instance.CurrentUser.SecurityAnswer = SecurityAnswerInput;
 
@@ -266,7 +270,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Avbryt redigering och återgå till WorkoutWindow
-        public void Cancel()
+        private void Cancel()
         {
             // Öppna WorkoutWindow
             OpenWorkoutWindow();
@@ -276,7 +280,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Öppnar WorkoutWindow
-        public void OpenWorkoutWindow()
+        private void OpenWorkoutWindow()
         {
             WorkoutWindow workoutWindow = new WorkoutWindow();
             workoutWindow.Show();
