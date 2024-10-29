@@ -12,8 +12,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Möjliggör stängning av detta fönster
         public Window _workoutDetailsWindow { get; set; }
 
-        // Ska klona vald träning
-        public Workout WorkoutEditable { get; set; }
+        // Blir en klon av vald träning och får sitt initiella värde i konstruktorn
+        public Workout WorkoutEditable { get; private set; } // Read-only för klassens metoder
 
         // Aktivererar eller avaktiverar redigering
         private bool isDataGridReadOnly;
@@ -66,14 +66,14 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
         // METODER ↓
         // Aktivera redigering av träning
-        public void EditWorkout()
+        private void EditWorkout()
         {
             // Ta bort skrivskydded från DataGrid
             IsDataGridReadOnly = false;
         }
 
         // Avbryter redigering och återställer värden
-        public void AbortEdit()
+        private void AbortEdit()
         {
             // Klonar originalet för att återställa värdena
             WorkoutEditable = Manager.Instance.CurrentWorkout.Clone();
@@ -86,7 +86,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Sparar ändringar
-        public void SaveWorkout()
+        private void SaveWorkout()
         {
             // Hitta index för originalet av träningen som ändrats
             int indexOfWorkout = Manager.Instance.CurrentUser.UserWorkouts.IndexOf(Manager.Instance.CurrentWorkout);
@@ -129,7 +129,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Kopiera träning
-        public void CopyWorkout()
+        private void CopyWorkout()
         {
             // Hämta värdena och lagra i Managerklassen för enkel åtkomst
             Manager.Instance.CopiedWorkout = WorkoutEditable;
@@ -138,7 +138,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Avbryt redigering och återgå till WorkoutWindow
-        public void Cancel()
+        private void Cancel()
         {
             // Öppna WorkoutWindow
             OpenWorkoutWindow();
@@ -148,7 +148,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Öppna WorkoutWindow
-        public void OpenWorkoutWindow()
+        private void OpenWorkoutWindow()
         {
             WorkoutWindow workoutWindow = new WorkoutWindow();
             workoutWindow.Show();
