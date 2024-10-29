@@ -11,7 +11,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Möjliggör stängning av detta fönster
         public Window _registerWindow { get; set; }
 
-        // Användarnamn
+        // Användarnamn med döljbar stödtext
         private string usernameInput;
         public string UsernameInput
         {
@@ -42,7 +42,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Lösenord
+        // Lösenord med döljbar stödtext
         private string passwordInput;
         public string PasswordInput
         {
@@ -73,7 +73,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Bekräfta lösenord
+        // Bekräfta lösenord med döljbar stödtext
         private string confirmPasswordInput;
         public string ConfirmPasswordInput
         {
@@ -104,7 +104,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Säkerhetsfrågor
+        // Lista med säkerhetsfrågor och vald säkerhetsfråga
         public ObservableCollection<string> SecurityQuestions { get; set; }
         private string selectedSecurityQuestion;
         public string SelectedSecurityQuestion
@@ -117,7 +117,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Säkerhetssvar
+        // Säkerhetssvar med döljbar stödtext
         private string securityAnswerInput;
         public string SecurityAnswerInput
         {
@@ -148,11 +148,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Länder
+        // Lista med länder och valt land
         public ObservableCollection<string> Countries { get; set; }
         public string CountryComboBox { get; set; }
 
-        // Relaykommandon vid klick på knappar
+        // Relaykommandon som representerar knappklick
         public RelayCommand RegisterNewUserCommand => new RelayCommand(execute => RegisterNewUser());
         public RelayCommand CancelCommand => new RelayCommand(execute => Cancel());
 
@@ -191,35 +191,39 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             {
                 if (UsernameInput.Length >= 3)
                 {
-                    // Kontroll för tillgängligt användarnamn
+                    // Kollar om användarnamnet hittas
                     bool isUserNameAvailable = true;
 
-                    // Kollar om användarnamnet redan finns
+                    // Kollar igenom alla användare om användarnamnet redan finns
                     foreach (User user in Manager.Instance.AllUsers)
                     {
                         if (user.Username == UsernameInput)
                         {
-                            isUserNameAvailable = false; // Samma användarnamn finns redan
+                            // Användarnamnet var upptaget
+                            isUserNameAvailable = false;
+
                             break;
                         }
                     }
 
-                    // Om användarnamnet är ledigt
+                    // Om användarnamnet är tillgängligt
                     if (isUserNameAvailable)
                     {
-                        // Kontrollerar så lösenordet är starkt nog
-                        string specialCharacters = "!@#$%^&*()-_=+[{]};:’\"|\\,<.>/?"; // Mall för lösenordskontroll av specialtecken
-                        bool hasSpecial = PasswordInput.Any(c => specialCharacters.Contains(c)); // Innehåller det minst ett specialtecken?
-                        bool hasLength = PasswordInput.Length > 7; // Innehåller det minst åtta tecken?
-                        bool hasDigit = PasswordInput.Any(char.IsDigit); // Innehåller det minst en siffra?
+                        // Mall för lösenordskontroll av specialtecken
+                        string specialCharacters = "!@#$%^&*()-_=+[{]};:’\"|\\,<.>/?";
+
+                        // Kontrollerar så lösenordet innehåller minst 8 tecken, en siffra och ett specialtecken
+                        bool hasSpecial = PasswordInput.Any(c => specialCharacters.Contains(c));
+                        bool hasLength = PasswordInput.Length > 7;
+                        bool hasDigit = PasswordInput.Any(char.IsDigit);
 
                         // Om lösenordet är starkt nog
                         if (hasSpecial && hasLength && hasDigit)
                         {
-                            // Om lösenord och bekräfta lösenord matchar
+                            // Om lösenord och bekräftat lösenord matchar
                             if (PasswordInput == ConfirmPasswordInput)
                             {
-                                // Skapa ny användare baserat på den inmatade informationen
+                                // Skapa användare baserat på inmatad information
                                 User newUser = new User(UsernameInput, PasswordInput, CountryComboBox, SelectedSecurityQuestion, SecurityAnswerInput);
 
                                 // Lägg till ny användare i listan för alla användare
@@ -244,6 +248,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             else { MessageBox.Show("Du måste fylla i all information!"); }
         }
 
+        // Avbryt registrering och återgå till MainWindow
         public void Cancel()
         {
             // Öppna MainWindow

@@ -168,12 +168,14 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             _workoutDetailsWindow.Close();
         }
 
+        // Kopiera träning
         public void CopyWorkout()
         {
             Manager.Instance.CopiedWorkout = WorkoutEditable;
             MessageBox.Show("Kopierat!");
         }
 
+        // Avbryt redigering och återgå till WorkoutWindow
         public void Cancel()
         {
             // Öppna WorkoutWindow

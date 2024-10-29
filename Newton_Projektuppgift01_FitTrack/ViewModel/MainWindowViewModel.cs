@@ -9,10 +9,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     {
         // EGENSKAPER ↓
         // Logotyp för applikationen
-        public string LabelTitle { get; set; }
-        public string LabelTitle2 { get; set; }
+        public string LabelTitle { get; set; } // "Fit"
+        public string LabelTitle2 { get; set; } // "Track"
 
-        // Inmatning av användarnamn
+        // Inmatning av användarnamn med döljbar stödtext
         private string usernameInput;
         public string UsernameInput
         {
@@ -34,8 +34,18 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 }
             }
         }
+        private Visibility pHUsernameVisibility;
+        public Visibility PHUsernameVisibility
+        {
+            get { return pHUsernameVisibility; }
+            set
+            {
+                pHUsernameVisibility = value;
+                OnPropertyChanged();
+            }
+        }
 
-        // Inmatning av lösenord
+        // Inmatning av lösenord med döljbar stödtext
         private string passwordInput;
         public string PasswordInput
         {
@@ -57,8 +67,18 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 }
             }
         }
+        private Visibility pHPasswordVisibility;
+        public Visibility PHPasswordVisibility
+        {
+            get { return pHPasswordVisibility; }
+            set
+            {
+                pHPasswordVisibility = value;
+                OnPropertyChanged();
+            }
+        }
 
-        // Inmatning av 2FA-kod
+        // Inmatning av 2FA-kod med döljbar stödtext
         private string twoFAInput;
         public string TwoFAInput
         {
@@ -78,6 +98,16 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 {
                     PHTwoFAVisibility = Visibility.Collapsed;
                 }
+            }
+        }
+        private Visibility pHTwoFAVisibility;
+        public Visibility PHTwoFAVisibility
+        {
+            get { return pHTwoFAVisibility; }
+            set
+            {
+                pHTwoFAVisibility = value;
+                OnPropertyChanged();
             }
         }
 
@@ -134,18 +164,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Döljer eller visar knappen för generering av nytt lösenord
-        private Visibility generateNewPasswordVisibility;
-        public Visibility GenerateNewPasswordVisibility
-        {
-            get { return generateNewPasswordVisibility; }
-            set
-            {
-                generateNewPasswordVisibility = value;
-                OnPropertyChanged();
-            }
-        }
-
         // Döljer eller visar 2FA inmatningen
         private Visibility twoFAVisibility;
         public Visibility TwoFAVisibility
@@ -154,38 +172,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             set
             {
                 twoFAVisibility = value;
-                OnPropertyChanged();
-            }
-        }
-
-        // Döljer eller visar stödtext/placeholders för olika inmatningar
-        private Visibility pHUsernameVisibility;
-        public Visibility PHUsernameVisibility
-        {
-            get { return pHUsernameVisibility; }
-            set
-            {
-                pHUsernameVisibility = value;
-                OnPropertyChanged();
-            }
-        }
-        private Visibility pHPasswordVisibility;
-        public Visibility PHPasswordVisibility
-        {
-            get { return pHPasswordVisibility; }
-            set
-            {
-                pHPasswordVisibility = value;
-                OnPropertyChanged();
-            }
-        }
-        private Visibility pHTwoFAVisibility;
-        public Visibility PHTwoFAVisibility
-        {
-            get { return pHTwoFAVisibility; }
-            set
-            {
-                pHTwoFAVisibility = value;
                 OnPropertyChanged();
             }
         }
@@ -202,6 +188,18 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Döljer eller visar knappen för generering av nytt lösenord
+        private Visibility generateNewPasswordVisibility;
+        public Visibility GenerateNewPasswordVisibility
+        {
+            get { return generateNewPasswordVisibility; }
+            set
+            {
+                generateNewPasswordVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         // Döljer eller visar knappen som avbryter säkerhetsfrågan
         private Visibility cancelNewPasswordVisibility;
         public Visibility CancelNewPasswordVisibility
@@ -214,7 +212,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Relay-kommand som anropar olika metoder för inloggning och registrering vid klick
+        // Relaykommandon som representerar knappklick
         public RelayCommand SignInCommand => new RelayCommand(execute => SignIn());
         public RelayCommand RegisterCommand => new RelayCommand(execute => Register());
         public RelayCommand ForgotPasswordCommand => new RelayCommand(execute => ForgotPassword());
@@ -225,7 +223,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // KONSTRUKTOR ↓
         public MainWindowViewModel()
         {
-            // Sätter texten för applikationens namn
+            // Sätter texten för applikationens logotyp
             LabelTitle = "Fit";
             LabelTitle2 = "Track";
 
@@ -319,17 +317,17 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     // Om det matchar en användare
                     if (UsernameInput == user.Username)
                     {
-                        // Hämta säkerhetsfråga
+                        // Användaren hittades
+                        didUsernameExist = true;
+
+                        // Hämta användarens säkerhetsfråga
                         SecurityQuestion = user.SecurityQuestion;
 
                         // Visa säkerhetsfråga
                         ShowSecurityQuestion();
 
-                        // Hämta användare
+                        // Hämta användare vars lösenord ska återställas
                         Manager.Instance.CurrentUser = user;
-
-                        // Användaren hittades
-                        didUsernameExist = true;
 
                         // Avbryt iterering
                         break;
@@ -343,7 +341,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Dölj säkerhetsfråga
         public void HideSecurityQuestion()
         {
-            // Kontroll för stödtext
+            // Kontroll så stödtext visas rätt
             if (string.IsNullOrEmpty(TwoFAInput))
             {
                 PHTwoFAVisibility = Visibility.Visible;

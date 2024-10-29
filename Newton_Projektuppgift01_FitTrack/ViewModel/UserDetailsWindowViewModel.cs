@@ -9,9 +9,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     public class UserDetailsWindowViewModel : ViewModelBase
     {
         // EGENSKAPER ↓
+        // Möjliggör stängning av detta fönster
         public Window _userDetailsWindow { get; set; }
 
-        // Spårar information vid registrering av nytt användarkonto
+        // Användarnamn med döljbar stödtext
         private string newUsernameInput;
         public string NewUsernameInput
         {
@@ -42,6 +43,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Lösenord med döljbar stödtext
         private string newPasswordInput;
         public string NewPasswordInput
         {
@@ -72,6 +74,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Bekräfta lösenord med döljbar stödtext
         private string confirmNewPasswordInput;
         public string ConfirmNewPasswordInput
         {
@@ -102,6 +105,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Lista med säkerhetsfrågor och vald säkerhetsfråga
+        public ObservableCollection<string> SecurityQuestions { get; set; }
         private string selectedSecurityQuestion;
         public string SelectedSecurityQuestion
         {
@@ -113,6 +118,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Säkerhetssvar med döljbar stödtext
         private string securityAnswerInput;
         public string SecurityAnswerInput
         {
@@ -143,15 +149,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Lista med länder och valt land
+        public ObservableCollection<string> Countries { get; set; }
         public string CountryComboBox { get; set; }
 
-        // Lagrar alla säkerhetsfrågor
-        public ObservableCollection<string> SecurityQuestions { get; set; }
-
-        // Lagrar alla möjliga landsval
-        public ObservableCollection<string> Countries { get; set; }
-
-        // Relay-kommando som anropar metoden "RegisterNewUser" vid klick
+        // Relaykommandon som representerar knappklick
         public RelayCommand SaveUserDetailsCommand => new RelayCommand(execute => SaveUserDetails());
         public RelayCommand CancelCommand => new RelayCommand(execute => Cancel());
 
@@ -160,7 +162,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             _userDetailsWindow = userDetailsWindow;
 
-            // Instansierar och tilldelar listan med länder
+            // Instansierar alla länder
             Countries = new ObservableCollection<string>
             {
                 "Sweden",
@@ -169,7 +171,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 "Finland"
             };
 
-            // Instansierar och tilldelar listan med säkerhetsfrågor
+            // Instansierar alla säkerhetsfrågor
             SecurityQuestions = new ObservableCollection<string>
             {
                 "The name of your favourite pet?",
@@ -178,7 +180,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 "What city were your mother born in?"
             };
 
-            // Förifylld information för att underlätta
+            // Förifylld användarinformation
             NewUsernameInput = Manager.Instance.CurrentUser.Username;
             NewPasswordInput = Manager.Instance.CurrentUser.Password;
             ConfirmNewPasswordInput = Manager.Instance.CurrentUser.Password;
@@ -195,21 +197,21 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 !string.IsNullOrEmpty(ConfirmNewPasswordInput) && !string.IsNullOrEmpty(CountryComboBox) &&
                 !string.IsNullOrEmpty(SelectedSecurityQuestion) && !string.IsNullOrEmpty(SecurityAnswerInput))
             {
+                // Kontrollerar längden på användarnamn
                 if (NewUsernameInput.Length >= 3)
                 {
-                    // Kontrollbool för tillgängligt användarnamn
+                    // Kollar om användarnamn finns
                     bool isUserNameAvailable = true;
 
                     // Kollar om användarnamnet redan finns
                     foreach (User user in Manager.Instance.AllUsers)
                     {
-                        // Användarnamn redan upptaget om det inte gäller det inloggade kontots användarnamn
+                        // Kollar om användarnamn är upptaget så länge det inte är användarens egna användarnamn
                         if (NewUsernameInput == user.Username && NewUsernameInput != Manager.Instance.CurrentUser.Username)
                         {
                             // Användernamnet var upptaget
                             isUserNameAvailable = false;
 
-                            // Behöver inte iterera fler gånger
                             break;
                         }
                     }
@@ -226,7 +228,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                         // Om lösenordet är starkt nog
                         if (hasSpecial && hasLength && hasDigit)
                         {
-                            // Om lösenord och bekräfta lösenord matchar
+                            // Om lösenord och bekräftat lösenord matchar
                             if (NewPasswordInput == ConfirmNewPasswordInput)
                             {
                                 // Skriv över den gamla användarinformationen
@@ -255,6 +257,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             else { MessageBox.Show("Du måste fylla i all information!"); }
         }
 
+        // Avbryt redigering och återgå till WorkoutWindow
         public void Cancel()
         {
             // Öppna WorkoutWindow

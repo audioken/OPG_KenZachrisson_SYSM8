@@ -30,7 +30,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Tillfällig lista för att möjliggöra filtrering
         public ObservableCollection<Workout> FilteredWorkoutList { get; set; }
 
-        // Sökfiltret
+        // Sökfiltret med döljbar stödtext
         private string searchFilter;
         public string SearchFilter
         {
@@ -43,12 +43,22 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
                 if (string.IsNullOrEmpty(searchFilter))
                 {
-                    PHSearchVisibility = Visibility.Visible;
+                    PHSearchFilterVisibility = Visibility.Visible;
                 }
                 else
                 {
-                    PHSearchVisibility = Visibility.Collapsed;
+                    PHSearchFilterVisibility = Visibility.Collapsed;
                 }
+            }
+        }
+        private Visibility pHSearchFilterVisibility;
+        public Visibility PHSearchFilterVisibility
+        {
+            get { return pHSearchFilterVisibility; }
+            set
+            {
+                pHSearchFilterVisibility = value;
+                OnPropertyChanged();
             }
         }
 
@@ -62,18 +72,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 durationFilter = value;
                 OnPropertyChanged();
                 ApplyDurationFilter();
-            }
-        }
-
-        // Döljer eller visar stödtext för sökfiltret
-        private Visibility pHSearchVisibility;
-        public Visibility PHSearchVisibility
-        {
-            get { return pHSearchVisibility; }
-            set
-            {
-                pHSearchVisibility = value;
-                OnPropertyChanged();
             }
         }
 
