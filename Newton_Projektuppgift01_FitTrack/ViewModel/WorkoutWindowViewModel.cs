@@ -12,8 +12,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Möjliggör stängning av detta fönster
         public Window _workoutWindow { get; set; }
 
-        // För att visa inloggad användare
-        public User User { get; set; }
+        // Spårar användarnamn och får sitt värde i konstruktorn
+        public User User { get; } // Read-only
 
         // Den valda träningen från listan
         public Workout SelectedWorkout { get; set; }
@@ -118,7 +118,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
         // METODER ↓
         // Öppnar fönster för att kunna lägga till ett träningspass
-        public void AddWorkout()
+        private void AddWorkout()
         {
             // Öppnar AddWorkoutWindow
             OpenAddWorkoutWindow();
@@ -128,7 +128,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Tar bort det valda träningspasset
-        public void RemoveWorkout()
+        private void RemoveWorkout()
         {
             if (SelectedWorkout != null)
             {
@@ -169,7 +169,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Öppna fönstret för detaljerad information om valt träningspass
-        public void OpenWorkoutDetails()
+        private void OpenWorkoutDetails()
         {
             // Om något är valt i listan
             if (SelectedWorkout != null)
@@ -187,7 +187,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Öppna fönster för användarens profilinställningar
-        public void OpenUserDetails()
+        private void OpenUserDetails()
         {
             // Öppnar UserDetailsWindow
             OpenUserDetailsWindow();
@@ -197,14 +197,14 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Öppnar en popup med information om företaget och appen
-        public void AppInfo()
+        private void AppInfo()
         {
             CompanyInfoWindow companyInfoWindow = new CompanyInfoWindow();
             companyInfoWindow.Show();
         }
 
         // Logga ut och återgå till MainWindow
-        public void SignOut()
+        private void SignOut()
         {
             // Rensar spårning av inloggad användare
             Manager.Instance.CurrentUser = null;
@@ -217,7 +217,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Sökfilter med textruta för träningstyp och kommentarer
-        public void ApplySearchFilter()
+        private void ApplySearchFilter()
         {
             // Rensa den tillfälliga listan för träningspass
             FilteredWorkoutList.Clear();
@@ -239,7 +239,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Sökfilter med slider för varaktighet
-        public void ApplyDurationFilter()
+        private void ApplyDurationFilter()
         {
             // Rensa den tillfälliga listan för träningspass
             FilteredWorkoutList.Clear();
@@ -256,22 +256,22 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Öppnar olika fönster
-        public void OpenUserDetailsWindow()
+        private void OpenUserDetailsWindow()
         {
             UserDetailsWindow userDetailsWindow = new UserDetailsWindow();
             userDetailsWindow.Show();
         }
-        public void OpenWorkoutDetailsWindow()
+        private void OpenWorkoutDetailsWindow()
         {
             WorkoutDetailsWindow workoutDetailsWindow = new WorkoutDetailsWindow();
             workoutDetailsWindow.Show();
         }
-        public void OpenMainWindow()
+        private void OpenMainWindow()
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
         }
-        public void OpenAddWorkoutWindow()
+        private void OpenAddWorkoutWindow()
         {
             AddWorkoutWindow addWorkoutWindow = new AddWorkoutWindow();
             addWorkoutWindow.Show();
