@@ -4,44 +4,52 @@ namespace Newton_Projektuppgift01_FitTrack.Model
 {
     public class Manager
     {
+        // SINGLETON-IMPLEMENTERING ↓
+        // Säkerställer att endast en instans av Manager existerar under applikationens livstid
+        private static Manager _instance;
+
+        // Publik egenskap som ger åtkomst till den enda instansen av Manager
+        // Använder en lazy initialization för att skapa instansen första gången den efterfrågas
+        public static Manager Instance => _instance ??= new Manager();
+
         // FÄLT ↓
+        // Startanvändare
         private User user;
         private AdminUser admin;
 
-        //EGENSKAPER ↓
-        // Singleton-implementering av Manager för att möjliggöra åtkomst över hela projektet
-        private static Manager _instance;
-        public static Manager Instance => _instance ??= new Manager();
+        // EGENSKAPER ↓
+        // Lista som ska lagra alla användare
+        // Read-only då endast Manager ska kunna ändra listan
+        public ObservableCollection<User> AllUsers { get; private set; }
 
-        // Deklarerar listor som lagrar alla användare och träningar
-        public ObservableCollection<User> AllUsers { get; private set; } // Readonly
-
-        // Håller koll på inloggad användare
+        // Spårar inloggad användare
         public User CurrentUser { get; set; }
+
+        // Spårar aktuell träning
         public Workout CurrentWorkout { get; set; }
+
+        // Används temporärt vid kopiering av träningspass
         public Workout CopiedWorkout { get; set; }
 
         // KONSTRUKTOR ↓
         private Manager()
         {
-            // Startanvändare redan inlagda för testning
+            // Instansierar listan för alla användare
+            AllUsers = new ObservableCollection<User>();
+
+            // Skapar startanvändare för testning
             user = new User("user", "password", "Sweden", "The name of your favourite pet?", "Fido");
             admin = new AdminUser("admin", "password", "Sweden");
 
-            AllUsers = new ObservableCollection<User>();
-
+            // Lägg till startanvändare i listan
             AddUser(user);
             AddUser(admin);
 
-            // Parametrar för förinlagda exempelträningar
-            DateTime dateTime = DateTime.Now;
-            TimeSpan timeSpan = TimeSpan.FromMinutes(30);
-
             // Förinlagda träningar för profilen "user"
-            Workout w1 = new StrengthWorkout(dateTime, "Strength Workout", timeSpan, 200, "Tynglyftning", 20);
-            Workout w2 = new CardioWorkout(dateTime, "Cardio Workout", timeSpan, 300, "Row", 12);
-            Workout w3 = new CardioWorkout(dateTime, "Cardio Workout", timeSpan, 300, "Marathon", 42);
-            Workout w4 = new CardioWorkout(dateTime, "Cardio Workout", timeSpan, 300, "Running", 10);
+            Workout w1 = new StrengthWorkout(DateTime.Now, "Strength Workout", TimeSpan.FromMinutes(30), 0, "Tyngdlyftning", 20);
+            Workout w2 = new CardioWorkout(DateTime.Now, "Cardio Workout", TimeSpan.FromMinutes(45), 0, "Rodd", 12);
+            Workout w3 = new CardioWorkout(DateTime.Now, "Cardio Workout", TimeSpan.FromMinutes(75), 0, "Lång runda", 15);
+            Workout w4 = new CardioWorkout(DateTime.Now, "Cardio Workout", TimeSpan.FromMinutes(15), 0, "Spinning", 5);
 
             // Lägger till träningarna i användarens träningslista
             user.UserWorkouts.Add(w1);
@@ -50,6 +58,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
             user.UserWorkouts.Add(w4);
         }
 
+        // Lägger till ny användare i listan för alla användare
         public void AddUser(User user)
         {
             AllUsers.Add(user);

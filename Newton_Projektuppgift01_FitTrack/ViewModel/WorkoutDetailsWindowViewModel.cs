@@ -51,11 +51,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             this._workoutDetailsWindow = _workoutDetailsWindow;
 
-            // Klonar vald träning för att möjliggöra redigering och återställning ändringar
-            WorkoutEditable = Manager.Instance.CurrentWorkout.Clone();
-
             // Beräknar brända kalorier för träningen
             Manager.Instance.CurrentWorkout.CaloriesBurned = Manager.Instance.CurrentWorkout.CalculateCaloriesBurned();
+
+            // Klonar vald träning för att möjliggöra redigering och återställning ändringar
+            WorkoutEditable = Manager.Instance.CurrentWorkout.Clone();
 
             // Lägger in träningen i lista för att kunna visas i DataGrid
             WorkoutList = new ObservableCollection<Workout> { WorkoutEditable };
