@@ -8,9 +8,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     public class MainWindowViewModel : ViewModelBase
     {
         // EGENSKAPER ↓
-        // Logotyp för applikationen
-        public string LabelTitle { get; set; } // "Fit"
-        public string LabelTitle2 { get; set; } // "Track"
+        // Read-only logotyp för applikationen utan setter som får sina värden i konstruktorn
+        public string LabelTitle { get; } // "Fit"
+        public string LabelTitle2 { get; } // "Track"
 
         // Inmatning av användarnamn med döljbar stödtext
         private string usernameInput;
@@ -239,7 +239,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
         // METODER ↓
         // Kontroll för inloggning
-        public void SignIn()
+        private void SignIn()
         {
             // Kollar om kontot hittas
             bool accountFound = false;
@@ -292,7 +292,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Öppnar fönster för registrering av användare
-        public void Register()
+        private void Register()
         {
             // Öppnar RegisterWindow
             RegisterWindow registerWindow = new RegisterWindow();
@@ -303,7 +303,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Möjliggör återställning av lösenord
-        public void ForgotPassword()
+        private void ForgotPassword()
         {
             // Kollar om användaren hittas
             bool didUsernameExist = false;
@@ -338,7 +338,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Dölj säkerhetsfråga
-        public void HideSecurityQuestion()
+        private void HideSecurityQuestion()
         {
             // Kontroll så stödtext visas rätt
             if (string.IsNullOrEmpty(TwoFAInput))
@@ -361,7 +361,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Visa säkerhetsfråga
-        public void ShowSecurityQuestion()
+        private void ShowSecurityQuestion()
         {
             // Visa alla element relaterade till säkerhetsfrågan
             SecurityVisibility = Visibility.Visible;
@@ -374,7 +374,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Generera ett nytt lösenord
-        public void GenerateNewPassword()
+        private void GenerateNewPassword()
         {
             // Genererar ett nytt lösenord, samt lagrar det, om svaret på säkerhetsfrågan är rätt
             bool isPasswordChanged = Manager.Instance.CurrentUser.ResetPassword(SecurityAnswerInput);
@@ -393,7 +393,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Generera och skicka en slumpad 2FA-kod som "SMS" till användaren
-        public void GenerateAndSendTwoFA()
+        private void GenerateAndSendTwoFA()
         {
             // Skapa ett objekt för slumpade nummer
             Random random = new Random();
@@ -405,7 +405,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Öppna WorkoutWindow
-        public void OpenWorkoutWindow()
+        private void OpenWorkoutWindow()
         {
             WorkoutWindow workoutWindow = new WorkoutWindow();
             workoutWindow.Show();
