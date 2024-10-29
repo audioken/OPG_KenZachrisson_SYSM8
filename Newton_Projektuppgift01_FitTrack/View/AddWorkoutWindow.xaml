@@ -51,7 +51,7 @@
                     </StackPanel>
 
                     <!-- Träningstyp -->
-                    <ComboBox ItemsSource="{Binding WorkoutTypes}" SelectedItem="{Binding WorkoutTypeComboBox}" Width="150" FontSize="16" 
+                    <ComboBox ItemsSource="{Binding WorkoutTypes}" SelectedItem="{Binding SelectedWorkoutType}" Width="150" FontSize="16" 
                       FontWeight="UltraLight" Foreground="Crimson" Margin="0,10,0,10"/>
 
                     <!-- Text för distans -->

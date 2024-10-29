@@ -9,12 +9,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     public class AddWorkWindowViewModel : ViewModelBase
     {
         // EGENSKAPER ↓
+        // Möjliggör stängning av detta fönster
         public Window _addWorkoutWindow { get; set; }
 
-        // Håller koll på inloggad användare
-        public User User { get; set; }
-
-        // Date
+        // Välj datum
         private DateTime selectedDate;
         public DateTime SelectedDate
         {
@@ -22,10 +20,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             set
             {
                 selectedDate = value;
+
+                // Uppdaterar värdet för datum och tid
                 OnPropertyChanged(nameof(FullDateTime));
             }
         }
-
         private int selectedDateHour;
         public int SelectedDateHour
         {
@@ -33,10 +32,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             set
             {
                 selectedDateHour = value;
+
+                // Uppdaterar värdet för datum och tid
                 OnPropertyChanged(nameof(FullDateTime));
             }
         }
-
         private int selectedDateMinute;
         public int SelectedDateMinute
         {
@@ -44,42 +44,36 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             set
             {
                 selectedDateMinute = value;
+
+                // Uppdaterar värdet för datum och tid
                 OnPropertyChanged(nameof(FullDateTime));
             }
         }
 
+        // Lägger ihop datumvärden
         private DateTime fullDateTime;
         public DateTime FullDateTime
         {
+            // Returnerar en ny DateTime baserad valt datum och tid
             get { return new DateTime(SelectedDate.Year, SelectedDate.Month, SelectedDate.Day, SelectedDateHour, SelectedDateMinute, 0); }
         }
 
-        // Type
-        private string workoutTypeComboBox;
-        public string WorkoutTypeComboBox
+        // Välj träningstyp
+        private string selectedWorkoutType;
+        public string SelectedWorkoutType
         {
-            get { return workoutTypeComboBox; }
+            get { return selectedWorkoutType; }
             set
             {
-                workoutTypeComboBox = value;
+                selectedWorkoutType = value;
                 OnPropertyChanged();
-                UpdateVisibility();
+
+                // Visar inmatning för Repetition eller Distans beroende på vald träningstyp
+                UpdateVisibilityBasedOnWorkout();
             }
         }
 
-        // Duration
-        private int selectedDurationSlider;
-        public int SelectedDurationSlider
-        {
-            get { return selectedDurationSlider; }
-            set
-            {
-                selectedDurationSlider = value;
-                OnPropertyChanged();
-
-                DurationInput = new TimeSpan(GetHours(), GetMinutes(), 0);
-            }
-        }
+        // Välj varaktighet
         private TimeSpan durationInput;
         public TimeSpan DurationInput
         {
@@ -90,8 +84,21 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 OnPropertyChanged();
             }
         }
+        private int selectedDurationSlider;
+        public int SelectedDurationSlider
+        {
+            get { return selectedDurationSlider; }
+            set
+            {
+                selectedDurationSlider = value;
+                OnPropertyChanged();
 
-        // Distance
+                // Skapar en ny TimeSpan som räknar ut sina värden via metoder som hanterar vald varaktighet
+                DurationInput = new TimeSpan(GetHours(), GetMinutes(), 0);
+            }
+        }
+
+        // Välj distans för Cardio Workout
         private int selectedDistanceSlider;
         public int SelectedDistanceSlider
         {
@@ -113,7 +120,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Repetition
+        // Välj repetitioner för Strength Workout
         private int selectedRepetitionSlider;
         public int SelectedRepetitionSlider
         {
@@ -135,20 +142,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // CaloriesBurned (Funderar på att skippa denna helt för inmatning eftersom kalorier räknas ut när man kollar detaljer)
-        //public int CaloriesBurnedInput { get; set; }
-        //private int calculateCaloriesBurned;
-        //public int CalculateCaloriesBurned
-        //{
-        //    get { return calculateCaloriesBurned; }
-        //    set
-        //    {
-        //        calculateCaloriesBurned = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-
-        // Notes
+        // Skriv in kommentar
         private string notesInput;
         public string NotesInput
         {
@@ -158,10 +152,12 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 notesInput = value;
                 OnPropertyChanged();
 
+                // Visar stödtext om inmatningsfältet är tomt
                 if (string.IsNullOrEmpty(notesInput))
                 {
                     PHNotesVisibility = Visibility.Visible;
                 }
+                // Döljer stödtexten om inmatningsfältet har värde
                 else
                 {
                     PHNotesVisibility = Visibility.Collapsed;
@@ -179,14 +175,12 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Listor som gör inmatningen enklare för användaren
+        // Listor för olika typer av inmatning
         public ObservableCollection<string> WorkoutTypes { get; set; }
         public ObservableCollection<int> AvailableDateHours { get; set; }
         public ObservableCollection<int> AvailableDateMinutes { get; set; }
-        public ObservableCollection<int> DurationHours { get; set; }
-        public ObservableCollection<int> DurationMinutes { get; set; }
 
-        // Relay-kommandon
+        // Relaykommandon som representerar knappklick
         public RelayCommand SaveCommand => new RelayCommand(execute => SaveWorkout());
         public RelayCommand PasteCommand => new RelayCommand(execute => PasteWorkout());
         public RelayCommand CancelCommand => new RelayCommand(execute => Cancel());
@@ -196,20 +190,16 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             _addWorkoutWindow = addWorkoutWindow;
 
-            // Hämtar nuvarande användare
-            User = Manager.Instance.CurrentUser; // Behövs kanske inte? Jag sparar ju direkt till Managerklassen i Save
-
             // Instansierar listor med värden
             WorkoutTypes = new ObservableCollection<string> { "Cardio Workout", "Strength Workout" };
             AvailableDateHours = new ObservableCollection<int> { 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
             AvailableDateMinutes = new ObservableCollection<int> { 00, 15, 30, 45 };
 
-            // Tilldelar värden för alla inputs för att det ska finnas något förifyllt
-            //DateTime now = DateTime.Now; // Hämtar aktuellt datum
-            SelectedDate = DateTime.Now; // Tilldelar aktuellt datum
+            // Standardmall för ny träning
+            SelectedDate = DateTime.Now;
             SelectedDateHour = 10;
-            SelectedDateMinute = 00;
-            WorkoutTypeComboBox = "Strength Workout";
+            SelectedDateMinute = 30;
+            SelectedWorkoutType = "Strength Workout";
             SelectedDurationSlider = 0;
             SelectedRepetitionSlider = 0;
             SelectedDistanceSlider = 0;
@@ -220,43 +210,40 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Spara träningspasset
         public void SaveWorkout()
         {
-            // Kolla också så det finns en kommentar
+            // Kolla så det finns en kommentar
             if (!string.IsNullOrEmpty(NotesInput))
             {
-                // Deklarer variabel som träningen ska instansieras från
+                // Deklarerar en variabel som träningen ska instansieras från
                 Workout workout = null;
 
-                // Kolla sen vad det är för typ av träning för att instansiera rätt träningsklass
-                if (WorkoutTypeComboBox == "Strength Workout")
+                // Kolla typ av träning för att instansiera rätt träningstyp
+                if (SelectedWorkoutType == "Strength Workout")
                 {
                     // Instansierar ny styrketräning
-                    workout = new StrengthWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, 0, NotesInput, SelectedRepetitionSlider);
+                    workout = new StrengthWorkout(FullDateTime, SelectedWorkoutType, DurationInput, 0, NotesInput, SelectedRepetitionSlider);
 
                 }
-                else if (WorkoutTypeComboBox == "Cardio Workout")
+                else if (SelectedWorkoutType == "Cardio Workout")
                 {
                     // Instansierar ny konditionsträning
-                    workout = new CardioWorkout(FullDateTime, WorkoutTypeComboBox, DurationInput, 0, NotesInput, SelectedDistanceSlider);
+                    workout = new CardioWorkout(FullDateTime, SelectedWorkoutType, DurationInput, 0, NotesInput, SelectedDistanceSlider);
                 }
 
                 // Lägg till träningen i användarens träningslista
                 Manager.Instance.CurrentUser.UserWorkouts.Add(workout);
 
-                MessageBox.Show($"Vald träningstyp: {WorkoutTypeComboBox}\nTidpunkt: {FullDateTime}\nVaraktighet: {SelectedDurationSlider} min\nÖvriga kommenterar: {NotesInput}");
+                MessageBox.Show($"Vald träningstyp: {SelectedWorkoutType}\nTidpunkt: {FullDateTime}\nVaraktighet: {SelectedDurationSlider} min\nÖvriga kommenterar: {NotesInput}");
 
                 // Öppna WorkoutWindow
                 OpenWorkoutWindow();
 
                 // Stäng AddWorkoutWindow
                 _addWorkoutWindow.Close();
-
-                // Oklart om man behöver använda dessa uppdateringar
-                OnPropertyChanged(nameof(Manager.Instance.CurrentUser.UserWorkouts));
             }
             else { MessageBox.Show("Du måste skriva en kommentar.."); }
         }
 
-        // Infoga alla parametrar från träningspasset som kopierades i WorkoutDetailsWindow
+        // Infoga relevanta parametrar från det kopierade träningspasset
         public void PasteWorkout()
         {
             // Kolla så det finns en kopierad träning
@@ -271,56 +258,35 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 OnPropertyChanged(nameof(SelectedDateMinute));
 
                 // Hämta träningstyp
-                WorkoutTypeComboBox = Manager.Instance.CopiedWorkout.Type;
-                OnPropertyChanged(nameof(WorkoutTypeComboBox));
+                SelectedWorkoutType = Manager.Instance.CopiedWorkout.Type;
+                OnPropertyChanged(nameof(SelectedWorkoutType));
 
                 // Hämta varaktighet i minuter
                 SelectedDurationSlider = ConvertTimeSpanToMinutes();
                 OnPropertyChanged(nameof(SelectedDurationSlider));
 
                 // Kontrollera vilken träningstyp som är kopierad för att tilldela rätt extravärde
-                if (Manager.Instance.CopiedWorkout is StrengthWorkout copiedStrengthWorkout)
+                if (Manager.Instance.CopiedWorkout is StrengthWorkout strengthWorkout)
                 {
                     // Hämta repetitioner
-                    SelectedRepetitionSlider = copiedStrengthWorkout.Repetition;
+                    SelectedRepetitionSlider = strengthWorkout.Repetition;
                     OnPropertyChanged(nameof(SelectedRepetitionSlider));
                 }
-                else if (Manager.Instance.CopiedWorkout is CardioWorkout copiedCardioWorkout)
+                else if (Manager.Instance.CopiedWorkout is CardioWorkout cardioWorkout)
                 {
                     // Hämta distans
-                    SelectedDistanceSlider = copiedCardioWorkout.Distance;
+                    SelectedDistanceSlider = cardioWorkout.Distance;
                     OnPropertyChanged(nameof(SelectedDistanceSlider));
                 }
 
-                //// Hämta 
-                //CaloriesBurnedInput = Manager.Instance.CopiedWorkout.CaloriesBurned;
-                //OnPropertyChanged(nameof(CaloriesBurnedInput));
-
+                // Hämta kommentar
                 NotesInput = Manager.Instance.CopiedWorkout.Notes;
                 OnPropertyChanged(nameof(NotesInput));
             }
-            else
-            {
-                MessageBox.Show("Det finns ingen kopierad träning..");
-            }
+            else { MessageBox.Show("Det finns ingen kopierad träning.."); }
         }
 
-        // Kontrollerar vilken knapp och vilken inputruta som syns beroende på träningstyp
-        private void UpdateVisibility()
-        {
-            if (WorkoutTypeComboBox == "Cardio Workout")
-            {
-                DistanceSliderVisibility = Visibility.Visible;
-                RepetitionSliderVisibility = Visibility.Collapsed;
-            }
-            else if (WorkoutTypeComboBox == "Strength Workout")
-            {
-                DistanceSliderVisibility = Visibility.Collapsed;
-                RepetitionSliderVisibility = Visibility.Visible;
-            }
-        }
-
-        // Gå tillbaka till tidigare fönster
+        // Avbryt tillägg av ny träning och öppna WorkoutWindow
         public void Cancel()
         {
             // Öppna WorkoutWindow
@@ -328,6 +294,21 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
             // Stäng AddWorkoutWindow
             _addWorkoutWindow.Close();
+        }
+
+        // Kontrollerar vilken knapp och vilken inputruta som syns beroende på träningstyp
+        private void UpdateVisibilityBasedOnWorkout()
+        {
+            if (SelectedWorkoutType == "Cardio Workout")
+            {
+                DistanceSliderVisibility = Visibility.Visible;
+                RepetitionSliderVisibility = Visibility.Collapsed;
+            }
+            else if (SelectedWorkoutType == "Strength Workout")
+            {
+                DistanceSliderVisibility = Visibility.Collapsed;
+                RepetitionSliderVisibility = Visibility.Visible;
+            }
         }
 
         // Konverterar konstant DurationSliders minutvärde till TimeSpan

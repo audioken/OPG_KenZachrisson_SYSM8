@@ -22,10 +22,12 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 newUsernameInput = value;
                 OnPropertyChanged();
 
+                // Visar stödtext om inmatningsfältet är tomt
                 if (string.IsNullOrEmpty(NewUsernameInput))
                 {
                     PHNewUsernameVisibility = Visibility.Visible;
                 }
+                // Döljer stödtexten om inmatningsfältet har värde
                 else
                 {
                     PHNewUsernameVisibility = Visibility.Collapsed;
@@ -53,10 +55,12 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 newPasswordInput = value;
                 OnPropertyChanged();
 
+                // Visar stödtext om inmatningsfältet är tomt
                 if (string.IsNullOrEmpty(NewPasswordInput))
                 {
                     PHNewPasswordVisibility = Visibility.Visible;
                 }
+                // Döljer stödtexten om inmatningsfältet har värde
                 else
                 {
                     PHNewPasswordVisibility = Visibility.Collapsed;
@@ -84,10 +88,12 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 confirmNewPasswordInput = value;
                 OnPropertyChanged();
 
+                // Visar stödtext om inmatningsfältet är tomt
                 if (string.IsNullOrEmpty(ConfirmNewPasswordInput))
                 {
                     PHConfirmNewPasswordVisibility = Visibility.Visible;
                 }
+                // Döljer stödtexten om inmatningsfältet har värde
                 else
                 {
                     PHConfirmNewPasswordVisibility = Visibility.Collapsed;
@@ -128,10 +134,12 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 securityAnswerInput = value;
                 OnPropertyChanged();
 
+                // Visar stödtext om inmatningsfältet är tomt
                 if (string.IsNullOrEmpty(SecurityAnswerInput))
                 {
                     PHSecurityAnswerVisibility = Visibility.Visible;
                 }
+                // Döljer stödtexten om inmatningsfältet har värde
                 else
                 {
                     PHSecurityAnswerVisibility = Visibility.Collapsed;
