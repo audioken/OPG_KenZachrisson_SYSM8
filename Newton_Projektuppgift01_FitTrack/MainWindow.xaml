@@ -22,9 +22,9 @@
         <Rectangle Grid.Row="0" Fill="Crimson"/>
 
         <!-- Logotyp -->
-        <Label Grid.Row="1" Content="Fit" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
+        <Label Grid.Row="1" Content="{Binding LabelTitle}" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,120,0"/>
-        <Label Grid.Row="1" Content="Track" FontSize="50" FontWeight="UltraBlack"  Foreground="Crimson" 
+        <Label Grid.Row="1" Content="{Binding LabelTitle2}" FontSize="50" FontWeight="UltraBlack"  Foreground="Crimson" 
                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="65,0,0,0"/>
 
         <!-- Huvudlayout -->

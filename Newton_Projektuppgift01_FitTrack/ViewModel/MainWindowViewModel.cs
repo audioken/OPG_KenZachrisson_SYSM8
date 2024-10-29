@@ -8,12 +8,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
     public class MainWindowViewModel : ViewModelBase
     {
         // EGENSKAPER ↓
-        // Sätter titeln på applikationen
-        public string LabelTitle { get; set; } = "FitTrack";
+        // Logotyp för applikationen
+        public string LabelTitle { get; set; }
+        public string LabelTitle2 { get; set; }
 
-        // Spårar inloggningsuppgifter för kontroll
-        //public string UsernameInput { get; set; }
-
+        // Inmatning av användarnamn
         private string usernameInput;
         public string UsernameInput
         {
@@ -23,17 +22,20 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 usernameInput = value;
                 OnPropertyChanged();
 
+                // Visar stödtext om inmatningsfältet är tomt
                 if (string.IsNullOrEmpty(UsernameInput))
                 {
-                    PHUsernameVisibility = "Visible";
+                    PHUsernameVisibility = Visibility.Visible;
                 }
+                // Döljer stödtexten om inmatningsfältet har värde
                 else
                 {
-                    PHUsernameVisibility = "Collapsed";
+                    PHUsernameVisibility = Visibility.Collapsed;
                 }
             }
         }
 
+        // Inmatning av lösenord
         private string passwordInput;
         public string PasswordInput
         {
@@ -43,17 +45,20 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 passwordInput = value;
                 OnPropertyChanged();
 
+                // Visar stödtext om inmatningsfältet är tomt
                 if (string.IsNullOrEmpty(PasswordInput))
                 {
-                    PHPasswordVisibility = "Visible";
+                    PHPasswordVisibility = Visibility.Visible;
                 }
+                // Döljer stödtexten om inmatningsfältet har värde
                 else
                 {
-                    PHPasswordVisibility = "Collapsed";
+                    PHPasswordVisibility = Visibility.Collapsed;
                 }
             }
         }
 
+        // Inmatning av 2FA-kod
         private string twoFAInput;
         public string TwoFAInput
         {
@@ -63,19 +68,23 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 twoFAInput = value;
                 OnPropertyChanged();
 
+                // Visar stödtext om inmatningsfältet är tomt
                 if (string.IsNullOrEmpty(TwoFAInput))
                 {
-                    PHTwoFAVisibility = "Visible";
+                    PHTwoFAVisibility = Visibility.Visible;
                 }
+                // Döljer stödtexten om inmatningsfältet har värde
                 else
                 {
-                    PHTwoFAVisibility = "Collapsed";
+                    PHTwoFAVisibility = Visibility.Collapsed;
                 }
             }
         }
 
+        // Slumpad 2FA-kod
         public string TwoFACode { get; set; }
 
+        // Visar användarens säkerhetsfråga
         private string securityQuestion;
         public string SecurityQuestion
         {
@@ -87,6 +96,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Inmatning av svar på säkerhetsfråga
         private string securityAnswerInput;
         public string SecurityAnswerInput
         {
@@ -96,22 +106,25 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 securityAnswerInput = value;
                 OnPropertyChanged();
 
+                // Visar knappar beroende på inmatning
                 if (string.IsNullOrEmpty(securityAnswerInput))
                 {
-                    GenerateNewPasswordVisibility = "Collapsed";
-                    CancelNewPasswordVisibility = "Visible";
+                    // Utan inmatning visas Cancel
+                    GenerateNewPasswordVisibility = Visibility.Collapsed;
+                    CancelNewPasswordVisibility = Visibility.Visible;
                 }
                 else
                 {
-                    GenerateNewPasswordVisibility = "Visible";
-                    CancelNewPasswordVisibility = "Collapsed";
+                    // Med inmatning visas Generate New Password
+                    GenerateNewPasswordVisibility = Visibility.Visible;
+                    CancelNewPasswordVisibility = Visibility.Collapsed;
                 }
             }
         }
 
-        // Visas när användaren klickar på knappen "Forgot Password"
-        private string securityVisibility;
-        public string SecurityVisibility
+        // Döljer eller visar säkerhetsfråga och inmatning av svar
+        private Visibility securityVisibility;
+        public Visibility SecurityVisibility
         {
             get { return securityVisibility; }
             set
@@ -121,9 +134,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Visas när användaren klickar på knappen "Forgot Password"
-        private string generateNewPasswordVisibility;
-        public string GenerateNewPasswordVisibility
+        // Döljer eller visar knappen för generering av nytt lösenord
+        private Visibility generateNewPasswordVisibility;
+        public Visibility GenerateNewPasswordVisibility
         {
             get { return generateNewPasswordVisibility; }
             set
@@ -133,9 +146,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Dölj medan användaren försöker återställa lösenordet
-        private string twoFAVisibility;
-        public string TwoFAVisibility
+        // Döljer eller visar 2FA inmatningen
+        private Visibility twoFAVisibility;
+        public Visibility TwoFAVisibility
         {
             get { return twoFAVisibility; }
             set
@@ -145,8 +158,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        private string pHUsernameVisibility;
-        public string PHUsernameVisibility
+        // Döljer eller visar stödtext/placeholders för olika inmatningar
+        private Visibility pHUsernameVisibility;
+        public Visibility PHUsernameVisibility
         {
             get { return pHUsernameVisibility; }
             set
@@ -155,9 +169,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 OnPropertyChanged();
             }
         }
-
-        private string pHPasswordVisibility;
-        public string PHPasswordVisibility
+        private Visibility pHPasswordVisibility;
+        public Visibility PHPasswordVisibility
         {
             get { return pHPasswordVisibility; }
             set
@@ -166,9 +179,8 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 OnPropertyChanged();
             }
         }
-
-        private string pHTwoFAVisibility;
-        public string PHTwoFAVisibility
+        private Visibility pHTwoFAVisibility;
+        public Visibility PHTwoFAVisibility
         {
             get { return pHTwoFAVisibility; }
             set
@@ -178,8 +190,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        private string signInVisibility;
-        public string SignInVisibility
+        // Döljer eller visar knappar för inloggning och registrering 
+        private Visibility signInVisibility;
+        public Visibility SignInVisibility
         {
             get { return signInVisibility; }
             set
@@ -189,8 +202,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        private string cancelNewPasswordVisibility;
-        public string CancelNewPasswordVisibility
+        // Döljer eller visar knappen som avbryter säkerhetsfrågan
+        private Visibility cancelNewPasswordVisibility;
+        public Visibility CancelNewPasswordVisibility
         {
             get { return cancelNewPasswordVisibility; }
             set
@@ -205,29 +219,31 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public RelayCommand RegisterCommand => new RelayCommand(execute => Register());
         public RelayCommand ForgotPasswordCommand => new RelayCommand(execute => ForgotPassword());
         public RelayCommand GenerateNewPasswordCommand => new RelayCommand(execute => GenerateNewPassword());
-        public RelayCommand SendTwoFACommand => new RelayCommand(execute => SendTwoFA());
-        public RelayCommand CancelNewPasswordCommand => new RelayCommand(execute => Cancel());
+        public RelayCommand SendTwoFACommand => new RelayCommand(execute => GenerateAndSendTwoFA());
+        public RelayCommand CancelNewPasswordCommand => new RelayCommand(execute => HideSecurityQuestion());
 
         // KONSTRUKTOR ↓
         public MainWindowViewModel()
         {
+            // Sätter texten för applikationens namn
+            LabelTitle = "Fit";
+            LabelTitle2 = "Track";
+
             // Tillfälligt för snabbare inlogg vid testning
             UsernameInput = "user";
             PasswordInput = "password";
             TwoFAInput = "123456";
             TwoFACode = "123456";
 
-            // Döljer label, knapp och textbox som dyker upp först när användaren klickar på Forgot Password
-            SecurityVisibility = "Collapsed";
-            GenerateNewPasswordVisibility = "Collapsed";
-            CancelNewPasswordVisibility = "Collapsed";
+            // Dölj säkerhetsfrågan initiellt
+            HideSecurityQuestion();
         }
 
         // METODER ↓
         // Kontroll för inloggning
         public void SignIn()
         {
-            // Kontroll om kontot finns
+            // Kollar om kontot hittas
             bool accountFound = false;
 
             // Kolla så text är inmatad
@@ -236,36 +252,37 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 // Kollar igenom användarlistan i Managerklassen
                 foreach (User user in Manager.Instance.AllUsers)
                 {
-                    // Kontrollerar så det matchar en användarprofil
+                    // Kontrollerar om det matchar en användarprofil
                     if (UsernameInput == user.Username && PasswordInput == user.Password)
                     {
-                        // Undviker att skriva ut felmeddelandet efter foreach-loopen
+                        // Kontot hittades
                         accountFound = true;
 
                         // Kontrollerar så 2FA stämmer
                         if (TwoFAInput == TwoFACode)
                         {
+                            // Loggar in admin eller användare
                             if (user is AdminUser admin)
                             {
+                                // Skapar en referens till den inloggade
                                 Manager.Instance.CurrentUser = admin;
+
+                                // Anropar metod för att skriva ut inloggningsinformation
                                 admin.SignIn();
                             }
                             else
                             {
-                                // Lagrar nuvarande användare
                                 Manager.Instance.CurrentUser = user;
-
-                                // Anropar metod för att skriva ut inloggningsinformation
                                 user.SignIn();
                             }
 
-                            // Öppna "WorkoutWindow"
-                            WorkoutWindow workoutWindow = new WorkoutWindow();
-                            workoutWindow.Show();
+                            // Öppna WorkoutWindow
+                            OpenWorkoutWindow();
 
-                            // Stäng "MainWindow"
+                            // Stäng MainWindow
                             Application.Current.MainWindow.Close();
 
+                            // Behöver inte iterera mer
                             break;
                         }
                         else { MessageBox.Show("2FA-koden är fel.."); }
@@ -283,13 +300,14 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             RegisterWindow registerWindow = new RegisterWindow();
             registerWindow.Show();
 
-            // Stänger ner MainWindow
+            // Stänger MainWindow
             Application.Current.MainWindow.Close();
         }
 
         // Möjliggör återställning av lösenord
         public void ForgotPassword()
         {
+            // Kollar om användaren hittas
             bool didUsernameExist = false;
 
             // Kolla så text är inmatad för användarnamn
@@ -298,24 +316,22 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 // Kollar igenom användarlistan i Managerklassen
                 foreach (User user in Manager.Instance.AllUsers)
                 {
-                    // Kontrollerar så det matchar en användarprofil
+                    // Om det matchar en användare
                     if (UsernameInput == user.Username)
                     {
-                        // Hämta användarens säkerhetsfråga
+                        // Hämta säkerhetsfråga
                         SecurityQuestion = user.SecurityQuestion;
 
-                        // Visa knapp och textbox som behövs för återställning av lösenord
-                        SecurityVisibility = "Visible";
-                        TwoFAVisibility = "Collapsed";
-                        PHTwoFAVisibility = "Collapsed";
-                        SignInVisibility = "Collapsed";
-                        CancelNewPasswordVisibility = "Visible";
+                        // Visa säkerhetsfråga
+                        ShowSecurityQuestion();
 
-                        // Se till att det är rätt användares profil som ändras
+                        // Hämta användare
                         Manager.Instance.CurrentUser = user;
 
+                        // Användaren hittades
                         didUsernameExist = true;
 
+                        // Avbryt iterering
                         break;
                     }
                 }
@@ -324,64 +340,78 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             else { MessageBox.Show("Du måste skriva in ett giltigt användarnamn!"); }
         }
 
+        // Dölj säkerhetsfråga
+        public void HideSecurityQuestion()
+        {
+            // Kontroll för stödtext
+            if (string.IsNullOrEmpty(TwoFAInput))
+            {
+                PHTwoFAVisibility = Visibility.Visible;
+            }
+            else
+            {
+                PHTwoFAVisibility = Visibility.Collapsed;
+            }
+
+            // Visa 2FA samt knappar för inloggning och registrering
+            TwoFAVisibility = Visibility.Visible;
+            SignInVisibility = Visibility.Visible;
+
+            // Dölj alla element relaterade till säkerhetsfrågan
+            SecurityVisibility = Visibility.Collapsed;
+            GenerateNewPasswordVisibility = Visibility.Collapsed;
+            CancelNewPasswordVisibility = Visibility.Collapsed;
+        }
+
+        // Visa säkerhetsfråga
+        public void ShowSecurityQuestion()
+        {
+            // Visa alla element relaterade till säkerhetsfrågan
+            SecurityVisibility = Visibility.Visible;
+            CancelNewPasswordVisibility = Visibility.Visible;
+
+            // Dölj 2FA samt knappar för inloggning och registrering
+            TwoFAVisibility = Visibility.Collapsed;
+            PHTwoFAVisibility = Visibility.Collapsed;
+            SignInVisibility = Visibility.Collapsed;
+        }
+
         // Generera ett nytt lösenord
         public void GenerateNewPassword()
         {
-            // Skickar användarens svar på säkerhetsfrågan till metoden för återställning i User-objektet
+            // Genererar ett nytt lösenord, samt lagrar det, om svaret på säkerhetsfrågan är rätt
             bool isPasswordChanged = Manager.Instance.CurrentUser.ResetPassword(SecurityAnswerInput);
 
+            // Återgå till startlayout om lösenordet ändrats
             if (isPasswordChanged)
             {
-                SecurityAnswerInput = "";
+                // Återställ alla inmatningar för lösenord
+                PasswordInput = "";
                 TwoFAInput = "";
+                SecurityAnswerInput = "";
 
-                TwoFAVisibility = "Visible";
-                PHTwoFAVisibility = "Visible";
-                SecurityVisibility = "Collapsed";
-                GenerateNewPasswordVisibility = "Collapsed";
-                SignInVisibility = "Visible";
-                CancelNewPasswordVisibility = "Collapsed";
+                // Dölj säkerhetsfråga
+                HideSecurityQuestion();
             }
-            //else
-            //{
-            //    TwoFAVisibility = "Collapsed";
-            //    PHTwoFAVisibility = "Collapsed";
-            //    SecurityVisibility = "Visible";
-            //    GenerateNewPasswordVisibility = "Visible";
-            //    SignInVisibility = "Collapsed";
-            //    CancelNewPasswordVisibility = "Visible";
-            //}
         }
 
-        // Generera en slumpad 2FA-kod som lagras för att kontrollera så att användarens inmatade kod är korrekt
-        public void SendTwoFA()
+        // Generera och skicka en slumpad 2FA-kod som "SMS" till användaren
+        public void GenerateAndSendTwoFA()
         {
             // Skapa ett objekt för slumpade nummer
             Random random = new Random();
 
-            // Generea ett sexsiffrigt tal och lagra i egenskapen "TwoFACode"
+            // Generera en sexsiffrig kod och lagra den för kontroll vid inlogg
             TwoFACode = random.Next(100000, 1000000).ToString();
 
             MessageBox.Show($"Din 2FA-kod är {TwoFACode}");
         }
 
-        public void Cancel()
+        // Öppna WorkoutWindow
+        public void OpenWorkoutWindow()
         {
-            TwoFAVisibility = "Visible";
-
-            if (string.IsNullOrEmpty(TwoFAInput))
-            {
-                PHTwoFAVisibility = "Visible";
-            }
-            else
-            {
-                PHTwoFAVisibility = "Collapsed";
-            }
-
-            SecurityVisibility = "Collapsed";
-            GenerateNewPasswordVisibility = "Collapsed";
-            SignInVisibility = "Visible";
-            CancelNewPasswordVisibility = "Collapsed";
+            WorkoutWindow workoutWindow = new WorkoutWindow();
+            workoutWindow.Show();
         }
     }
 }

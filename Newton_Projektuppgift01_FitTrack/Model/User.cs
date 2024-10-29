@@ -41,8 +41,6 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         // Återställ lösenordet för användaren
         public bool ResetPassword(string securityAnswer)
         {
-            bool isPasswordChanged = false;
-
             if (SecurityAnswer != null)
             {
                 if (!string.IsNullOrEmpty(securityAnswer))
@@ -55,7 +53,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
 
                         MessageBox.Show($"Ditt nya lösenord är {Password}");
 
-                        isPasswordChanged = true;
+                        return true;
                     }
                     else { MessageBox.Show("Tyvärr var det fel svar.."); }
                 }
@@ -63,7 +61,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
             }
             else { MessageBox.Show("Du har inte ställt in någon säkerhetsfråga.."); }
 
-            return isPasswordChanged;
+            return false;
         }
     }
 }
