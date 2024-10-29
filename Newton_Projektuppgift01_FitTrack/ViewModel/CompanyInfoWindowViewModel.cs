@@ -20,7 +20,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
         // METODER ↓
         // Stäng fönster
-        public void Close()
+        private void Close()
         {
             _companyInfoWindow.Close();
         }
