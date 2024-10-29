@@ -50,12 +50,23 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Lägger ihop datumvärden
+        // Lägger ihop datum och tid
         private DateTime fullDateTime;
         public DateTime FullDateTime
         {
             // Returnerar en ny DateTime baserad valt datum och tid
-            get { return new DateTime(SelectedDate.Year, SelectedDate.Month, SelectedDate.Day, SelectedDateHour, SelectedDateMinute, 0); }
+            get
+            {
+                return new DateTime(
+
+                SelectedDate.Year,
+                SelectedDate.Month,
+                SelectedDate.Day,
+                SelectedDateHour,
+                SelectedDateMinute,
+                0
+                );
+            } // Read-only
         }
 
         // Välj träningstyp
@@ -175,10 +186,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Listor för olika typer av inmatning
-        public ObservableCollection<string> WorkoutTypes { get; set; }
-        public ObservableCollection<int> AvailableDateHours { get; set; }
-        public ObservableCollection<int> AvailableDateMinutes { get; set; }
+        // Listor för olika typer av inmatning som får sina värden i konstruktorn
+        public ObservableCollection<string> WorkoutTypes { get; } // Read-only
+        public ObservableCollection<int> AvailableDateHours { get; } // Read-only
+        public ObservableCollection<int> AvailableDateMinutes { get; } // Read-only
 
         // Relaykommandon som representerar knappklick
         public RelayCommand SaveCommand => new RelayCommand(execute => SaveWorkout());
@@ -208,7 +219,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
         // METODER ↓
         // Spara träningspasset
-        public void SaveWorkout()
+        private void SaveWorkout()
         {
             // Kolla så det finns en kommentar
             if (!string.IsNullOrEmpty(NotesInput))
@@ -244,7 +255,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Infoga relevanta parametrar från det kopierade träningspasset
-        public void PasteWorkout()
+        private void PasteWorkout()
         {
             // Kolla så det finns en kopierad träning
             if (Manager.Instance.CopiedWorkout != null)
@@ -287,7 +298,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Avbryt tillägg av ny träning och öppna WorkoutWindow
-        public void Cancel()
+        private void Cancel()
         {
             // Öppna WorkoutWindow
             OpenWorkoutWindow();
@@ -312,23 +323,23 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Konverterar konstant DurationSliders minutvärde till TimeSpan
-        public int GetHours()
+        private int GetHours()
         {
             return SelectedDurationSlider / 60;
         }
-        public int GetMinutes()
+        private int GetMinutes()
         {
             return SelectedDurationSlider % 60;
         }
 
         // Konverterar TimeSpan till minuter när man klistrar in en träning
-        public int ConvertTimeSpanToMinutes()
+        private int ConvertTimeSpanToMinutes()
         {
             return (int)Manager.Instance.CopiedWorkout.Duration.TotalMinutes;
         }
 
         // Öppnar WorkoutWindow
-        public void OpenWorkoutWindow()
+        private void OpenWorkoutWindow()
         {
             WorkoutWindow workoutWindow = new WorkoutWindow();
             workoutWindow.Show();
