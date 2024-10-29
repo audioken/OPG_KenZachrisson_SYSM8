@@ -39,7 +39,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
 
             // Skapar startanvändare för testning
             user = new User("user", "password", "Sweden", "The name of your favourite pet?", "Fido");
-            admin = new AdminUser("admin", "password", "Sweden");
+            admin = new AdminUser("admin", "password", "Sweden", "The name of your favourite pet?", "Fido");
 
             // Lägg till startanvändare i listan
             AddUser(user);

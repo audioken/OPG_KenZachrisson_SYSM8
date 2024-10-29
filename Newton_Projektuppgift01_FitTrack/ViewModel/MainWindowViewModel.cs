@@ -329,7 +329,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                         // Hämta användare vars lösenord ska återställas
                         Manager.Instance.CurrentUser = user;
 
-                        // Avbryt iterering
                         break;
                     }
                 }

@@ -5,7 +5,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
     public class AdminUser : User
     {
         // KONSTRUKTOR ↓
-        public AdminUser(string Username, string Password, string Country) : base(Username, Password, Country) { }
+        public AdminUser(string Username, string Password, string Country, string SecurityQuestion, string SecurityAnswer) : base(Username, Password, Country, SecurityQuestion, SecurityAnswer) { }
 
         // METODER ↓
         // Hämtar alla användares träningspass och samlar i en lista
