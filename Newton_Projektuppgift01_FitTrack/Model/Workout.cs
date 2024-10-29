@@ -1,7 +1,10 @@
 ﻿namespace Newton_Projektuppgift01_FitTrack.Model
 {
+    // Abstrakt klass som tvingar härledda klasser att implementera dess medlemmar
     public abstract class Workout
     {
+        // EGENSKAPER ↓
+        // Grundparametrar som ett träningspass består av
         public DateTime Date { get; set; }
         public string Type { get; set; }
         public TimeSpan Duration { get; set; }
@@ -9,6 +12,7 @@
         public string Notes { get; set; }
         public User User { get; internal set; }
 
+        // KONSTRUKTOR ↓
         public Workout(DateTime Date, string Type, TimeSpan Duration, int CaloriesBurned, string Notes)
         {
             this.Date = Date;
@@ -18,9 +22,11 @@
             this.Notes = Notes;
         }
 
+        // METODER ↓
+        // Uträkning av brända kalorier i härledda klasser
         public abstract int CalculateCaloriesBurned();
 
-        // Tvingar härledda klasser att ha en metod för kloning
+        // Kloning av träningspass i härledda klasser
         public abstract Workout Clone();
     }
 }

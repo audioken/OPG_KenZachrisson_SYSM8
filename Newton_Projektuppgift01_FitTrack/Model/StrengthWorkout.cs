@@ -4,6 +4,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
     public class StrengthWorkout : Workout
     {
         // EGENSKAPER ↓
+        // Unik parameter för denna klass
         public int Repetition { get; set; }
 
         // KONSTRUKTOR ↓

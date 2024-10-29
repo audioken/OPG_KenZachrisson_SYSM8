@@ -4,6 +4,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
     public class CardioWorkout : Workout
     {
         // EGENSKAPER ↓
+        // Unik parameter för denna klass
         public int Distance { get; set; }
 
         // KONSTRUKTOR ↓
