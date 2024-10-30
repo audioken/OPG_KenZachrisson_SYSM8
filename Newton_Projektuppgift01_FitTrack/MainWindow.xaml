@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack"
+        xmlns:model="clr-namespace:Newton_Projektuppgift01_FitTrack.Model"
         mc:Ignorable="d"
         Title="MainWindow" MinWidth="600" MinHeight="600" Height="600" Width="600">
 
@@ -36,21 +37,26 @@
 
             <!-- Skriv in användarnamn -->
             <Grid>
+                
                 <Label Content="Username.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
                        Visibility="{Binding PHUsernameVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
                 <TextBox Text="{Binding UsernameInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
-                     VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
+                
             </Grid>
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200" Margin="0,0,0,5"/>
 
             <!-- Skriv in lösenord -->
             <Grid>
+                
                 <Label Content="Password.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
                        Visibility="{Binding PHPasswordVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
-                <TextBox Text="{Binding PasswordInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
-                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
+                <!-- Binder till klassen PasswordHelper för att kunna dölja lösenord och upprätthålla MVVM-mönstret -->
+                <PasswordBox model:PasswordHelper.BoundPassword="{Binding PasswordInput, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" BorderThickness="0" 
+                             FontSize="16" Width="200" Height="auto" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
+                
             </Grid>
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200"/>
 
@@ -63,10 +69,12 @@
                    Height="35" Width="400" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Crimson" FontSize="16"/>
 
             <Grid>
+                
                 <Label Content="Answer.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
                        Visibility="{Binding PHSecurityAnswerVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
                 <TextBox Text="{Binding SecurityAnswerInput, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SecurityVisibility}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
                          VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
+                
             </Grid>
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200" Margin="0,0,0,5" Visibility="{Binding SecurityVisibility}"/>
 
@@ -79,11 +87,13 @@
 
             <!-- Skriv in 2FA-kod -->
             <Grid>
+                
                 <Label Content="2FA.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
                        Visibility="{Binding PHTwoFAVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
                 <TextBox Text="{Binding TwoFAInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
                      VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Visibility="{Binding TwoFAVisibility}" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
+                
             </Grid>
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200" Visibility="{Binding TwoFAVisibility}"/>
 
