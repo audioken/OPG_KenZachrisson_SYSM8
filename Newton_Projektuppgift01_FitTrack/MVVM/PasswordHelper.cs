@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Newton_Projektuppgift01_FitTrack.Model
+namespace Newton_Projektuppgift01_FitTrack.MVVM
 {
 
     public static class PasswordHelper

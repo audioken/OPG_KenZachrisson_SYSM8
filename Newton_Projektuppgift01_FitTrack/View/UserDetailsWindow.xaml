@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View"
-        xmlns:model="clr-namespace:Newton_Projektuppgift01_FitTrack.Model"
+        xmlns:mvvm="clr-namespace:Newton_Projektuppgift01_FitTrack.MVVM"
         mc:Ignorable="d"
         Title="UserDetailsWindow" MinWidth="600" MinHeight="600" Height="600" Width="600">
 
@@ -51,7 +51,7 @@
                 <Label Content="New password.." Foreground="LightGray" Width="200" Height="32" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,-1" 
                        Visibility="{Binding PHNewPasswordVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
-                <PasswordBox model:PasswordHelper.BoundPassword="{Binding NewPasswordInput, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" BorderThickness="0" 
+                <PasswordBox mvvm:PasswordHelper.BoundPassword="{Binding NewPasswordInput, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" BorderThickness="0" 
                              FontSize="16" Width="200" Height="auto" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
 
             </Grid>
@@ -63,7 +63,7 @@
                 <Label Content="Confirm password.." Foreground="LightGray" Width="200" Height="32" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,-1" 
                        Visibility="{Binding PHConfirmNewPasswordVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
-                <PasswordBox model:PasswordHelper.BoundPassword="{Binding ConfirmNewPasswordInput, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" BorderThickness="0" 
+                <PasswordBox mvvm:PasswordHelper.BoundPassword="{Binding ConfirmNewPasswordInput, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" BorderThickness="0" 
                              FontSize="16" Width="200" Height="auto" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
 
             </Grid>

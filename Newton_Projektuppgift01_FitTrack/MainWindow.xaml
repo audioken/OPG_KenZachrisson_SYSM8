@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack"
-        xmlns:model="clr-namespace:Newton_Projektuppgift01_FitTrack.Model"
+        xmlns:mvvm="clr-namespace:Newton_Projektuppgift01_FitTrack.MVVM"
         mc:Ignorable="d"
         Title="MainWindow" MinWidth="600" MinHeight="600" Height="600" Width="600">
 
@@ -54,7 +54,7 @@
                        Visibility="{Binding PHPasswordVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
                 <!-- Binder till klassen PasswordHelper för att kunna dölja lösenord och upprätthålla MVVM-mönstret -->
-                <PasswordBox model:PasswordHelper.BoundPassword="{Binding PasswordInput, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" BorderThickness="0" 
+                <PasswordBox mvvm:PasswordHelper.BoundPassword="{Binding PasswordInput, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" BorderThickness="0" 
                              FontSize="16" Width="200" Height="auto" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
                 
             </Grid>
