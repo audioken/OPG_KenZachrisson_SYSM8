@@ -241,23 +241,23 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                                 // Lägg till ny användare i listan för alla användare
                                 Manager.Instance.AddUser(newUser);
 
-                                MessageBox.Show($"Tack {UsernameInput}! Din användarprofil har skapats. Var god logga in..");
-
                                 // Öppna MainWindow
                                 OpenMainWindow();
 
                                 // Stäng RegisterWindow
                                 _registerWindow.Close();
+
+                                MessageBox.Show($"Tack {UsernameInput}! Din användarprofil har skapats. Var god logga in..", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
-                            else { MessageBox.Show("Lösenorden matchar inte!"); }
+                            else { MessageBox.Show("Lösenorden matchar inte!", "No match!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                         }
-                        else { MessageBox.Show("Minst en åtta tecken, en siffra och ett specieltecken!"); }
+                        else { MessageBox.Show("Minst en åtta tecken, en siffra och ett specieltecken!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                     }
-                    else { MessageBox.Show("Användarnamnet finns redan!"); }
+                    else { MessageBox.Show("Användarnamnet finns redan!", "Occupied!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                 }
-                else { MessageBox.Show("Användarnamnet måste ha minst tre tecken!"); }
+                else { MessageBox.Show("Användarnamnet måste ha minst tre tecken!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
-            else { MessageBox.Show("Du måste fylla i all information!"); }
+            else { MessageBox.Show("Du måste fylla i all information!", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         // Avbryt registrering och återgå till MainWindow

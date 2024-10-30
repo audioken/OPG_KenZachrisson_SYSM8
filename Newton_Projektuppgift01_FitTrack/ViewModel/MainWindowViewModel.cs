@@ -301,12 +301,12 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                             // Behöver inte iterera mer
                             break;
                         }
-                        else { MessageBox.Show("2FA-koden är fel.."); }
+                        else { MessageBox.Show("2FA-koden är fel..", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                     }
                 }
-                if (!accountFound) { MessageBox.Show("Användarnamn och/eller lösenord är fel.."); }
+                if (!accountFound) { MessageBox.Show("Användarnamn och/eller lösenord är fel..", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
-            else { MessageBox.Show("Du måste fylla i användarnamn, lösenord och 2FA-kod.."); }
+            else { MessageBox.Show("Du måste fylla i användarnamn, lösenord och 2FA-kod..", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         // Öppnar fönster för registrering av användare
@@ -350,9 +350,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                         break;
                     }
                 }
-                if (!didUsernameExist) { MessageBox.Show("Användarnamnet finns tyvärr inte!"); }
+                if (!didUsernameExist) { MessageBox.Show("Användarnamnet finns tyvärr inte!", "No match!", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
-            else { MessageBox.Show("Du måste skriva in ett giltigt användarnamn!"); }
+            else { MessageBox.Show("Du måste skriva in ett giltigt användarnamn!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         // Dölj säkerhetsfråga
@@ -430,7 +430,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // Generera en sexsiffrig kod och lagra den för kontroll vid inlogg
             TwoFACode = random.Next(100000, 1000000).ToString();
 
-            MessageBox.Show($"Din 2FA-kod är {TwoFACode}");
+            MessageBox.Show($"Din 2FA-kod är {TwoFACode}", "Generated 2FA!", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         // Öppna WorkoutWindow

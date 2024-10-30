@@ -250,23 +250,23 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                                 Manager.Instance.CurrentUser.SecurityQuestion = SelectedSecurityQuestion;
                                 Manager.Instance.CurrentUser.SecurityAnswer = SecurityAnswerInput;
 
-                                MessageBox.Show($"Tack {NewUsernameInput}! Din användarprofil har uppdaterats..");
-
                                 // Öppna WorkoutWindow
                                 OpenWorkoutWindow();
 
                                 // Stäng UserDetailsWindow
                                 _userDetailsWindow.Close();
+
+                                MessageBox.Show($"Tack {NewUsernameInput}! Din användarprofil har uppdaterats..", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
-                            else { MessageBox.Show("Lösenorden matchar inte!"); }
+                            else { MessageBox.Show("Lösenorden matchar inte!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                         }
-                        else { MessageBox.Show("Minst en åtta tecken, en siffra och ett specieltecken!"); }
+                        else { MessageBox.Show("Lösenordet måste innehålla minst åtta tecken, en siffra och ett specieltecken!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                     }
-                    else { MessageBox.Show("Användarnamnet finns redan!"); }
+                    else { MessageBox.Show("Användarnamnet finns redan!", "Occupied!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                 }
-                else { MessageBox.Show("Användarnamnet måste ha minst tre tecken!"); }
+                else { MessageBox.Show("Användarnamnet måste ha minst tre tecken!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
-            else { MessageBox.Show("Du måste fylla i all information!"); }
+            else { MessageBox.Show("Du måste fylla i all information!", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         // Avbryt redigering och återgå till WorkoutWindow

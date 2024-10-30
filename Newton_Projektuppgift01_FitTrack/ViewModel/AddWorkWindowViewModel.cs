@@ -270,7 +270,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 // Lägg till träningen i användarens träningslista
                 Manager.Instance.CurrentUser.UserWorkouts.Add(newWorkout);
 
-                MessageBox.Show($"Vald träningstyp: {SelectedWorkoutType}\nTidpunkt: {FullDateTime}\nVaraktighet: {SelectedDurationSlider} min\nÖvriga kommenterar: {NotesInput}");
+                MessageBox.Show($"Vald träningstyp: {SelectedWorkoutType}\nTidpunkt: {FullDateTime}\nVaraktighet: {SelectedDurationSlider} min\nÖvriga kommenterar: {NotesInput}", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 // Öppna WorkoutWindow
                 OpenWorkoutWindow();
@@ -278,7 +278,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 // Stäng AddWorkoutWindow
                 _addWorkoutWindow.Close();
             }
-            else { MessageBox.Show("Du måste skriva en kommentar.."); }
+            else { MessageBox.Show("Du måste skriva en kommentar..", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         // Infoga relevanta parametrar från det kopierade träningspasset
@@ -321,7 +321,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 NotesInput = Manager.Instance.CopiedWorkout.Notes;
                 OnPropertyChanged(nameof(NotesInput));
             }
-            else { MessageBox.Show("Det finns ingen kopierad träning.."); }
+            else { MessageBox.Show("Det finns ingen kopierad träning..", "Missing copy!", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         // Avbryt tillägg av ny träning och öppna WorkoutWindow

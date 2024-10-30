@@ -375,7 +375,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     }
                 }
             }
-            else { MessageBox.Show("Något gick fel! Träningen kunde inte sparas.."); }
+            else { MessageBox.Show("Något gick fel! Träningen kunde inte sparas..", "Error!", MessageBoxButton.OK, MessageBoxImage.Error); }
 
             // Öppna WorkoutWindow
             OpenWorkoutWindow();
@@ -390,7 +390,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // Hämta värdena och lagra i Managerklassen för enkel åtkomst
             Manager.Instance.CopiedWorkout = WorkoutEditable;
 
-            MessageBox.Show("Kopierat!");
+            MessageBox.Show("Träningen är kopierad!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         // Avbryt redigering och återgå till WorkoutWindow
@@ -465,8 +465,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
                     // Återställ slider för Cardio Workout
                     SelectedDistanceSlider = 0;
-
-                    MessageBox.Show("Skapade Strength Workout");
                 }
             }
             else if (SelectedWorkoutType == "Cardio Workout")
@@ -478,8 +476,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
                     // Återställ slider för Strength Workout
                     SelectedRepetitionSlider = 0;
-
-                    MessageBox.Show("Skapade Cardio Workout");
                 }
             }
         }

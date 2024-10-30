@@ -63,16 +63,16 @@ namespace Newton_Projektuppgift01_FitTrack.Model
                         // Omvandla från heltal till sträng och ersätt tidigare lösenord
                         Password = randomizedPin.ToString();
 
-                        MessageBox.Show($"Ditt nya lösenord är {Password}");
+                        MessageBox.Show($"Ditt nya lösenord är {Password}", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
 
                         // Återställningen lyckades
                         return true;
                     }
-                    else { MessageBox.Show("Tyvärr var det fel svar.."); }
+                    else { MessageBox.Show("Tyvärr var det fel svar..", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                 }
-                else { MessageBox.Show("Du måste skriva ett svar på din säkerhetsfråga.."); }
+                else { MessageBox.Show("Du måste skriva ett svar på din säkerhetsfråga..", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
-            else { MessageBox.Show("Du har inte ställt in någon säkerhetsfråga.."); }
+            else { MessageBox.Show("Du har inte ställt in någon säkerhetsfråga..", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
 
             // Återställningen misslyckades
             return false;

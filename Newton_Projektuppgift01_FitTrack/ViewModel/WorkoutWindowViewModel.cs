@@ -165,7 +165,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     ApplySearchFilter();
                 }
             }
-            else { MessageBox.Show("Du måste välja något i listan!"); }
+            else { MessageBox.Show("Du måste välja något i listan!", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         // Öppna fönstret för detaljerad information om valt träningspass
@@ -183,7 +183,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 // Stäng WorkoutWindow
                 _workoutWindow.Close();
             }
-            else { MessageBox.Show("Du måste välja något i listan!"); }
+            else { MessageBox.Show("Du måste välja något i listan!", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         // Öppna fönster för användarens profilinställningar
