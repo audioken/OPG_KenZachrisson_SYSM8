@@ -27,7 +27,7 @@
 
         <!-- Instruktioner -->
         <Label Grid.Row="1" Content="Make changes to your workout or create a copy.." FontSize="20" Width="500" Foreground="Crimson" Margin="0,0,0,0"
-                   HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+               HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
 
         <!-- Layout för att lägga till träning -->
         <StackPanel Grid.Row="2" Margin="0,30,0,0">
@@ -156,23 +156,23 @@
 
                 <!-- Avbryt -->
                 <Button Content="Cancel" Command="{Binding CancelCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
-                Foreground="White" Width="90" Height="35" FontSize="16" Margin="10"/>
+                        Foreground="White" Width="90" Height="35" FontSize="16" Margin="10"/>
 
-                <!-- Avbryt -->
+                <!-- Redigera -->
                 <Button Content="Edit" Command="{Binding EditCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
-                Foreground="White" Width="90" Height="35" FontSize="16" Margin="10"/>
-
-                <!-- Kopiera -->
-                <Button Content="Copy" Command="{Binding CopyCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
-                Foreground="White" Width="90" Height="35" FontSize="16" Margin="10"/>
+                        Foreground="White" Width="90" Height="35" FontSize="16" Margin="10" Visibility="{Binding EditVisibility}"/>
 
                 <!-- Återställ -->
                 <Button Content="Restore" Command="{Binding RestoreCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
-                Foreground="White" Width="90" Height="35" FontSize="16" Margin="10"/>
+                        Foreground="White" Width="90" Height="35" FontSize="16" Margin="10" Visibility="{Binding RestoreVisibility}"/>
+                
+                <!-- Kopiera -->
+                <Button Content="Copy" Command="{Binding CopyCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
+                        Foreground="White" Width="90" Height="35" FontSize="16" Margin="10"/>
 
                 <!-- Spara -->
                 <Button Content="Save" Command="{Binding SaveCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
-                Foreground="White" Width="70" Height="35" FontSize="16" Margin="10"/>
+                        Foreground="White" Width="70" Height="35" FontSize="16" Margin="10"/>
 
             </StackPanel>
 

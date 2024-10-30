@@ -27,37 +27,43 @@
 
         <!-- Instruktioner -->
         <Label Grid.Row="1" Content="Register a new user profile. Fill in your details below.." FontSize="20" Width="500" Foreground="Crimson" Margin="0,0,0,0"
-                   HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+               HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
 
         <StackPanel Grid.Row="2" Margin="0,20,0,0">
 
             <!-- Välj användarnamn -->
             <Grid>
+                
                 <Label Content="Username.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
                        Visibility="{Binding PHUsernameVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
                 <TextBox Text="{Binding UsernameInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
-                     VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Foreground="Crimson" FontWeight="UltraLight"/>
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Foreground="Crimson" FontWeight="UltraLight"/>
+                
             </Grid>
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200" Margin="0,0,0,5"/>
 
             <!-- Välj lösenord -->
             <Grid>
+                
                 <Label Content="Password.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
                        Visibility="{Binding PHPasswordVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
                 <TextBox Text="{Binding PasswordInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
                          VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Foreground="Crimson" FontWeight="UltraLight"/>
+                
             </Grid>
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200" Margin="0,0,0,5"/>
 
             <!-- Bekräfta valt lösenord -->
             <Grid>
+                
                 <Label Content="Confirm Password.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
                        Visibility="{Binding PHConfirmPasswordVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
                 <TextBox Text="{Binding ConfirmPasswordInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
                          VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Foreground="Crimson" FontWeight="UltraLight"/>
+                
             </Grid>
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200" Margin="0,0,0,5"/>
 
@@ -69,11 +75,13 @@
 
             <!-- Välj svar på vald säkerhetsfråga -->
             <Grid>
+                
                 <Label Content="Security Answer.." Foreground="LightGray" Width="200" Height="32" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,-1" 
                        Visibility="{Binding PHSecurityAnswerVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
                 <TextBox Text="{Binding SecurityAnswerInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
                          VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Foreground="Crimson" FontWeight="UltraLight"/>
+                
             </Grid>
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200" Margin="0,0,0,5"/>
 
@@ -88,11 +96,12 @@
 
                 <!-- Knapp för att avbryta och gå tillbaka till inloggningsskärmen -->
                 <Button Content="Cancel" Command="{Binding CancelCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
-                Foreground="White" Width="90" Height="35" FontSize="16" Margin="10"/>
+                        Foreground="White" Width="90" Height="35" FontSize="16" Margin="10"/>
 
                 <!-- Knapp för att registrera ny användare -->
                 <Button Content="Save" Command="{Binding RegisterNewUserCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
-                Foreground="White" Width="70" Height="35" FontSize="16" Margin="10"/>
+                        Foreground="White" Width="70" Height="35" FontSize="16" Margin="10"/>
+                
             </StackPanel>
 
         </StackPanel>

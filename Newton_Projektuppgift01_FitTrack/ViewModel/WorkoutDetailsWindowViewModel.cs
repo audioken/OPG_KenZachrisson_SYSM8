@@ -24,18 +24,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
-        // Räknar ut brända kalorier i realtid
-        private int caloriesBurned;
-        public int CaloriesBurned
-        {
-            get { return caloriesBurned; }
-            set
-            {
-                caloriesBurned = value;
-                OnPropertyChanged();
-            }
-        }
-
         // Välj datum
         private DateTime selectedDate;
         public DateTime SelectedDate
@@ -197,6 +185,18 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Räknar ut brända kalorier i realtid
+        private int caloriesBurned;
+        public int CaloriesBurned
+        {
+            get { return caloriesBurned; }
+            set
+            {
+                caloriesBurned = value;
+                OnPropertyChanged();
+            }
+        }
+
         // Skriv in kommentar
         private string notesInput;
         public string NotesInput
@@ -230,13 +230,37 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Döljer eller visar Restore-knappen
+        private Visibility restoreVisibility;
+        public Visibility RestoreVisibility
+        {
+            get { return restoreVisibility; }
+            set
+            {
+                restoreVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Döljer eller visar Edit-knappen
+        private Visibility editVisibility;
+        public Visibility EditVisibility
+        {
+            get { return editVisibility; }
+            set
+            {
+                editVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Blir en klon av vald träning och får sitt initiella värde i konstruktorn
+        public Workout WorkoutEditable { get; private set; } // Read-only för klassens metoder
+
         // Listor för olika typer av inmatning som får sina värden i konstruktorn
         public ObservableCollection<string> WorkoutTypes { get; } // Read-only
         public ObservableCollection<int> AvailableDateHours { get; } // Read-only
         public ObservableCollection<int> AvailableDateMinutes { get; } // Read-only
-
-        // Blir en klon av vald träning och får sitt initiella värde i konstruktorn
-        public Workout WorkoutEditable { get; private set; } // Read-only för klassens metoder
 
         // Relaykommandon som representerar knappklick
         public RelayCommand EditCommand => new RelayCommand(execute => EditWorkout());
@@ -282,13 +306,21 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
             // Avaktivera redigering initiellt
             IsEditEnabled = false;
+
+            // Döljer restore-knappen initiellt
+            RestoreVisibility = Visibility.Collapsed;
         }
 
         // METODER ↓
         // Aktivera redigering av träning
         private void EditWorkout()
         {
+            // Låser upp alla fält
             IsEditEnabled = true;
+
+            // Döljer Edit-knapp och visar Restore-knapp
+            EditVisibility = Visibility.Collapsed;
+            RestoreVisibility = Visibility.Visible;
         }
 
         // Avbryter redigering och återställer värden
@@ -302,6 +334,11 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
             // Avaktiverar redigering
             IsEditEnabled = false;
+
+            // Döljer Restore-knapp och visar Edit-knapp
+            EditVisibility = Visibility.Visible;
+            RestoreVisibility = Visibility.Collapsed;
+
         }
 
         // Sparar ändringar
@@ -392,6 +429,14 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             SelectedDurationSlider = ConvertTimeSpanToMinutes();
             OnPropertyChanged(nameof(SelectedDurationSlider));
 
+            // Hämta brända kalorier
+            CaloriesBurned = WorkoutEditable.CaloriesBurned;
+            OnPropertyChanged(nameof(CaloriesBurned));
+
+            // Hämta kommentar
+            NotesInput = WorkoutEditable.Notes;
+            OnPropertyChanged(nameof(NotesInput));
+
             // Kontrollera vilken träningstyp som är kopierad för att tilldela rätt extravärde
             if (WorkoutEditable is StrengthWorkout strengthWorkout)
             {
@@ -405,14 +450,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 SelectedDistanceSlider = cardioWorkout.Distance;
                 OnPropertyChanged(nameof(SelectedDistanceSlider));
             }
-
-            // Hämta brända kalorier
-            CaloriesBurned = WorkoutEditable.CaloriesBurned;
-            OnPropertyChanged(nameof(CaloriesBurned));
-
-            // Hämta kommentar
-            NotesInput = WorkoutEditable.Notes;
-            OnPropertyChanged(nameof(NotesInput));
         }
 
         // Skapar träning baserat på träningstyp och inkluderar relevanta parametrar
@@ -468,6 +505,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 cardioWorkout.Distance = SelectedDistanceSlider;
                 cardioWorkout.CaloriesBurned = cardioWorkout.CalculateCaloriesBurned();
             }
+
             OnPropertyChanged(nameof(CaloriesBurned));
         }
 

@@ -118,6 +118,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             {
                 selectedDistanceSlider = value;
                 OnPropertyChanged();
+
             }
         }
         private Visibility distanceSliderVisibility;
@@ -149,6 +150,18 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             set
             {
                 repetitionSliderVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Räknar ut brända kalorier i realtid
+        private int caloriesBurned;
+        public int CaloriesBurned
+        {
+            get { return caloriesBurned; }
+            set
+            {
+                caloriesBurned = value;
                 OnPropertyChanged();
             }
         }

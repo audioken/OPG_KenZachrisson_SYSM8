@@ -23,26 +23,26 @@
 
         <!-- Logotyp -->
         <Label Grid.Row="1" Content="Fit" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
-            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,120,0"/>
+               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,120,0"/>
         <Label Grid.Row="1" Content="Track" FontSize="50" FontWeight="UltraBlack"  Foreground="Crimson" 
-            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="65,0,0,0"/>
+               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="65,0,0,0"/>
 
         <!-- Layout för företagsinformation och stängknapp -->
         <StackPanel Grid.Row="2">
 
             <!-- Företagsinformation del 1 -->
             <TextBlock Text="FitTrack is a global brand with a focus on health and training. We are located in 80+ countries all over the world." 
-                   HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="16" Width="300" Margin="0,10,0,0"
-                   Foreground="Crimson" FontWeight="UltraLight"/>
+                       HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="16" Width="300" Margin="0,10,0,0"
+                       Foreground="Crimson" FontWeight="UltraLight"/>
 
             <!-- Företagsinformation del 2 -->
             <TextBlock Text="We made this app for you to easily log your trainings and calculate the calories burned. Join a global community and become a FitTracker today!" 
-                   HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="16" Width="300"
-                   Foreground="Crimson" FontWeight="UltraLight" Margin="0,10,0,0"/>
+                       HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="16" Width="300"
+                       Foreground="Crimson" FontWeight="UltraLight" Margin="0,10,0,0"/>
 
             <!-- Knapp för att stänga fönstret -->
             <Button Content="Close" Command="{Binding CloseCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
-                Foreground="White" Width="70" Height="35" FontSize="16" Margin="0,30,0,0"/>
+                    Foreground="White" Width="70" Height="35" FontSize="16" Margin="0,30,0,0"/>
 
         </StackPanel>
 
