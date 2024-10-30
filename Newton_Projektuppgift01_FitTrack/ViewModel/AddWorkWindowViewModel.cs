@@ -203,8 +203,22 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
             // Instansierar listor med värden
             WorkoutTypes = new ObservableCollection<string> { "Cardio Workout", "Strength Workout" };
-            AvailableDateHours = new ObservableCollection<int> { 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
-            AvailableDateMinutes = new ObservableCollection<int> { 00, 15, 30, 45 };
+
+            AvailableDateHours = new ObservableCollection<int>
+            {
+                06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17,
+                18, 19, 20, 21, 22, 23, 24, 01, 02, 03, 04, 05
+            };
+
+            AvailableDateMinutes = new ObservableCollection<int>
+            {
+                00, 01, 02, 03, 04, 05, 06, 07, 08, 09,
+                10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+                20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+                30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+                40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
+                50, 51, 52, 52, 54, 55, 56, 57, 58, 59
+            };
 
             // Standardmall för ny träning
             SelectedDate = DateTime.Now;
@@ -225,23 +239,23 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             if (!string.IsNullOrEmpty(NotesInput))
             {
                 // Deklarerar en variabel som träningen ska instansieras från
-                Workout workout = null;
+                Workout newWorkout = null;
 
                 // Kolla typ av träning för att instansiera rätt träningstyp
                 if (SelectedWorkoutType == "Strength Workout")
                 {
                     // Instansierar ny styrketräning
-                    workout = new StrengthWorkout(FullDateTime, SelectedWorkoutType, DurationInput, 0, NotesInput, SelectedRepetitionSlider);
+                    newWorkout = new StrengthWorkout(FullDateTime, SelectedWorkoutType, DurationInput, 0, NotesInput, SelectedRepetitionSlider);
 
                 }
                 else if (SelectedWorkoutType == "Cardio Workout")
                 {
                     // Instansierar ny konditionsträning
-                    workout = new CardioWorkout(FullDateTime, SelectedWorkoutType, DurationInput, 0, NotesInput, SelectedDistanceSlider);
+                    newWorkout = new CardioWorkout(FullDateTime, SelectedWorkoutType, DurationInput, 0, NotesInput, SelectedDistanceSlider);
                 }
 
                 // Lägg till träningen i användarens träningslista
-                Manager.Instance.CurrentUser.UserWorkouts.Add(workout);
+                Manager.Instance.CurrentUser.UserWorkouts.Add(newWorkout);
 
                 MessageBox.Show($"Vald träningstyp: {SelectedWorkoutType}\nTidpunkt: {FullDateTime}\nVaraktighet: {SelectedDurationSlider} min\nÖvriga kommenterar: {NotesInput}");
 
