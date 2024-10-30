@@ -37,7 +37,7 @@
             <!-- Skriv in användarnamn -->
             <Grid>
                 <Label Content="Username.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
-                       Visibility="{Binding PHUsernameVisibility}"/>
+                       Visibility="{Binding PHUsernameVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
                 <TextBox Text="{Binding UsernameInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
                      VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
@@ -47,7 +47,7 @@
             <!-- Skriv in lösenord -->
             <Grid>
                 <Label Content="Password.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
-                       Visibility="{Binding PHPasswordVisibility}"/>
+                       Visibility="{Binding PHPasswordVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
                 <TextBox Text="{Binding PasswordInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
                          VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
@@ -64,7 +64,7 @@
 
             <Grid>
                 <Label Content="Answer.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
-                       Visibility="{Binding PHSecurityAnswerVisibility}"/>
+                       Visibility="{Binding PHSecurityAnswerVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
                 <TextBox Text="{Binding SecurityAnswerInput, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SecurityVisibility}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
                          VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
             </Grid>
@@ -80,7 +80,7 @@
             <!-- Skriv in 2FA-kod -->
             <Grid>
                 <Label Content="2FA.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
-                       Visibility="{Binding PHTwoFAVisibility}"/>
+                       Visibility="{Binding PHTwoFAVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
                 <TextBox Text="{Binding TwoFAInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
                      VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Visibility="{Binding TwoFAVisibility}" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>

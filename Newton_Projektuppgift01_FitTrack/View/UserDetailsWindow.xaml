@@ -34,7 +34,7 @@
            
             <!-- Skriv in nytt användarnamn -->
             <Grid>
-                <Label Content="New Username.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
+                <Label Content="New username.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
                        Visibility="{Binding PHNewUsernameVisibility, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBox Text="{Binding NewUsernameInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
@@ -44,7 +44,7 @@
 
             <!-- Skriv in nytt lösenord -->
             <Grid>
-                <Label Content="New Password.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
+                <Label Content="New password.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
                        Visibility="{Binding PHNewPasswordVisibility}"/>
 
                 <TextBox Text="{Binding NewPasswordInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
@@ -54,7 +54,7 @@
 
             <!-- Bekräfta nytt lösenord -->
             <Grid>
-                <Label Content="Confirm Password.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
+                <Label Content="Confirm password.." Foreground="LightGray" Width="200" Height="28" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,3" 
                        Visibility="{Binding PHConfirmNewPasswordVisibility}"/>
 
                 <TextBox Text="{Binding ConfirmNewPasswordInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
@@ -70,7 +70,7 @@
 
             <!-- Välj svar på vald säkerhetsfråga -->
             <Grid>
-                <Label Content="Security Answer.." Foreground="LightGray" Width="200" Height="32" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,-1" 
+                <Label Content="Security answer.." Foreground="LightGray" Width="200" Height="32" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,-1" 
                        Visibility="{Binding PHSecurityAnswerVisibility}"/>
 
                 <TextBox Text="{Binding SecurityAnswerInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
@@ -85,7 +85,7 @@
                       FontWeight="UltraLight" Foreground="Crimson" Margin="0,0,0,0"/>
 
             <!-- Spara och Cancelknapp -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,25,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
                 
                 <!-- Knapp för att avbryta och gå tillbaka -->
                 <Button Content="Cancel" Command="{Binding CancelCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
