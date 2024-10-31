@@ -70,20 +70,19 @@
 
             <!-- Olika sökfilter -->
             <Grid>
-                
+
                 <!-- Sökfilter -->
                 <Label Content="Search.." Foreground="LightGray" Width="100" Height="28" FontSize="16" VerticalContentAlignment="Top" 
                        HorizontalAlignment="Center" Margin="3,0,230,3" Visibility="{Binding PHSearchFilterVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
-                
+
                 <TextBox Text="{Binding SearchFilter, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="150" Height="auto" 
                          VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Margin="0,0,180,0" HorizontalAlignment="Center" Foreground="Crimson" FontWeight="UltraLight"/>
 
                 <!-- Varaktighetsfilter -->
                 <Slider Value="{Binding DurationFilter, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="180" Width="150" 
                         VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="190,0,0,-3"/>
-                
-            </Grid>
 
+            </Grid>
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" HorizontalAlignment="Center" Width="150" Margin="0,0,180,10"/>
 
             <!-- Träningslistan -->
@@ -109,6 +108,9 @@
                 <!-- Knapp för att ta bort träning -->
                 <Button Content="Remove" Command="{Binding RemoveWorkoutCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
                         Width="45" Height="20" BorderThickness="0" Margin="0,0,230,0" VerticalAlignment="Top"/>
+
+                <Button Content="Clear Filter" Command="{Binding ClearFilterCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
+                        Width="60" Height="20" BorderThickness="0" Margin="0,0,0,0" VerticalAlignment="Top" Visibility="{Binding ClearFilterVisibility}"/>
 
                 <!-- Knapp för att öppna WorkoutDetailsWindow och möjliggöra redigering -->
                 <Button Content="Workout Details" Command="{Binding WorkoutDetailsCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 

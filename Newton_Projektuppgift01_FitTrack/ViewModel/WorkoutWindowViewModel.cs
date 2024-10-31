@@ -84,13 +84,26 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Döljer eller visar Clear Filter-knappen
+        private Visibility clearFilterVisibility;
+        public Visibility ClearFilterVisibility
+        {
+            get { return clearFilterVisibility; }
+            set
+            {
+                clearFilterVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         // Relay-kommando som öppnar olika fönster vid klick
+        public RelayCommand AppInfoCommand => new RelayCommand(execute => AppInfo());
         public RelayCommand UserDetailsCommand => new RelayCommand(execute => OpenUserDetails());
-        public RelayCommand WorkoutDetailsCommand => new RelayCommand(execute => OpenWorkoutDetails());
+        public RelayCommand SignOutCommand => new RelayCommand(execute => SignOut());
         public RelayCommand AddWorkoutCommand => new RelayCommand(execute => AddWorkout());
         public RelayCommand RemoveWorkoutCommand => new RelayCommand(execute => RemoveWorkout());
-        public RelayCommand AppInfoCommand => new RelayCommand(execute => AppInfo());
-        public RelayCommand SignOutCommand => new RelayCommand(execute => SignOut());
+        public RelayCommand ClearFilterCommand => new RelayCommand(execute => ClearFilter());
+        public RelayCommand WorkoutDetailsCommand => new RelayCommand(execute => OpenWorkoutDetails());
 
         // KONSTRUKTOR ↓
         public WorkoutWindowViewModel(Window _workoutWindow)
@@ -115,8 +128,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 WorkoutList = Manager.Instance.CurrentUser.UserWorkouts;
             }
 
-            // Sätter startvärdet för slidern så alla pass visas
+            // Sätter startvärdet för båda filter
             DurationFilter = 0;
+            SearchFilter = "";
 
             // Uppdatera vyn
             ApplyCombinedFilter();
@@ -249,6 +263,23 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                     FilteredWorkoutList.Add(workout);
                 }
             }
+
+            // Döljer eller visar Clear Filter-knappen beroende på om det finns inmatning eller ej
+            if (DurationFilter > 0 || SearchFilter != "")
+            {
+                ClearFilterVisibility = Visibility.Visible;
+            }
+            else
+            {
+                ClearFilterVisibility = Visibility.Collapsed;
+            }
+        }
+
+        // Rensa filter
+        private void ClearFilter()
+        {
+            SearchFilter = "";
+            DurationFilter = 0;
         }
 
         // Öppnar olika fönster
