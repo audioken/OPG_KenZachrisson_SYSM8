@@ -22,8 +22,13 @@
         <Rectangle Grid.Row="0" Fill="Crimson"/>
 
         <!-- Fönstertitel -->
-        <Label Grid.Row="1" Content="Your Workouts" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
-               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <!-- Spårar inloggad användare -->
+            <Label Content="{Binding User.Username}" FontSize="50" VerticalAlignment="Top" Foreground="Crimson" Margin="0,0,0,0" FontFamily="Arial" FontWeight="UltraLight"/>
+            <Label Content="Workouts" FontSize="50" FontWeight="UltraBlack"  Foreground="LightGray" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial"/>
+            
+        </StackPanel>
         
         <!-- Instruktioner -->
         <Label Grid.Row="1" Content="Add, remove or edit a workout.." FontSize="20" Width="400" Foreground="Crimson"
@@ -39,13 +44,9 @@
                 <Button Content="Info" Command="{Binding AppInfoCommand}" Background="Crimson" BorderBrush="Crimson" Foreground="White" 
                         Width="35" Height="25" Margin="0,0,0,0" VerticalAlignment="Top" BorderThickness="0"/>
 
-                <!-- Håller koll på nuvarande användare -->
-                <Label Content="{Binding User.Username}" Width="auto" Height="30" VerticalAlignment="Top" Foreground="Crimson" Margin="10,0,0,0"
-                       Background="LightGray"/>
-
                 <!-- Knapp för att öppna UserDetailsWindow -->
                 <Button Content="User Profile" Command="{Binding UserDetailsCommand}" Background="Crimson" BorderBrush="Crimson" Foreground="White" 
-                        Width="75" Height="25" VerticalAlignment="Top" BorderThickness="0"/>
+                        Width="75" Height="25" VerticalAlignment="Top" BorderThickness="0" Margin="10,0,0,0"/>
 
                 <!-- Knapp för utloggning -->
                 <Button Content="Sign Out" Command="{Binding SignOutCommand}" Background="Crimson" BorderBrush="Crimson" Foreground="White" 
@@ -110,7 +111,7 @@
                         Width="45" Height="20" BorderThickness="0" Margin="0,0,230,0" VerticalAlignment="Top"/>
 
                 <!-- Knapp för att öppna WorkoutDetailsWindow och möjliggöra redigering -->
-                <Button Content="Workout Details" Command="{Binding OpenDetailsCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
+                <Button Content="Workout Details" Command="{Binding WorkoutDetailsCommand}" Background="Transparent" BorderBrush="Crimson" Foreground="Crimson" 
                         Width="90" Height="20" BorderThickness="0" Margin="250,0,0,0"/>
                 
             </Grid>

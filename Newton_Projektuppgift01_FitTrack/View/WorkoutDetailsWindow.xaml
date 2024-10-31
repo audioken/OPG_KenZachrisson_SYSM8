@@ -22,8 +22,12 @@
         <Rectangle Grid.Row="0" Fill="Crimson"/>
 
         <!-- Fönstertitel -->
-        <Label Grid.Row="1" Content="Edit Workout" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
-               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <Label Content="Workout" FontSize="50" VerticalAlignment="Top" Foreground="Crimson" Margin="0,0,0,0" FontFamily="Arial" FontWeight="UltraLight"/>
+            <Label Content="Details" FontSize="50" FontWeight="UltraBlack"  Foreground="LightGray" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial"/>
+
+        </StackPanel>
 
         <!-- Instruktioner -->
         <Label Grid.Row="1" Content="Make changes to your workout or create a copy.." FontSize="20" Width="500" Foreground="Crimson" Margin="0,0,0,0"

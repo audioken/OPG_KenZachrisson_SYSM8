@@ -39,7 +39,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         // Överskuggande metod som skriver ut text för lyckad inloggning
         public override void SignIn()
         {
-            MessageBox.Show($"Användaren {Username} från {Country} är inloggad..");
+            MessageBox.Show($"Användaren {Username} från {Country} är inloggad!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         // Överskuggande metod som Återställer användarens lösenord

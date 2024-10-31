@@ -23,9 +23,13 @@
         <Rectangle Grid.Row="0" Fill="Crimson"/>
 
         <!-- Fönstertitel -->
-        <Label Grid.Row="1" Content="User Profile" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
-               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0"/>
-        
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <Label Content="User" FontSize="50" VerticalAlignment="Top" Foreground="Crimson" Margin="0,0,0,0" FontFamily="Arial" FontWeight="UltraLight"/>
+            <Label Content="Profile" FontSize="50" FontWeight="UltraBlack"  Foreground="LightGray" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial"/>
+
+        </StackPanel>
+
         <!-- Instruktioner -->
         <Label Grid.Row="1" Content="Change username, password and more.." FontSize="20" Width="400" Foreground="Crimson" Margin="0,0,0,0"
                HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontWeight="UltraLight"/>
