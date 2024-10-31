@@ -22,14 +22,14 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         // Read-only då endast Manager ska kunna ändra listan
         public ObservableCollection<User> AllUsers { get; private set; }
 
-        // Spårar inloggad användare
-        public User CurrentUser { get; set; }
+        // Spårar inloggad användare (kan vara null)
+        public User? CurrentUser { get; set; }
 
-        // Spårar aktuell träning
-        public Workout CurrentWorkout { get; set; }
+        // Spårar aktuell träning (kan vara null)
+        public Workout? CurrentWorkout { get; set; }
 
-        // Används temporärt vid kopiering av träningspass
-        public Workout CopiedWorkout { get; set; }
+        // Används temporärt vid kopiering av träningspass (kan vara null)
+        public Workout? CopiedWorkout { get; set; }
 
         // KONSTRUKTOR ↓
         private Manager()

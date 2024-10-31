@@ -149,6 +149,38 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // METODER ↓
+        // Öppnar en popup med information om företaget och appen
+        private void AppInfo()
+        {
+            CompanyInfoWindow companyInfoWindow = new CompanyInfoWindow();
+            companyInfoWindow.Show();
+        }
+
+        // Öppna fönster för användarens profilinställningar
+        private void OpenUserDetails()
+        {
+            // Öppnar UserDetailsWindow
+            OpenUserDetailsWindow();
+
+            // Stänger WorkoutWindow
+            _workoutWindow.Close();
+        }
+
+        // Logga ut och återgå till MainWindow
+        private void SignOut()
+        {
+            // Rensar all spårning
+            Manager.Instance.CurrentUser = null;
+            Manager.Instance.CurrentWorkout = null;
+            Manager.Instance.CopiedWorkout = null;
+
+            // Öppnar MainWindow
+            OpenMainWindow();
+
+            // Stäng WorkoutWindow
+            _workoutWindow.Close();
+        }
+
         // Öppnar fönster för att kunna lägga till ett träningspass
         private void AddWorkout()
         {
@@ -212,6 +244,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             else { MessageBox.Show("Du måste välja något i listan!", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
+        // Rensa filter
+        private void ClearFilter()
+        {
+            SearchFilter = "";
+            DurationFilter = 0;
+        }
+
         // Öppna fönstret för detaljerad information om valt träningspass
         private void OpenWorkoutDetails()
         {
@@ -228,38 +267,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 _workoutWindow.Close();
             }
             else { MessageBox.Show("Du måste välja något i listan!", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
-        }
-
-        // Öppna fönster för användarens profilinställningar
-        private void OpenUserDetails()
-        {
-            // Öppnar UserDetailsWindow
-            OpenUserDetailsWindow();
-
-            // Stänger WorkoutWindow
-            _workoutWindow.Close();
-        }
-
-        // Öppnar en popup med information om företaget och appen
-        private void AppInfo()
-        {
-            CompanyInfoWindow companyInfoWindow = new CompanyInfoWindow();
-            companyInfoWindow.Show();
-        }
-
-        // Logga ut och återgå till MainWindow
-        private void SignOut()
-        {
-            // Rensar all spårning
-            Manager.Instance.CurrentUser = null;
-            Manager.Instance.CurrentWorkout = null;
-            Manager.Instance.CopiedWorkout = null;
-
-            // Öppnar MainWindow
-            OpenMainWindow();
-
-            // Stäng WorkoutWindow
-            _workoutWindow.Close();
         }
 
         // Kombinerar filterresultatet från SearchFilter och DurationFilter
@@ -299,13 +306,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             {
                 ClearFilterVisibility = Visibility.Collapsed;
             }
-        }
-
-        // Rensa filter
-        private void ClearFilter()
-        {
-            SearchFilter = "";
-            DurationFilter = 0;
         }
 
         // Öppnar olika fönster

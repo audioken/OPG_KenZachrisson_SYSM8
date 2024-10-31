@@ -76,8 +76,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 SelectedDate.Day,
                 SelectedDateHour,
                 SelectedDateMinute,
-                0
-                );
+                0);
             } // Read-only
         }
 
@@ -281,7 +280,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             AvailableDateHours = new ObservableCollection<int>
             {
                 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17,
-                18, 19, 20, 21, 22, 23, 24, 01, 02, 03, 04, 05
+                18, 19, 20, 21, 22, 23, 00, 01, 02, 03, 04, 05
             };
 
             // Instansierar lista med minuter
@@ -295,11 +294,29 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 50, 51, 52, 52, 54, 55, 56, 57, 58, 59
             };
 
-            // Beräknar brända kalorier för träningen
-            Manager.Instance.CurrentWorkout.CaloriesBurned = Manager.Instance.CurrentWorkout.CalculateCaloriesBurned();
+            // Unviker null i de strängbaserade egenskaperna
+            notesInput = string.Empty;
+            selectedWorkoutType = string.Empty;
 
-            // Klonar vald träning för att möjliggöra redigering och återställning av ändringar
-            WorkoutEditable = Manager.Instance.CurrentWorkout.Clone();
+            // Använder ett tomt träningspass som placeholder om ett oväntat fel skulle ske vid kloning
+            WorkoutEditable = new CardioWorkout(DateTime.Now, "Cardio Workout", TimeSpan.Zero, 0, "", 0);
+
+            // Nullkontroll
+            if (Manager.Instance.CurrentWorkout != null)
+            {
+                // Beräknar brända kalorier för träningen
+                Manager.Instance.CurrentWorkout.CaloriesBurned = Manager.Instance.CurrentWorkout.CalculateCaloriesBurned();
+
+                // Klonar vald träning för att möjliggöra redigering och återställning av ändringar
+                WorkoutEditable = Manager.Instance.CurrentWorkout.Clone();
+            }
+            else
+            {
+                MessageBox.Show("Kunde inte hitta något träningspass!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                // Avbryt och återgå till WorkoutWindow
+                Cancel();
+            }
 
             // Hämtar alla värden från den aktuella träningen så de reflekteras i UI
             FetchWorkout();
@@ -326,8 +343,17 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Avbryter redigering och återställer värden
         private void RestoreWorkout()
         {
-            // Klonar originalet för att återställa värdena
-            WorkoutEditable = Manager.Instance.CurrentWorkout.Clone();
+            // Nullkontroll
+            if (Manager.Instance.CurrentWorkout != null)
+            {
+                // Klonar originalet för att återställa värdena
+                WorkoutEditable = Manager.Instance.CurrentWorkout.Clone();
+            }
+            else
+            {
+                MessageBox.Show("Träningspasset kunde tyvärr inte återställas!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             // Hämta alla värden på nytt
             FetchWorkout();
@@ -350,8 +376,21 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 // Uppdaterar värdena för WorkoutEditable för att säkerställa korrekt värden
                 UpdateWorkoutEditable();
 
-                // Hitta index för originalet av träningen som ändrats
-                int indexOfWorkout = Manager.Instance.CurrentUser.UserWorkouts.IndexOf(Manager.Instance.CurrentWorkout);
+                int indexOfWorkout = 0;
+
+                // Nullkontroll
+                if (Manager.Instance.CurrentUser != null && Manager.Instance.CurrentWorkout != null)
+                {
+                    // Hitta index för originalet av träningen som ändrats
+                    indexOfWorkout = Manager.Instance.CurrentUser.UserWorkouts.IndexOf(Manager.Instance.CurrentWorkout);
+                }
+                else
+                {
+                    MessageBox.Show("Något gick fel! Träningen kunde inte sparas..", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    Cancel();
+                    return;
+                }
 
                 // Kontrollera så det är en vanlig användare samt att index för träningen finns
                 if (Manager.Instance.CurrentUser is User && indexOfWorkout >= 0)
@@ -410,13 +449,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
             // Stäng WorkoutDetails
             _workoutDetailsWindow.Close();
-        }
-
-        // Öppna WorkoutWindow
-        private void OpenWorkoutWindow()
-        {
-            WorkoutWindow workoutWindow = new WorkoutWindow();
-            workoutWindow.Show();
         }
 
         // Infoga relevanta parametrar från det kopierade träningspasset
@@ -507,6 +539,21 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Kontrollerar vilken knapp och vilken inputruta som syns beroende på träningstyp
+        private void UpdateVisibilityBasedOnWorkout()
+        {
+            if (SelectedWorkoutType == "Cardio Workout")
+            {
+                DistanceSliderVisibility = Visibility.Visible;
+                RepetitionSliderVisibility = Visibility.Collapsed;
+            }
+            else if (SelectedWorkoutType == "Strength Workout")
+            {
+                DistanceSliderVisibility = Visibility.Collapsed;
+                RepetitionSliderVisibility = Visibility.Visible;
+            }
+        }
+
         // Uppdaterar WorkoutEditable till de senaste värdena
         private void UpdateWorkoutEditable()
         {
@@ -544,21 +591,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
         }
 
-        // Kontrollerar vilken knapp och vilken inputruta som syns beroende på träningstyp
-        private void UpdateVisibilityBasedOnWorkout()
-        {
-            if (SelectedWorkoutType == "Cardio Workout")
-            {
-                DistanceSliderVisibility = Visibility.Visible;
-                RepetitionSliderVisibility = Visibility.Collapsed;
-            }
-            else if (SelectedWorkoutType == "Strength Workout")
-            {
-                DistanceSliderVisibility = Visibility.Collapsed;
-                RepetitionSliderVisibility = Visibility.Visible;
-            }
-        }
-
         // Konverterar konstant DurationSliders minutvärde till TimeSpan
         private int GetHours()
         {
@@ -573,6 +605,13 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         private int ConvertTimeSpanToMinutes()
         {
             return (int)WorkoutEditable.Duration.TotalMinutes;
+        }
+
+        // Öppna WorkoutWindow
+        private void OpenWorkoutWindow()
+        {
+            WorkoutWindow workoutWindow = new WorkoutWindow();
+            workoutWindow.Show();
         }
     }
 }

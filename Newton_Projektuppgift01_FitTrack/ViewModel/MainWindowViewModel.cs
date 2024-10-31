@@ -371,6 +371,51 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Generera ett nytt lösenord
+        private void GenerateNewPassword()
+        {
+            // Testa kodblock som säkerhetsåtergärd
+            try
+            {
+                // Nullkontroll
+                if (Manager.Instance.CurrentUser != null)
+                {
+                    // Genererar ett nytt lösenord, samt lagrar det, om svaret på säkerhetsfrågan är rätt
+                    bool isPasswordChanged = Manager.Instance.CurrentUser.ResetPassword(SecurityAnswerInput);
+
+                    // Återgå till startlayout om lösenordet ändrats
+                    if (isPasswordChanged)
+                    {
+                        // Återställ alla inmatningar för lösenord
+                        PasswordInput = "";
+                        TwoFAInput = "";
+                        SecurityAnswerInput = "";
+
+                        // Dölj säkerhetsfråga
+                        HideSecurityQuestion();
+                    }
+                }
+                else { MessageBox.Show($"Kan inte hitta någon användardata!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error); }
+            }
+            // Om ett oväntat fel sker
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ett fel uppstod vid återställning av lösenord: {ex.Message}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // Generera och skicka en slumpad 2FA-kod som "SMS" till användaren
+        private void GenerateAndSendTwoFA()
+        {
+            // Skapa ett objekt för slumpade nummer
+            Random random = new Random();
+
+            // Generera en sexsiffrig kod och lagra den för kontroll vid inlogg
+            TwoFACode = random.Next(100000, 1000000).ToString();
+
+            MessageBox.Show($"Din 2FA-kod är {TwoFACode}", "Generated 2FA!", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
         // Dölj säkerhetsfråga
         private void HideSecurityQuestion()
         {
@@ -416,46 +461,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             TwoFAVisibility = Visibility.Collapsed;
             PHTwoFAVisibility = Visibility.Collapsed;
             SignInVisibility = Visibility.Collapsed;
-        }
-
-        // Generera ett nytt lösenord
-        private void GenerateNewPassword()
-        {
-            // Testa kodblock som säkerhetsåtergärd
-            try
-            {
-                // Genererar ett nytt lösenord, samt lagrar det, om svaret på säkerhetsfrågan är rätt
-                bool isPasswordChanged = Manager.Instance.CurrentUser.ResetPassword(SecurityAnswerInput);
-
-                // Återgå till startlayout om lösenordet ändrats
-                if (isPasswordChanged)
-                {
-                    // Återställ alla inmatningar för lösenord
-                    PasswordInput = "";
-                    TwoFAInput = "";
-                    SecurityAnswerInput = "";
-
-                    // Dölj säkerhetsfråga
-                    HideSecurityQuestion();
-                }
-            }
-            // Om ett oväntat fel sker
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ett fel uppstod vid återställning av lösenord: {ex.Message}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        // Generera och skicka en slumpad 2FA-kod som "SMS" till användaren
-        private void GenerateAndSendTwoFA()
-        {
-            // Skapa ett objekt för slumpade nummer
-            Random random = new Random();
-
-            // Generera en sexsiffrig kod och lagra den för kontroll vid inlogg
-            TwoFACode = random.Next(100000, 1000000).ToString();
-
-            MessageBox.Show($"Din 2FA-kod är {TwoFACode}", "Generated 2FA!", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         // Öppna WorkoutWindow
