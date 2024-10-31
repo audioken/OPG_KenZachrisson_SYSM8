@@ -16,7 +16,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         public User User { get; } // Read-only
 
         // Den valda träningen från listan
-        public Workout SelectedWorkout { get; set; }
+        public Workout? SelectedWorkout { get; set; }
 
         // Listan med träningspass
         private ObservableCollection<Workout> workoutList;
@@ -110,11 +110,31 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             this._workoutWindow = _workoutWindow;
 
-            // Endast för att kunna vem som är inloggad
-            User = Manager.Instance.CurrentUser;
-
-            // Instansierar den temporära listan
+            // Instansierar värden för att undvika nullvarningar
             FilteredWorkoutList = new ObservableCollection<Workout>();
+            workoutList = new ObservableCollection<Workout>();
+            User = new User("No one", "No password", "No country");
+
+            // Sätter startvärdet för båda filter
+            DurationFilter = 0;
+            SearchFilter = "";
+
+            // Undviker nullvarning
+            searchFilter = "";
+
+            // Nullkontroll
+            if (Manager.Instance.CurrentUser != null)
+            {
+                // Spårar användaren för att kunna visa i fönstret
+                User = Manager.Instance.CurrentUser;
+            }
+            else
+            {
+                MessageBox.Show("Kunde inte hämta någon användare!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                // Logga ut användaren
+                SignOut();
+            }
 
             // Testa kodblock som säkerhetsåtergärd
             try
@@ -127,8 +147,19 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 }
                 else
                 {
-                    // Hämta endast användarens egna träningspass
-                    WorkoutList = Manager.Instance.CurrentUser.UserWorkouts;
+                    // Nullkontroll
+                    if (Manager.Instance.CurrentUser != null)
+                    {
+                        // Hämta endast användarens egna träningspass
+                        WorkoutList = Manager.Instance.CurrentUser.UserWorkouts;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Kunde inte hämta någon användare!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                        // Logga ut användaren
+                        SignOut();
+                    }
                 }
             }
             // Om ett oväntat fel sker
@@ -139,10 +170,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 // Logga ut användaren
                 SignOut();
             }
-
-            // Sätter startvärdet för båda filter
-            DurationFilter = 0;
-            SearchFilter = "";
 
             // Uppdatera vyn
             ApplyCombinedFilter();
