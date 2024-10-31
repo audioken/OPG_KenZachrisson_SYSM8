@@ -173,6 +173,14 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             this._registerWindow = _registerWindow;
 
+            // Undviker nullvarningar
+            usernameInput = string.Empty;
+            passwordInput = string.Empty;
+            confirmPasswordInput = string.Empty;
+            selectedSecurityQuestion = string.Empty;
+            securityAnswerInput = string.Empty;
+            SelectedCountry = string.Empty;
+
             // Instansierar alla länder
             Countries = new ObservableCollection<string>
             {

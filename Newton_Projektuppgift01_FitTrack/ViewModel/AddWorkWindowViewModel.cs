@@ -214,6 +214,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             _addWorkoutWindow = addWorkoutWindow;
 
+            // Undviker nullvarningar
+            selectedWorkoutType = string.Empty;
+            notesInput = string.Empty;
+
             // Instansierar listor med värden
             WorkoutTypes = new ObservableCollection<string> { "Cardio Workout", "Strength Workout" };
 
@@ -255,7 +259,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 if (!string.IsNullOrEmpty(NotesInput))
                 {
                     // Deklarerar en variabel som träningen ska instansieras från
-                    Workout newWorkout = null;
+                    Workout? newWorkout = null;
 
                     // Kolla typ av träning för att instansiera rätt träningstyp
                     if (SelectedWorkoutType == "Strength Workout")
@@ -270,16 +274,23 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                         newWorkout = new CardioWorkout(FullDateTime, SelectedWorkoutType, DurationInput, 0, NotesInput, SelectedDistanceSlider);
                     }
 
-                    // Lägg till träningen i användarens träningslista
-                    Manager.Instance.CurrentUser.UserWorkouts.Add(newWorkout);
+                    if (Manager.Instance.CurrentUser != null && newWorkout != null)
+                    {
+                        // Lägg till träningen i användarens träningslista
+                        Manager.Instance.CurrentUser.UserWorkouts.Add(newWorkout);
+                        MessageBox.Show($"Vald träningstyp: {SelectedWorkoutType}\nTidpunkt: {FullDateTime}\nVaraktighet: {SelectedDurationSlider} min\nÖvriga kommenterar: {NotesInput}", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    MessageBox.Show($"Vald träningstyp: {SelectedWorkoutType}\nTidpunkt: {FullDateTime}\nVaraktighet: {SelectedDurationSlider} min\nÖvriga kommenterar: {NotesInput}", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        // Öppna WorkoutWindow
+                        OpenWorkoutWindow();
 
-                    // Öppna WorkoutWindow
-                    OpenWorkoutWindow();
-
-                    // Stäng AddWorkoutWindow
-                    _addWorkoutWindow.Close();
+                        // Stäng AddWorkoutWindow
+                        _addWorkoutWindow.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Kunde inte hitta lägga till en ny träning!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Cancel();
+                    }
                 }
                 else { MessageBox.Show("Du måste skriva en kommentar..", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
@@ -380,7 +391,19 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Konverterar TimeSpan till minuter när man klistrar in en träning
         private int ConvertTimeSpanToMinutes()
         {
-            return (int)Manager.Instance.CopiedWorkout.Duration.TotalMinutes;
+            // Nullkontroll
+            if (Manager.Instance.CopiedWorkout != null)
+            {
+                // Returnera totala antalet minuter
+                return (int)Manager.Instance.CopiedWorkout.Duration.TotalMinutes;
+            }
+            else
+            {
+                MessageBox.Show("Kunde inte räkna ut varaktighet!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                // Vid error returnera 0
+                return 0;
+            }
         }
 
         // Öppnar WorkoutWindow

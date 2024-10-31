@@ -241,6 +241,12 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // KONSTRUKTOR ↓
         public MainWindowViewModel()
         {
+            usernameInput = string.Empty;
+            passwordInput = string.Empty;
+            twoFAInput = string.Empty;
+            securityQuestion = string.Empty;
+            securityAnswerInput = string.Empty;
+
             // Sätter texten för applikationens logotyp
             LabelTitle = "Fit";
             LabelTitle2 = "Track";
