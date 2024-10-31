@@ -28,7 +28,7 @@
         
         <!-- Instruktioner -->
         <Label Grid.Row="1" Content="Change username, password and more.." FontSize="20" Width="400" Foreground="Crimson" Margin="0,0,0,0"
-               HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+               HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontWeight="UltraLight"/>
 
         <!-- Layout för redigering av användarprofil -->
         <StackPanel Grid.Row="2" Margin="0,20,0,0">

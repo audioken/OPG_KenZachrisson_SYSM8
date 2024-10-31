@@ -27,7 +27,7 @@
         
         <!-- Instruktioner -->
         <Label Grid.Row="1" Content="Define your workout and add it to your list.." FontSize="20" Width="400" Foreground="Crimson" Margin="0,0,0,0"
-               HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+               HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontWeight="UltraLight"/>
 
         <!-- Layout för att lägga till träning -->
         <StackPanel Grid.Row="2" Margin="0,30,0,0">
@@ -51,16 +51,35 @@
 
                     <!-- Klockslag -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="200">
-                        
-                        <ComboBox ItemsSource="{Binding AvailableDateHours}" SelectedItem="{Binding SelectedDateHour}" Width="63" Height="25" FontSize="16"
-                                  FontWeight="UltraLight" Foreground="Crimson" Margin="25,5,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" BorderThickness="0"/>
-                        
+
+                        <!-- Timmar -->
+                        <ComboBox ItemsSource="{Binding AvailableDateHours}" SelectedItem="{Binding SelectedDateHour}" Width="63" Height="25" FontSize="16" Foreground="Crimson" Margin="25,5,0,0" 
+                                  VerticalAlignment="Top" HorizontalContentAlignment="Center" BorderThickness="0" FontWeight="UltraLight">
+
+                            <!-- Lägger till en nolla före ett ensiffrigt tal -->
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding StringFormat={}{0:D2}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+
+                        </ComboBox>
+
                         <Label Content=" : " VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Center"
                                Foreground="Crimson" FontSize="16"/>
-                        
-                        <ComboBox ItemsSource="{Binding AvailableDateMinutes}" SelectedItem="{Binding SelectedDateMinute}" Width="63" Height="25" FontSize="16" 
-                                  FontWeight="UltraLight" Foreground="Crimson" Margin="0,5,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" BorderThickness="0"/>
-                        
+
+                        <!-- Minuter -->
+                        <ComboBox ItemsSource="{Binding AvailableDateMinutes}" SelectedItem="{Binding SelectedDateMinute}" Width="63" Height="25" FontSize="16" Foreground="Crimson" Margin="0,5,0,0" 
+                                  VerticalAlignment="Top" HorizontalContentAlignment="Center" BorderThickness="0" FontWeight="UltraLight">
+
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding StringFormat={}{0:D2}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+
+                        </ComboBox>
+
                     </StackPanel>
 
                     <Label Content="Workout Type" HorizontalAlignment="Center" Margin="0,10,0,-10" Foreground="Crimson" FontSize="16"/>

@@ -23,17 +23,17 @@
 
         <!-- Fönstertitel -->
         <Label Grid.Row="1" Content="Your Workouts" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
-               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0"/>
+               HorizontalAlignment="Center" VerticalAlignment="Center"/>
         
         <!-- Instruktioner -->
-        <Label Grid.Row="1" Content="Add, remove or edit a workout.." FontSize="20" Width="400" Foreground="Crimson" Margin="0,0,0,0"
-               HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+        <Label Grid.Row="1" Content="Add, remove or edit a workout.." FontSize="20" Width="400" Foreground="Crimson"
+               HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontWeight="UltraLight"/>
 
         <!-- Layout för träningsinformation och sökfilter -->
-        <StackPanel Grid.Row="2" Margin="0,20,0,0">
+        <StackPanel Grid.Row="2" Margin="0,0,0,0">
 
             <!-- Menyval -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="25" VerticalAlignment="Top" Margin="0,5,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="25" VerticalAlignment="Top" Margin="0,25,0,20">
 
                 <!-- Knapp för företagsinformation -->
                 <Button Content="Info" Command="{Binding AppInfoCommand}" Background="Crimson" BorderBrush="Crimson" Foreground="White" 

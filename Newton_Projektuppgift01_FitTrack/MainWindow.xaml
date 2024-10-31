@@ -33,7 +33,7 @@
 
             <!-- Instruktioner -->
             <Label Content="Sign in or create a new account.." FontSize="20" Width="400" Foreground="Crimson" Margin="0,0,0,30"
-                   HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
+                   HorizontalContentAlignment="Center" HorizontalAlignment="Center" FontWeight="UltraLight"/>
 
             <!-- Skriv in användarnamn -->
             <Grid>

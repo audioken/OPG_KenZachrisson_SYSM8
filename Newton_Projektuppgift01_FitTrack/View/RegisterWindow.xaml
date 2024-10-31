@@ -28,7 +28,7 @@
 
         <!-- Instruktioner -->
         <Label Grid.Row="1" Content="Register a new user profile. Fill in your details below.." FontSize="20" Width="500" Foreground="Crimson" Margin="0,0,0,0"
-               HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+               HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontWeight="UltraLight"/>
 
         <StackPanel Grid.Row="2" Margin="0,20,0,0">
 
