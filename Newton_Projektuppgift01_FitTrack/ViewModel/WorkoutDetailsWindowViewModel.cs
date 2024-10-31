@@ -344,44 +344,53 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Sparar ändringar
         private void SaveWorkout()
         {
-            // Uppdaterar värdena för WorkoutEditable för att säkerställa korrekt värden
-            UpdateWorkoutEditable();
-
-            // Hitta index för originalet av träningen som ändrats
-            int indexOfWorkout = Manager.Instance.CurrentUser.UserWorkouts.IndexOf(Manager.Instance.CurrentWorkout);
-
-            // Kontrollera så det är en vanlig användare samt att index för träningen finns
-            if (Manager.Instance.CurrentUser is User && indexOfWorkout >= 0)
+            // Testa kodblock som säkerhetsåtergärd
+            try
             {
-                // Ersätt originalet med uppdaterad träning för användaren
-                Manager.Instance.CurrentUser.UserWorkouts[indexOfWorkout] = WorkoutEditable;
-            }
-            // Kontrollera om det är en admin som är inloggad
-            else if (Manager.Instance.CurrentUser is AdminUser)
-            {
-                // Kolla igenom alla användare i listan AllUsers
-                foreach (User user in Manager.Instance.AllUsers)
+                // Uppdaterar värdena för WorkoutEditable för att säkerställa korrekt värden
+                UpdateWorkoutEditable();
+
+                // Hitta index för originalet av träningen som ändrats
+                int indexOfWorkout = Manager.Instance.CurrentUser.UserWorkouts.IndexOf(Manager.Instance.CurrentWorkout);
+
+                // Kontrollera så det är en vanlig användare samt att index för träningen finns
+                if (Manager.Instance.CurrentUser is User && indexOfWorkout >= 0)
                 {
-                    // Om en användare har den aktuella träningen som ska uppdateras
-                    if (user.UserWorkouts.Contains(Manager.Instance.CurrentWorkout))
+                    // Ersätt originalet med uppdaterad träning för användaren
+                    Manager.Instance.CurrentUser.UserWorkouts[indexOfWorkout] = WorkoutEditable;
+                }
+                // Kontrollera om det är en admin som är inloggad
+                else if (Manager.Instance.CurrentUser is AdminUser)
+                {
+                    // Kolla igenom alla användare i listan AllUsers
+                    foreach (User user in Manager.Instance.AllUsers)
                     {
-                        // Hitta index
-                        int indexUserWorkout = user.UserWorkouts.IndexOf(Manager.Instance.CurrentWorkout);
+                        // Om en användare har den aktuella träningen som ska uppdateras
+                        if (user.UserWorkouts.Contains(Manager.Instance.CurrentWorkout))
+                        {
+                            // Hitta index
+                            int indexUserWorkout = user.UserWorkouts.IndexOf(Manager.Instance.CurrentWorkout);
 
-                        // Ersätt med den redigerade klonen
-                        user.UserWorkouts[indexUserWorkout] = WorkoutEditable;
+                            // Ersätt med den redigerade klonen
+                            user.UserWorkouts[indexUserWorkout] = WorkoutEditable;
 
-                        break;
+                            break;
+                        }
                     }
                 }
+                else { MessageBox.Show("Något gick fel! Träningen kunde inte sparas..", "Error!", MessageBoxButton.OK, MessageBoxImage.Error); }
+
+                // Öppna WorkoutWindow
+                OpenWorkoutWindow();
+
+                // Stäng WorkoutDetailsWindow
+                _workoutDetailsWindow.Close();
             }
-            else { MessageBox.Show("Något gick fel! Träningen kunde inte sparas..", "Error!", MessageBoxButton.OK, MessageBoxImage.Error); }
-
-            // Öppna WorkoutWindow
-            OpenWorkoutWindow();
-
-            // Stäng WorkoutDetailsWindow
-            _workoutDetailsWindow.Close();
+            // Om ett oväntat fel sker
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ett fel uppstod vid sparande av träning: {ex.Message}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         // Kopiera träning
@@ -413,96 +422,126 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Infoga relevanta parametrar från det kopierade träningspasset
         private void FetchWorkout()
         {
-            // Hämta datum och tid
-            SelectedDate = WorkoutEditable.Date;
-            OnPropertyChanged(nameof(SelectedDate));
-            SelectedDateHour = WorkoutEditable.Date.Hour;
-            OnPropertyChanged(nameof(SelectedDateHour));
-            SelectedDateMinute = WorkoutEditable.Date.Minute;
-            OnPropertyChanged(nameof(SelectedDateMinute));
-
-            // Hämta träningstyp
-            SelectedWorkoutType = WorkoutEditable.Type;
-            OnPropertyChanged(nameof(SelectedWorkoutType));
-
-            // Hämta varaktighet i minuter
-            SelectedDurationSlider = ConvertTimeSpanToMinutes();
-            OnPropertyChanged(nameof(SelectedDurationSlider));
-
-            // Hämta brända kalorier
-            CaloriesBurned = WorkoutEditable.CaloriesBurned;
-            OnPropertyChanged(nameof(CaloriesBurned));
-
-            // Hämta kommentar
-            NotesInput = WorkoutEditable.Notes;
-            OnPropertyChanged(nameof(NotesInput));
-
-            // Kontrollera vilken träningstyp som är kopierad för att tilldela rätt extravärde
-            if (WorkoutEditable is StrengthWorkout strengthWorkout)
+            // Testa kodblock som säkerhetsåtergärd
+            try
             {
-                // Hämta repetitioner
-                SelectedRepetitionSlider = strengthWorkout.Repetition;
-                OnPropertyChanged(nameof(SelectedRepetitionSlider));
+                // Hämta datum och tid
+                SelectedDate = WorkoutEditable.Date;
+                OnPropertyChanged(nameof(SelectedDate));
+                SelectedDateHour = WorkoutEditable.Date.Hour;
+                OnPropertyChanged(nameof(SelectedDateHour));
+                SelectedDateMinute = WorkoutEditable.Date.Minute;
+                OnPropertyChanged(nameof(SelectedDateMinute));
+
+                // Hämta träningstyp
+                SelectedWorkoutType = WorkoutEditable.Type;
+                OnPropertyChanged(nameof(SelectedWorkoutType));
+
+                // Hämta varaktighet i minuter
+                SelectedDurationSlider = ConvertTimeSpanToMinutes();
+                OnPropertyChanged(nameof(SelectedDurationSlider));
+
+                // Hämta brända kalorier
+                CaloriesBurned = WorkoutEditable.CaloriesBurned;
+                OnPropertyChanged(nameof(CaloriesBurned));
+
+                // Hämta kommentar
+                NotesInput = WorkoutEditable.Notes;
+                OnPropertyChanged(nameof(NotesInput));
+
+                // Kontrollera vilken träningstyp som är kopierad för att tilldela rätt extravärde
+                if (WorkoutEditable is StrengthWorkout strengthWorkout)
+                {
+                    // Hämta repetitioner
+                    SelectedRepetitionSlider = strengthWorkout.Repetition;
+                    OnPropertyChanged(nameof(SelectedRepetitionSlider));
+                }
+                else if (WorkoutEditable is CardioWorkout cardioWorkout)
+                {
+                    // Hämta distans
+                    SelectedDistanceSlider = cardioWorkout.Distance;
+                    OnPropertyChanged(nameof(SelectedDistanceSlider));
+                }
             }
-            else if (WorkoutEditable is CardioWorkout cardioWorkout)
+            // Om ett oväntat fel sker
+            catch (Exception ex)
             {
-                // Hämta distans
-                SelectedDistanceSlider = cardioWorkout.Distance;
-                OnPropertyChanged(nameof(SelectedDistanceSlider));
+                MessageBox.Show($"Ett fel uppstod vid hämtning av träning: {ex.Message}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         // Skapar träning baserat på träningstyp och inkluderar relevanta parametrar
         private void CreateSelectedWorkout()
         {
-            // Kolla först vad som faktist är valt
-            if (SelectedWorkoutType == "Strength Workout")
+            // Testa kodblock som säkerhetsåtergärd
+            try
             {
-                // Skapa ny träning om vald träningstyp inte matchar den aktuella träningstypen
-                if (!(WorkoutEditable is StrengthWorkout))
+                // Kolla först vad som faktist är valt
+                if (SelectedWorkoutType == "Strength Workout")
                 {
-                    WorkoutEditable = new StrengthWorkout(FullDateTime, SelectedWorkoutType, DurationInput, CaloriesBurned, NotesInput, SelectedRepetitionSlider);
+                    // Skapa ny träning om vald träningstyp inte matchar den aktuella träningstypen
+                    if (!(WorkoutEditable is StrengthWorkout))
+                    {
+                        WorkoutEditable = new StrengthWorkout(FullDateTime, SelectedWorkoutType, DurationInput, CaloriesBurned, NotesInput, SelectedRepetitionSlider);
 
-                    // Återställ slider för Cardio Workout
-                    SelectedDistanceSlider = 0;
+                        // Återställ slider för Cardio Workout
+                        SelectedDistanceSlider = 0;
+                    }
+                }
+                else if (SelectedWorkoutType == "Cardio Workout")
+                {
+                    // Skapa ny träning om vald träningstyp inte matchar den aktuella träningstypen
+                    if (!(WorkoutEditable is CardioWorkout))
+                    {
+                        WorkoutEditable = new CardioWorkout(FullDateTime, SelectedWorkoutType, DurationInput, CaloriesBurned, NotesInput, SelectedDistanceSlider);
+
+                        // Återställ slider för Strength Workout
+                        SelectedRepetitionSlider = 0;
+                    }
                 }
             }
-            else if (SelectedWorkoutType == "Cardio Workout")
+            // Om ett oväntat fel sker
+            catch (Exception ex)
             {
-                // Skapa ny träning om vald träningstyp inte matchar den aktuella träningstypen
-                if (!(WorkoutEditable is CardioWorkout))
-                {
-                    WorkoutEditable = new CardioWorkout(FullDateTime, SelectedWorkoutType, DurationInput, CaloriesBurned, NotesInput, SelectedDistanceSlider);
-
-                    // Återställ slider för Strength Workout
-                    SelectedRepetitionSlider = 0;
-                }
+                MessageBox.Show($"Ett fel uppstod vid skapande av träning: {ex.Message}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         // Uppdaterar WorkoutEditable till de senaste värdena
         private void UpdateWorkoutEditable()
         {
-            if (WorkoutEditable is StrengthWorkout strengthWorkout)
+            // Testa kodblock som säkerhetsåtergärd
+            try
             {
-                strengthWorkout.Date = FullDateTime;
-                strengthWorkout.Type = SelectedWorkoutType;
-                strengthWorkout.Duration = DurationInput;
-                strengthWorkout.Notes = NotesInput;
-                strengthWorkout.Repetition = SelectedRepetitionSlider;
-                strengthWorkout.CaloriesBurned = strengthWorkout.CalculateCaloriesBurned();
+                // Uppdatera värden relevanta för den valda träningstypen och beräkna brända kalorier
+                if (WorkoutEditable is StrengthWorkout strengthWorkout)
+                {
+                    strengthWorkout.Date = FullDateTime;
+                    strengthWorkout.Type = SelectedWorkoutType;
+                    strengthWorkout.Duration = DurationInput;
+                    strengthWorkout.Notes = NotesInput;
+                    strengthWorkout.Repetition = SelectedRepetitionSlider;
+                    strengthWorkout.CaloriesBurned = strengthWorkout.CalculateCaloriesBurned();
+                }
+                else if (WorkoutEditable is CardioWorkout cardioWorkout)
+                {
+                    cardioWorkout.Date = FullDateTime;
+                    cardioWorkout.Type = SelectedWorkoutType;
+                    cardioWorkout.Duration = DurationInput;
+                    cardioWorkout.Notes = NotesInput;
+                    cardioWorkout.Distance = SelectedDistanceSlider;
+                    cardioWorkout.CaloriesBurned = cardioWorkout.CalculateCaloriesBurned();
+                }
+
+                // Uppdatera egenskapen
+                OnPropertyChanged(nameof(CaloriesBurned));
             }
-            else if (WorkoutEditable is CardioWorkout cardioWorkout)
+            // Om ett oväntat fel sker
+            catch (Exception ex)
             {
-                cardioWorkout.Date = FullDateTime;
-                cardioWorkout.Type = SelectedWorkoutType;
-                cardioWorkout.Duration = DurationInput;
-                cardioWorkout.Notes = NotesInput;
-                cardioWorkout.Distance = SelectedDistanceSlider;
-                cardioWorkout.CaloriesBurned = cardioWorkout.CalculateCaloriesBurned();
+                MessageBox.Show($"Ett fel uppstod vid uppdatering av träning: {ex.Message}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            OnPropertyChanged(nameof(CaloriesBurned));
         }
 
         // Kontrollerar vilken knapp och vilken inputruta som syns beroende på träningstyp

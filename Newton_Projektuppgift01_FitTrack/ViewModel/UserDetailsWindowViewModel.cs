@@ -204,69 +204,78 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // METOD ↓
         private void SaveUserDetails()
         {
-            // Kontrollerar så alla inputs har inmatning
-            if (!string.IsNullOrEmpty(NewUsernameInput) && !string.IsNullOrEmpty(NewPasswordInput) &&
-                !string.IsNullOrEmpty(ConfirmNewPasswordInput) && !string.IsNullOrEmpty(SelectedCountry) &&
-                !string.IsNullOrEmpty(SelectedSecurityQuestion) && !string.IsNullOrEmpty(SecurityAnswerInput))
+            // Testa kodblock som säkerhetsåtergärd
+            try
             {
-                // Kontrollerar längden på användarnamn
-                if (NewUsernameInput.Length >= 3)
+                // Kontrollerar så alla inputs har inmatning
+                if (!string.IsNullOrEmpty(NewUsernameInput) && !string.IsNullOrEmpty(NewPasswordInput) &&
+                    !string.IsNullOrEmpty(ConfirmNewPasswordInput) && !string.IsNullOrEmpty(SelectedCountry) &&
+                    !string.IsNullOrEmpty(SelectedSecurityQuestion) && !string.IsNullOrEmpty(SecurityAnswerInput))
                 {
-                    // Kollar om användarnamn finns
-                    bool isUserNameAvailable = true;
-
-                    // Kollar om användarnamnet redan finns
-                    foreach (User user in Manager.Instance.AllUsers)
+                    // Kontrollerar längden på användarnamn
+                    if (NewUsernameInput.Length >= 3)
                     {
-                        // Kollar om användarnamn är upptaget så länge det inte är användarens egna användarnamn
-                        if (NewUsernameInput == user.Username && NewUsernameInput != Manager.Instance.CurrentUser.Username)
+                        // Kollar om användarnamn finns
+                        bool isUserNameAvailable = true;
+
+                        // Kollar om användarnamnet redan finns
+                        foreach (User user in Manager.Instance.AllUsers)
                         {
-                            // Användernamnet var upptaget
-                            isUserNameAvailable = false;
-
-                            break;
-                        }
-                    }
-
-                    // Om användarnamnet är ledigt
-                    if (isUserNameAvailable)
-                    {
-                        // Kontrollerar så lösenordet är starkt nog
-                        string specialCharacters = "!@#$%^&*()-_=+[{]};:’\"|\\,<.>/?"; // Mall för lösenordskontroll av specialtecken
-                        bool hasSpecial = NewPasswordInput.Any(c => specialCharacters.Contains(c)); // Innehåller det specialtecken?
-                        bool hasLength = NewPasswordInput.Length > 7; // Innehåller det minst åtta tecken?
-                        bool hasDigit = NewPasswordInput.Any(char.IsDigit); // Innehåller det minst en siffra?
-
-                        // Om lösenordet är starkt nog
-                        if (hasSpecial && hasLength && hasDigit)
-                        {
-                            // Om lösenord och bekräftat lösenord matchar
-                            if (NewPasswordInput == ConfirmNewPasswordInput)
+                            // Kollar om användarnamn är upptaget så länge det inte är användarens egna användarnamn
+                            if (NewUsernameInput == user.Username && NewUsernameInput != Manager.Instance.CurrentUser.Username)
                             {
-                                // Skriv över den gamla användarinformationen
-                                Manager.Instance.CurrentUser.Username = NewUsernameInput;
-                                Manager.Instance.CurrentUser.Password = NewPasswordInput;
-                                Manager.Instance.CurrentUser.Country = SelectedCountry;
-                                Manager.Instance.CurrentUser.SecurityQuestion = SelectedSecurityQuestion;
-                                Manager.Instance.CurrentUser.SecurityAnswer = SecurityAnswerInput;
+                                // Användernamnet var upptaget
+                                isUserNameAvailable = false;
 
-                                // Öppna WorkoutWindow
-                                OpenWorkoutWindow();
-
-                                // Stäng UserDetailsWindow
-                                _userDetailsWindow.Close();
-
-                                MessageBox.Show($"Tack {NewUsernameInput}! Din användarprofil har uppdaterats..", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                                break;
                             }
-                            else { MessageBox.Show("Lösenorden matchar inte!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                         }
-                        else { MessageBox.Show("Lösenordet måste innehålla minst åtta tecken, en siffra och ett specieltecken!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+
+                        // Om användarnamnet är ledigt
+                        if (isUserNameAvailable)
+                        {
+                            // Kontrollerar så lösenordet är starkt nog
+                            string specialCharacters = "!@#$%^&*()-_=+[{]};:’\"|\\,<.>/?"; // Mall för lösenordskontroll av specialtecken
+                            bool hasSpecial = NewPasswordInput.Any(c => specialCharacters.Contains(c)); // Innehåller det specialtecken?
+                            bool hasLength = NewPasswordInput.Length > 7; // Innehåller det minst åtta tecken?
+                            bool hasDigit = NewPasswordInput.Any(char.IsDigit); // Innehåller det minst en siffra?
+
+                            // Om lösenordet är starkt nog
+                            if (hasSpecial && hasLength && hasDigit)
+                            {
+                                // Om lösenord och bekräftat lösenord matchar
+                                if (NewPasswordInput == ConfirmNewPasswordInput)
+                                {
+                                    // Skriv över den gamla användarinformationen
+                                    Manager.Instance.CurrentUser.Username = NewUsernameInput;
+                                    Manager.Instance.CurrentUser.Password = NewPasswordInput;
+                                    Manager.Instance.CurrentUser.Country = SelectedCountry;
+                                    Manager.Instance.CurrentUser.SecurityQuestion = SelectedSecurityQuestion;
+                                    Manager.Instance.CurrentUser.SecurityAnswer = SecurityAnswerInput;
+
+                                    // Öppna WorkoutWindow
+                                    OpenWorkoutWindow();
+
+                                    // Stäng UserDetailsWindow
+                                    _userDetailsWindow.Close();
+
+                                    MessageBox.Show($"Tack {NewUsernameInput}! Din användarprofil har uppdaterats..", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                                }
+                                else { MessageBox.Show("Lösenorden matchar inte!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+                            }
+                            else { MessageBox.Show("Lösenordet måste innehålla minst åtta tecken, en siffra och ett specieltecken!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+                        }
+                        else { MessageBox.Show("Användarnamnet finns redan!", "Occupied!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                     }
-                    else { MessageBox.Show("Användarnamnet finns redan!", "Occupied!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+                    else { MessageBox.Show("Användarnamnet måste ha minst tre tecken!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                 }
-                else { MessageBox.Show("Användarnamnet måste ha minst tre tecken!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+                else { MessageBox.Show("Du måste fylla i all information!", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
-            else { MessageBox.Show("Du måste fylla i all information!", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+            // Om ett oväntat fel sker
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ett fel uppstod vid uppdatering av användaruppgifter: {ex.Message}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         // Avbryt redigering och återgå till WorkoutWindow

@@ -248,80 +248,98 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Spara träningspasset
         private void SaveWorkout()
         {
-            // Kolla så det finns en kommentar
-            if (!string.IsNullOrEmpty(NotesInput))
+            // Testa kodblock som säkerhetsåtergärd
+            try
             {
-                // Deklarerar en variabel som träningen ska instansieras från
-                Workout newWorkout = null;
-
-                // Kolla typ av träning för att instansiera rätt träningstyp
-                if (SelectedWorkoutType == "Strength Workout")
+                // Kolla så det finns en kommentar
+                if (!string.IsNullOrEmpty(NotesInput))
                 {
-                    // Instansierar ny styrketräning
-                    newWorkout = new StrengthWorkout(FullDateTime, SelectedWorkoutType, DurationInput, 0, NotesInput, SelectedRepetitionSlider);
+                    // Deklarerar en variabel som träningen ska instansieras från
+                    Workout newWorkout = null;
 
+                    // Kolla typ av träning för att instansiera rätt träningstyp
+                    if (SelectedWorkoutType == "Strength Workout")
+                    {
+                        // Instansierar ny styrketräning
+                        newWorkout = new StrengthWorkout(FullDateTime, SelectedWorkoutType, DurationInput, 0, NotesInput, SelectedRepetitionSlider);
+
+                    }
+                    else if (SelectedWorkoutType == "Cardio Workout")
+                    {
+                        // Instansierar ny konditionsträning
+                        newWorkout = new CardioWorkout(FullDateTime, SelectedWorkoutType, DurationInput, 0, NotesInput, SelectedDistanceSlider);
+                    }
+
+                    // Lägg till träningen i användarens träningslista
+                    Manager.Instance.CurrentUser.UserWorkouts.Add(newWorkout);
+
+                    MessageBox.Show($"Vald träningstyp: {SelectedWorkoutType}\nTidpunkt: {FullDateTime}\nVaraktighet: {SelectedDurationSlider} min\nÖvriga kommenterar: {NotesInput}", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    // Öppna WorkoutWindow
+                    OpenWorkoutWindow();
+
+                    // Stäng AddWorkoutWindow
+                    _addWorkoutWindow.Close();
                 }
-                else if (SelectedWorkoutType == "Cardio Workout")
-                {
-                    // Instansierar ny konditionsträning
-                    newWorkout = new CardioWorkout(FullDateTime, SelectedWorkoutType, DurationInput, 0, NotesInput, SelectedDistanceSlider);
-                }
-
-                // Lägg till träningen i användarens träningslista
-                Manager.Instance.CurrentUser.UserWorkouts.Add(newWorkout);
-
-                MessageBox.Show($"Vald träningstyp: {SelectedWorkoutType}\nTidpunkt: {FullDateTime}\nVaraktighet: {SelectedDurationSlider} min\nÖvriga kommenterar: {NotesInput}", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                // Öppna WorkoutWindow
-                OpenWorkoutWindow();
-
-                // Stäng AddWorkoutWindow
-                _addWorkoutWindow.Close();
+                else { MessageBox.Show("Du måste skriva en kommentar..", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
-            else { MessageBox.Show("Du måste skriva en kommentar..", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+            // Om ett oväntat fel sker
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ett fel uppstod vid sparande av träning: {ex.Message}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         // Infoga relevanta parametrar från det kopierade träningspasset
         private void PasteWorkout()
         {
-            // Kolla så det finns en kopierad träning
-            if (Manager.Instance.CopiedWorkout != null)
+            // Testa kodblock som säkerhetsåtergärd
+            try
             {
-                // Hämta datum och tid
-                SelectedDate = Manager.Instance.CopiedWorkout.Date;
-                OnPropertyChanged(nameof(SelectedDate));
-                SelectedDateHour = Manager.Instance.CopiedWorkout.Date.Hour;
-                OnPropertyChanged(nameof(SelectedDateHour));
-                SelectedDateMinute = Manager.Instance.CopiedWorkout.Date.Minute;
-                OnPropertyChanged(nameof(SelectedDateMinute));
-
-                // Hämta träningstyp
-                SelectedWorkoutType = Manager.Instance.CopiedWorkout.Type;
-                OnPropertyChanged(nameof(SelectedWorkoutType));
-
-                // Hämta varaktighet i minuter
-                SelectedDurationSlider = ConvertTimeSpanToMinutes();
-                OnPropertyChanged(nameof(SelectedDurationSlider));
-
-                // Kontrollera vilken träningstyp som är kopierad för att tilldela rätt extravärde
-                if (Manager.Instance.CopiedWorkout is StrengthWorkout strengthWorkout)
+                // Kolla så det finns en kopierad träning
+                if (Manager.Instance.CopiedWorkout != null)
                 {
-                    // Hämta repetitioner
-                    SelectedRepetitionSlider = strengthWorkout.Repetition;
-                    OnPropertyChanged(nameof(SelectedRepetitionSlider));
-                }
-                else if (Manager.Instance.CopiedWorkout is CardioWorkout cardioWorkout)
-                {
-                    // Hämta distans
-                    SelectedDistanceSlider = cardioWorkout.Distance;
-                    OnPropertyChanged(nameof(SelectedDistanceSlider));
-                }
+                    // Hämta datum och tid
+                    SelectedDate = Manager.Instance.CopiedWorkout.Date;
+                    OnPropertyChanged(nameof(SelectedDate));
+                    SelectedDateHour = Manager.Instance.CopiedWorkout.Date.Hour;
+                    OnPropertyChanged(nameof(SelectedDateHour));
+                    SelectedDateMinute = Manager.Instance.CopiedWorkout.Date.Minute;
+                    OnPropertyChanged(nameof(SelectedDateMinute));
 
-                // Hämta kommentar
-                NotesInput = Manager.Instance.CopiedWorkout.Notes;
-                OnPropertyChanged(nameof(NotesInput));
+                    // Hämta träningstyp
+                    SelectedWorkoutType = Manager.Instance.CopiedWorkout.Type;
+                    OnPropertyChanged(nameof(SelectedWorkoutType));
+
+                    // Hämta varaktighet i minuter
+                    SelectedDurationSlider = ConvertTimeSpanToMinutes();
+                    OnPropertyChanged(nameof(SelectedDurationSlider));
+
+                    // Kontrollera vilken träningstyp som är kopierad för att tilldela rätt extravärde
+                    if (Manager.Instance.CopiedWorkout is StrengthWorkout strengthWorkout)
+                    {
+                        // Hämta repetitioner
+                        SelectedRepetitionSlider = strengthWorkout.Repetition;
+                        OnPropertyChanged(nameof(SelectedRepetitionSlider));
+                    }
+                    else if (Manager.Instance.CopiedWorkout is CardioWorkout cardioWorkout)
+                    {
+                        // Hämta distans
+                        SelectedDistanceSlider = cardioWorkout.Distance;
+                        OnPropertyChanged(nameof(SelectedDistanceSlider));
+                    }
+
+                    // Hämta kommentar
+                    NotesInput = Manager.Instance.CopiedWorkout.Notes;
+                    OnPropertyChanged(nameof(NotesInput));
+                }
+                else { MessageBox.Show("Det finns ingen kopierad träning..", "Missing copy!", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
-            else { MessageBox.Show("Det finns ingen kopierad träning..", "Missing copy!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+            // Om ett oväntat fel sker
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ett fel uppstod vid klistring av träning: {ex.Message}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         // Avbryt tillägg av ny träning och öppna WorkoutWindow

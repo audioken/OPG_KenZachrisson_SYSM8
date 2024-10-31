@@ -196,68 +196,77 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Registrera ny användare baserad på inmatad information
         private void RegisterNewUser()
         {
-            // Kontrollerar så alla inputs har inmatning
-            if (!string.IsNullOrEmpty(UsernameInput) && !string.IsNullOrEmpty(PasswordInput) &&
-                !string.IsNullOrEmpty(ConfirmPasswordInput) && !string.IsNullOrEmpty(SelectedCountry) &&
-                !string.IsNullOrEmpty(SecurityAnswerInput) && !string.IsNullOrEmpty(selectedSecurityQuestion))
+            // Testa kodblock som säkerhetsåtergärd
+            try
             {
-                if (UsernameInput.Length >= 3)
+                // Kontrollerar så alla inputs har inmatning
+                if (!string.IsNullOrEmpty(UsernameInput) && !string.IsNullOrEmpty(PasswordInput) &&
+                    !string.IsNullOrEmpty(ConfirmPasswordInput) && !string.IsNullOrEmpty(SelectedCountry) &&
+                    !string.IsNullOrEmpty(SecurityAnswerInput) && !string.IsNullOrEmpty(selectedSecurityQuestion))
                 {
-                    // Kollar om användarnamnet hittas
-                    bool isUserNameAvailable = true;
-
-                    // Kollar igenom alla användare om användarnamnet redan finns
-                    foreach (User user in Manager.Instance.AllUsers)
+                    if (UsernameInput.Length >= 3)
                     {
-                        if (user.Username == UsernameInput)
+                        // Kollar om användarnamnet hittas
+                        bool isUserNameAvailable = true;
+
+                        // Kollar igenom alla användare om användarnamnet redan finns
+                        foreach (User user in Manager.Instance.AllUsers)
                         {
-                            // Användarnamnet var upptaget
-                            isUserNameAvailable = false;
-
-                            break;
-                        }
-                    }
-
-                    // Om användarnamnet är tillgängligt
-                    if (isUserNameAvailable)
-                    {
-                        // Mall för lösenordskontroll av specialtecken
-                        string specialCharacters = "!@#$%^&*()-_=+[{]};:’\"|\\,<.>/?";
-
-                        // Kontrollerar så lösenordet innehåller minst 8 tecken, en siffra och ett specialtecken
-                        bool hasSpecial = PasswordInput.Any(c => specialCharacters.Contains(c));
-                        bool hasLength = PasswordInput.Length > 7;
-                        bool hasDigit = PasswordInput.Any(char.IsDigit);
-
-                        // Om lösenordet är starkt nog
-                        if (hasSpecial && hasLength && hasDigit)
-                        {
-                            // Om lösenord och bekräftat lösenord matchar
-                            if (PasswordInput == ConfirmPasswordInput)
+                            if (user.Username == UsernameInput)
                             {
-                                // Skapa användare baserat på inmatad information
-                                User newUser = new User(UsernameInput, PasswordInput, SelectedCountry, SelectedSecurityQuestion, SecurityAnswerInput);
+                                // Användarnamnet var upptaget
+                                isUserNameAvailable = false;
 
-                                // Lägg till ny användare i listan för alla användare
-                                Manager.Instance.AddUser(newUser);
-
-                                // Öppna MainWindow
-                                OpenMainWindow();
-
-                                // Stäng RegisterWindow
-                                _registerWindow.Close();
-
-                                MessageBox.Show($"Tack {UsernameInput}! Din användarprofil har skapats. Var god logga in..", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                                break;
                             }
-                            else { MessageBox.Show("Lösenorden matchar inte!", "No match!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                         }
-                        else { MessageBox.Show("Minst en åtta tecken, en siffra och ett specieltecken!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+
+                        // Om användarnamnet är tillgängligt
+                        if (isUserNameAvailable)
+                        {
+                            // Mall för lösenordskontroll av specialtecken
+                            string specialCharacters = "!@#$%^&*()-_=+[{]};:’\"|\\,<.>/?";
+
+                            // Kontrollerar så lösenordet innehåller minst 8 tecken, en siffra och ett specialtecken
+                            bool hasSpecial = PasswordInput.Any(c => specialCharacters.Contains(c));
+                            bool hasLength = PasswordInput.Length > 7;
+                            bool hasDigit = PasswordInput.Any(char.IsDigit);
+
+                            // Om lösenordet är starkt nog
+                            if (hasSpecial && hasLength && hasDigit)
+                            {
+                                // Om lösenord och bekräftat lösenord matchar
+                                if (PasswordInput == ConfirmPasswordInput)
+                                {
+                                    // Skapa användare baserat på inmatad information
+                                    User newUser = new User(UsernameInput, PasswordInput, SelectedCountry, SelectedSecurityQuestion, SecurityAnswerInput);
+
+                                    // Lägg till ny användare i listan för alla användare
+                                    Manager.Instance.AddUser(newUser);
+
+                                    // Öppna MainWindow
+                                    OpenMainWindow();
+
+                                    // Stäng RegisterWindow
+                                    _registerWindow.Close();
+
+                                    MessageBox.Show($"Tack {UsernameInput}! Din användarprofil har skapats. Var god logga in..", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                                }
+                                else { MessageBox.Show("Lösenorden matchar inte!", "No match!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+                            }
+                            else { MessageBox.Show("Minst en åtta tecken, en siffra och ett specieltecken!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+                        }
+                        else { MessageBox.Show("Användarnamnet finns redan!", "Occupied!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                     }
-                    else { MessageBox.Show("Användarnamnet finns redan!", "Occupied!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+                    else { MessageBox.Show("Användarnamnet måste ha minst tre tecken!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                 }
-                else { MessageBox.Show("Användarnamnet måste ha minst tre tecken!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+                else { MessageBox.Show("Du måste fylla i all information!", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
-            else { MessageBox.Show("Du måste fylla i all information!", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+            // Om ett oväntat fel sker
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ett fel uppstod vid registrering av användare: {ex.Message}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         // Avbryt registrering och återgå till MainWindow

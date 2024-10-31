@@ -116,16 +116,28 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             // Instansierar den temporära listan
             FilteredWorkoutList = new ObservableCollection<Workout>();
 
-            // Kolla om admin är inloggad
-            if (Manager.Instance.CurrentUser is AdminUser admin)
+            // Testa kodblock som säkerhetsåtergärd
+            try
             {
-                // Hämta alla användares träningspass
-                WorkoutList = admin.ManageAllWorkouts();
+                // Kolla om admin är inloggad
+                if (Manager.Instance.CurrentUser is AdminUser admin)
+                {
+                    // Hämta alla användares träningspass
+                    WorkoutList = admin.ManageAllWorkouts();
+                }
+                else
+                {
+                    // Hämta endast användarens egna träningspass
+                    WorkoutList = Manager.Instance.CurrentUser.UserWorkouts;
+                }
             }
-            else
+            // Om ett oväntat fel sker
+            catch (Exception ex)
             {
-                // Hämta endast användarens egna träningspass
-                WorkoutList = Manager.Instance.CurrentUser.UserWorkouts;
+                MessageBox.Show($"Ett fel uppstod vid hämtning av träningspass: {ex.Message}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                // Logga ut användaren
+                SignOut();
             }
 
             // Sätter startvärdet för båda filter
@@ -155,34 +167,46 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 // Håller koll på om träningen raderats
                 bool wasWorkoutRemoved = false;
 
-                // Kolla igenom alla användare
-                foreach (var user in Manager.Instance.AllUsers)
+                // Testa kodblock som säkerhetsåtergärd
+                try
                 {
-                    // Leta efter träningen
-                    if (user.UserWorkouts.Contains(SelectedWorkout))
+                    // Kolla igenom alla användare
+                    foreach (var user in Manager.Instance.AllUsers)
                     {
-                        // Ta bort från användarens träningar
-                        user.UserWorkouts.Remove(SelectedWorkout);
+                        // Leta efter träningen
+                        if (user.UserWorkouts.Contains(SelectedWorkout))
+                        {
+                            // Ta bort från användarens träningar
+                            user.UserWorkouts.Remove(SelectedWorkout);
 
-                        // Träningen raderades
-                        wasWorkoutRemoved = true;
+                            // Träningen raderades
+                            wasWorkoutRemoved = true;
 
-                        // Avbryter iterering
-                        break;
+                            // Avbryter iterering
+                            break;
+                        }
+                    }
+
+                    // Om träningen är raderad
+                    if (wasWorkoutRemoved)
+                    {
+                        // Ta bort från träningslista
+                        WorkoutList.Remove(SelectedWorkout);
+
+                        // Uppdatera träningslista
+                        OnPropertyChanged(nameof(WorkoutList));
+
+                        // Uppdatera vyn
+                        ApplyCombinedFilter();
                     }
                 }
-
-                // Om träningen är raderad
-                if (wasWorkoutRemoved)
+                // Om ett oväntat fel sker
+                catch (Exception ex)
                 {
-                    // Ta bort från träningslista
-                    WorkoutList.Remove(SelectedWorkout);
+                    MessageBox.Show($"Ett fel uppstod vid borttagning av träningspass: {ex.Message}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                    // Uppdatera träningslista
-                    OnPropertyChanged(nameof(WorkoutList));
-
-                    // Uppdatera vyn
-                    ApplyCombinedFilter();
+                    // Logga ut användaren
+                    SignOut();
                 }
             }
             else { MessageBox.Show("Du måste välja något i listan!", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
@@ -226,8 +250,10 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Logga ut och återgå till MainWindow
         private void SignOut()
         {
-            // Rensar spårning av inloggad användare
+            // Rensar all spårning
             Manager.Instance.CurrentUser = null;
+            Manager.Instance.CurrentWorkout = null;
+            Manager.Instance.CopiedWorkout = null;
 
             // Öppnar MainWindow
             OpenMainWindow();

@@ -45,37 +45,49 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         // Överskuggande metod som Återställer användarens lösenord
         public bool ResetPassword(string securityAnswer)
         {
-            // Kolla så användaren har ställt in en säkerhetsfråga
-            if (SecurityAnswer != null)
+            // Testa kodblock som säkerhetsåtergärd
+            try
             {
-                // Kolla så inmatning finns
-                if (!string.IsNullOrEmpty(securityAnswer))
+                // Kolla så användaren har ställt in en säkerhetsfråga
+                if (SecurityAnswer != null)
                 {
-                    // Om svaret är rätt
-                    if (SecurityAnswer == securityAnswer)
+                    // Kolla så inmatning finns
+                    if (!string.IsNullOrEmpty(securityAnswer))
                     {
-                        // Skapa ett objekt för att slumpa nummer
-                        Random random = new Random();
+                        // Om svaret är rätt
+                        if (SecurityAnswer == securityAnswer)
+                        {
+                            // Skapa ett objekt för att slumpa nummer
+                            Random random = new Random();
 
-                        // Slumpa ett sexsiffrigt nummer
-                        int randomizedPin = random.Next(100000, 1000000);
+                            // Slumpa ett sexsiffrigt nummer
+                            int randomizedPin = random.Next(100000, 1000000);
 
-                        // Omvandla från heltal till sträng och ersätt tidigare lösenord
-                        Password = randomizedPin.ToString();
+                            // Omvandla från heltal till sträng och ersätt tidigare lösenord
+                            Password = randomizedPin.ToString();
 
-                        MessageBox.Show($"Ditt nya lösenord är {Password}", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show($"Ditt nya lösenord är {Password}", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        // Återställningen lyckades
-                        return true;
+                            // Återställningen lyckades
+                            return true;
+                        }
+                        else { MessageBox.Show("Tyvärr var det fel svar..", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                     }
-                    else { MessageBox.Show("Tyvärr var det fel svar..", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+                    else { MessageBox.Show("Du måste skriva ett svar på din säkerhetsfråga..", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                 }
-                else { MessageBox.Show("Du måste skriva ett svar på din säkerhetsfråga..", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
-            }
-            else { MessageBox.Show("Du har inte ställt in någon säkerhetsfråga..", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+                else { MessageBox.Show("Du har inte ställt in någon säkerhetsfråga..", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
 
-            // Återställningen misslyckades
-            return false;
+                // Återställningen misslyckades
+                return false;
+            }
+            // Om ett oväntat fel sker
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ett fel uppstod vid återställning av lösenord: {ex.Message}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                // Återställningen misslyckades
+                return false;
+            }
         }
     }
 }

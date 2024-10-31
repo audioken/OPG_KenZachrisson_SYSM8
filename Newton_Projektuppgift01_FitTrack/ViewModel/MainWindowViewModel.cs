@@ -259,54 +259,61 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Kontroll för inloggning
         private void SignIn()
         {
-            // Kollar om kontot hittas
-            bool accountFound = false;
-
-            // Kolla så text är inmatad
-            if (!string.IsNullOrEmpty(UsernameInput) && !string.IsNullOrEmpty(PasswordInput) && !string.IsNullOrEmpty(TwoFAInput))
+            try
             {
-                // Kollar igenom användarlistan i Managerklassen
-                foreach (User user in Manager.Instance.AllUsers)
+                // Kollar om kontot hittas
+                bool accountFound = false;
+
+                // Kolla så text är inmatad
+                if (!string.IsNullOrEmpty(UsernameInput) && !string.IsNullOrEmpty(PasswordInput) && !string.IsNullOrEmpty(TwoFAInput))
                 {
-                    // Kontrollerar om det matchar en användarprofil
-                    if (UsernameInput == user.Username && PasswordInput == user.Password)
+                    // Kollar igenom användarlistan i Managerklassen
+                    foreach (User user in Manager.Instance.AllUsers)
                     {
-                        // Kontot hittades
-                        accountFound = true;
-
-                        // Kontrollerar så 2FA stämmer
-                        if (TwoFAInput == TwoFACode)
+                        // Kontrollerar om det matchar en användarprofil
+                        if (UsernameInput == user.Username && PasswordInput == user.Password)
                         {
-                            // Loggar in admin eller användare
-                            if (user is AdminUser admin)
+                            // Kontot hittades
+                            accountFound = true;
+
+                            // Kontrollerar så 2FA stämmer
+                            if (TwoFAInput == TwoFACode)
                             {
-                                // Skapar en referens till den inloggade
-                                Manager.Instance.CurrentUser = admin;
+                                // Loggar in admin eller användare
+                                if (user is AdminUser admin)
+                                {
+                                    // Skapar en referens till den inloggade
+                                    Manager.Instance.CurrentUser = admin;
 
-                                // Anropar metod för att skriva ut inloggningsinformation
-                                admin.SignIn();
+                                    // Anropar metod för att skriva ut inloggningsinformation
+                                    admin.SignIn();
+                                }
+                                else
+                                {
+                                    Manager.Instance.CurrentUser = user;
+                                    user.SignIn();
+                                }
+
+                                // Öppna WorkoutWindow
+                                OpenWorkoutWindow();
+
+                                // Stäng MainWindow
+                                Application.Current.MainWindow.Close();
+
+                                // Behöver inte iterera mer
+                                break;
                             }
-                            else
-                            {
-                                Manager.Instance.CurrentUser = user;
-                                user.SignIn();
-                            }
-
-                            // Öppna WorkoutWindow
-                            OpenWorkoutWindow();
-
-                            // Stäng MainWindow
-                            Application.Current.MainWindow.Close();
-
-                            // Behöver inte iterera mer
-                            break;
+                            else { MessageBox.Show("2FA-koden är fel..", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                         }
-                        else { MessageBox.Show("2FA-koden är fel..", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                     }
+                    if (!accountFound) { MessageBox.Show("Användarnamn och/eller lösenord är fel..", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                 }
-                if (!accountFound) { MessageBox.Show("Användarnamn och/eller lösenord är fel..", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+                else { MessageBox.Show("Du måste fylla i användarnamn, lösenord och 2FA-kod..", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
-            else { MessageBox.Show("Du måste fylla i användarnamn, lösenord och 2FA-kod..", "Missing input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ett fel uppstod vid inloggning: {ex.Message}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         // Öppnar fönster för registrering av användare
@@ -323,36 +330,45 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Möjliggör återställning av lösenord
         private void ForgotPassword()
         {
-            // Kollar om användaren hittas
-            bool didUsernameExist = false;
-
-            // Kolla så text är inmatad för användarnamn
-            if (!string.IsNullOrEmpty(UsernameInput))
+            // Testa kodblock som säkerhetsåtergärd
+            try
             {
-                // Kollar igenom användarlistan i Managerklassen
-                foreach (User user in Manager.Instance.AllUsers)
+                // Kollar om användaren hittas
+                bool didUsernameExist = false;
+
+                // Kolla så text är inmatad för användarnamn
+                if (!string.IsNullOrEmpty(UsernameInput))
                 {
-                    // Om det matchar en användare
-                    if (UsernameInput == user.Username)
+                    // Kollar igenom användarlistan i Managerklassen
+                    foreach (User user in Manager.Instance.AllUsers)
                     {
-                        // Användaren hittades
-                        didUsernameExist = true;
+                        // Om det matchar en användare
+                        if (UsernameInput == user.Username)
+                        {
+                            // Användaren hittades
+                            didUsernameExist = true;
 
-                        // Hämta användarens säkerhetsfråga
-                        SecurityQuestion = user.SecurityQuestion;
+                            // Hämta användarens säkerhetsfråga
+                            SecurityQuestion = user.SecurityQuestion;
 
-                        // Visa säkerhetsfråga
-                        ShowSecurityQuestion();
+                            // Visa säkerhetsfråga
+                            ShowSecurityQuestion();
 
-                        // Hämta användare vars lösenord ska återställas
-                        Manager.Instance.CurrentUser = user;
+                            // Hämta användare vars lösenord ska återställas
+                            Manager.Instance.CurrentUser = user;
 
-                        break;
+                            break;
+                        }
                     }
+                    if (!didUsernameExist) { MessageBox.Show("Användarnamnet finns tyvärr inte!", "No match!", MessageBoxButton.OK, MessageBoxImage.Warning); }
                 }
-                if (!didUsernameExist) { MessageBox.Show("Användarnamnet finns tyvärr inte!", "No match!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+                else { MessageBox.Show("Du måste skriva in ett giltigt användarnamn!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
-            else { MessageBox.Show("Du måste skriva in ett giltigt användarnamn!", "Wrong input!", MessageBoxButton.OK, MessageBoxImage.Warning); }
+            // Om ett oväntat fel sker
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ett fel uppstod vid återställning av lösenord: {ex.Message}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         // Dölj säkerhetsfråga
@@ -405,19 +421,28 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Generera ett nytt lösenord
         private void GenerateNewPassword()
         {
-            // Genererar ett nytt lösenord, samt lagrar det, om svaret på säkerhetsfrågan är rätt
-            bool isPasswordChanged = Manager.Instance.CurrentUser.ResetPassword(SecurityAnswerInput);
-
-            // Återgå till startlayout om lösenordet ändrats
-            if (isPasswordChanged)
+            // Testa kodblock som säkerhetsåtergärd
+            try
             {
-                // Återställ alla inmatningar för lösenord
-                PasswordInput = "";
-                TwoFAInput = "";
-                SecurityAnswerInput = "";
+                // Genererar ett nytt lösenord, samt lagrar det, om svaret på säkerhetsfrågan är rätt
+                bool isPasswordChanged = Manager.Instance.CurrentUser.ResetPassword(SecurityAnswerInput);
 
-                // Dölj säkerhetsfråga
-                HideSecurityQuestion();
+                // Återgå till startlayout om lösenordet ändrats
+                if (isPasswordChanged)
+                {
+                    // Återställ alla inmatningar för lösenord
+                    PasswordInput = "";
+                    TwoFAInput = "";
+                    SecurityAnswerInput = "";
+
+                    // Dölj säkerhetsfråga
+                    HideSecurityQuestion();
+                }
+            }
+            // Om ett oväntat fel sker
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ett fel uppstod vid återställning av lösenord: {ex.Message}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
