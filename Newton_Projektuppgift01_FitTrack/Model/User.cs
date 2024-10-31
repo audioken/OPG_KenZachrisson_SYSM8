@@ -20,6 +20,10 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         {
             this.Country = Country;
 
+            // Undviker nullvarningar
+            SecurityQuestion = string.Empty;
+            SecurityAnswer = string.Empty;
+
             // Instansiera användarens träningslista
             UserWorkouts = new ObservableCollection<Workout>();
         }
