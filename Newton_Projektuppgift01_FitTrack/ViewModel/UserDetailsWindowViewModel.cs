@@ -174,6 +174,14 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         {
             _userDetailsWindow = userDetailsWindow;
 
+            // Undviker nullvarningar
+            newUsernameInput = string.Empty;
+            newPasswordInput = string.Empty;
+            confirmNewPasswordInput = string.Empty;
+            selectedSecurityQuestion = string.Empty;
+            securityAnswerInput = string.Empty;
+            SelectedCountry = string.Empty;
+
             // Instansierar alla länder
             Countries = new ObservableCollection<string>
             {
@@ -192,13 +200,21 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 "What city were your mother born in?"
             };
 
-            // Förifylld användarinformation
-            NewUsernameInput = Manager.Instance.CurrentUser.Username;
-            NewPasswordInput = Manager.Instance.CurrentUser.Password;
-            ConfirmNewPasswordInput = Manager.Instance.CurrentUser.Password;
-            SelectedSecurityQuestion = Manager.Instance.CurrentUser.SecurityQuestion;
-            SecurityAnswerInput = Manager.Instance.CurrentUser.SecurityAnswer;
-            SelectedCountry = Manager.Instance.CurrentUser.Country;
+            if (Manager.Instance.CurrentUser != null)
+            {
+                // Förifylld användarinformation
+                NewUsernameInput = Manager.Instance.CurrentUser.Username;
+                NewPasswordInput = Manager.Instance.CurrentUser.Password;
+                ConfirmNewPasswordInput = Manager.Instance.CurrentUser.Password;
+                SelectedSecurityQuestion = Manager.Instance.CurrentUser.SecurityQuestion;
+                SecurityAnswerInput = Manager.Instance.CurrentUser.SecurityAnswer;
+                SelectedCountry = Manager.Instance.CurrentUser.Country;
+            }
+            else
+            {
+                MessageBox.Show("Kunde inte hämta användardata!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                Cancel();
+            }
         }
 
         // METOD ↓
@@ -218,17 +234,28 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                         // Kollar om användarnamn finns
                         bool isUserNameAvailable = true;
 
-                        // Kollar om användarnamnet redan finns
-                        foreach (User user in Manager.Instance.AllUsers)
+                        // Nullkontroll
+                        if (Manager.Instance.CurrentUser != null)
                         {
-                            // Kollar om användarnamn är upptaget så länge det inte är användarens egna användarnamn
-                            if (NewUsernameInput == user.Username && NewUsernameInput != Manager.Instance.CurrentUser.Username)
+                            // Kollar om användarnamnet redan finns
+                            foreach (User user in Manager.Instance.AllUsers)
                             {
-                                // Användernamnet var upptaget
-                                isUserNameAvailable = false;
+                                // Kollar om användarnamn är upptaget så länge det inte är användarens egna användarnamn
+                                if (NewUsernameInput == user.Username && NewUsernameInput != Manager.Instance.CurrentUser.Username)
+                                {
+                                    // Användernamnet var upptaget
+                                    isUserNameAvailable = false;
 
-                                break;
+                                    break;
+                                }
                             }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Kunde inte spara användare!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                            // Avbryt och gå tillbaka till WorkoutWindow
+                            Cancel();
                         }
 
                         // Om användarnamnet är ledigt
@@ -246,12 +273,21 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                                 // Om lösenord och bekräftat lösenord matchar
                                 if (NewPasswordInput == ConfirmNewPasswordInput)
                                 {
-                                    // Skriv över den gamla användarinformationen
-                                    Manager.Instance.CurrentUser.Username = NewUsernameInput;
-                                    Manager.Instance.CurrentUser.Password = NewPasswordInput;
-                                    Manager.Instance.CurrentUser.Country = SelectedCountry;
-                                    Manager.Instance.CurrentUser.SecurityQuestion = SelectedSecurityQuestion;
-                                    Manager.Instance.CurrentUser.SecurityAnswer = SecurityAnswerInput;
+                                    if (Manager.Instance.CurrentUser != null)
+                                    {
+                                        // Skriv över den gamla användarinformationen
+                                        Manager.Instance.CurrentUser.Username = NewUsernameInput;
+                                        Manager.Instance.CurrentUser.Password = NewPasswordInput;
+                                        Manager.Instance.CurrentUser.Country = SelectedCountry;
+                                        Manager.Instance.CurrentUser.SecurityQuestion = SelectedSecurityQuestion;
+                                        Manager.Instance.CurrentUser.SecurityAnswer = SecurityAnswerInput;
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Kunde inte spara användare!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                                        Cancel();
+                                        return;
+                                    }
 
                                     // Öppna WorkoutWindow
                                     OpenWorkoutWindow();
