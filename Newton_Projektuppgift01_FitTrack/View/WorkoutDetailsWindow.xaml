@@ -168,7 +168,7 @@
 
                 <TextBox Text="{Binding NotesInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="345" Height="auto" 
                          VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson" Margin="120,0,0,0"
-                         IsEnabled="{Binding IsEditEnabled}"/>
+                         IsEnabled="{Binding IsEditEnabled}" />
                 
             </Grid>
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="350"/>

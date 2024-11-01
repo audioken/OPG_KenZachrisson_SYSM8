@@ -189,8 +189,6 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
 
             // Undviker nullvarningar
             usernameInput = string.Empty;
-            //passwordInput = string.Empty;
-            //confirmPasswordInput = string.Empty;
             selectedSecurityQuestion = string.Empty;
             securityAnswerInput = string.Empty;
             SelectedCountry = string.Empty;

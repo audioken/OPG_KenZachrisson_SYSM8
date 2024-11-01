@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Newton_Projektuppgift01_FitTrack.MVVM
+namespace Newton_Projektuppgift01_FitTrack.Attached_Properties
 {
     // En statisk hjälparklass för att binda ett lösenord från PasswordBox till en DependencyProperty
     public static class PasswordHelper

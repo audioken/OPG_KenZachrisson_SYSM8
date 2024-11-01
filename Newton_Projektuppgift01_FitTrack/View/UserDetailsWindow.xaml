@@ -16,7 +16,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
             <RowDefinition Height="130"/>
-            <RowDefinition/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="214*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
@@ -32,21 +33,21 @@
         </StackPanel>
 
         <!-- Instruktioner -->
-        <Label Grid.Row="1" Content="Change username, password and more.." FontSize="20" Width="400" Foreground="Crimson" Margin="0,0,0,0"
-               HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontWeight="UltraLight"/>
+        <Label Grid.Row="1" Content="Change username, password and more.." FontSize="20" Width="400" Foreground="Crimson" Margin="0,93,0,0"
+               HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="UltraLight"/>
 
         <!-- Layout för redigering av användarprofil -->
-        <StackPanel Grid.Row="2" Margin="0,20,0,0">
-           
+        <StackPanel Grid.Row="3" Margin="0,14,0,0">
+
             <!-- Skriv in nytt användarnamn -->
             <Grid>
-                
+
                 <Label Content="New username.." Foreground="LightGray" Width="200" Height="32" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,-1" 
                        Visibility="{Binding PHNewUsernameVisibility, UpdateSourceTrigger=PropertyChanged}" FontWeight="UltraLight" FontStyle="Italic"/>
 
                 <TextBox Text="{Binding NewUsernameInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
                          VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Foreground="Crimson" FontWeight="UltraLight"/>
-                
+
             </Grid>
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200" Margin="0,0,0,5"/>
 
@@ -56,7 +57,7 @@
                 <Label Content="New password.." Foreground="LightGray" Width="200" Height="32" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,-1" 
                        Visibility="{Binding PHNewPasswordVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
-                <PasswordBox mvvm:PasswordHelper.BoundPassword="{Binding NewPasswordInput, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" BorderThickness="0" 
+                <PasswordBox attachedproperties:PasswordHelper.BoundPassword="{Binding NewPasswordInput, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" BorderThickness="0" 
                              FontSize="16" Width="200" Height="auto" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
 
             </Grid>
@@ -64,11 +65,11 @@
 
             <!-- Bekräfta nytt lösenord -->
             <Grid>
-                
+
                 <Label Content="Confirm password.." Foreground="LightGray" Width="200" Height="32" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,-1" 
                        Visibility="{Binding PHConfirmNewPasswordVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
-                <PasswordBox mvvm:PasswordHelper.BoundPassword="{Binding ConfirmNewPasswordInput, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" BorderThickness="0" 
+                <PasswordBox attachedproperties:PasswordHelper.BoundPassword="{Binding ConfirmNewPasswordInput, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" BorderThickness="0" 
                              FontSize="16" Width="200" Height="auto" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson"/>
 
             </Grid>
@@ -82,13 +83,13 @@
 
             <!-- Välj svar på vald säkerhetsfråga -->
             <Grid>
-                
+
                 <Label Content="Security answer.." Foreground="LightGray" Width="200" Height="32" FontSize="16" VerticalContentAlignment="Top" Margin="3,0,0,-1" 
                        Visibility="{Binding PHSecurityAnswerVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
                 <TextBox Text="{Binding SecurityAnswerInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="200" Height="auto" 
                          VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Foreground="Crimson" FontWeight="UltraLight"/>
-                
+
             </Grid>
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="200" Margin="0,0,0,5"/>
 
@@ -100,7 +101,7 @@
 
             <!-- Spara och Cancelknapp -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
-                
+
                 <!-- Knapp för att avbryta och gå tillbaka -->
                 <Button Content="Cancel" Command="{Binding CancelCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
                         Foreground="White" Width="90" Height="35" FontSize="16" Margin="10"/>
@@ -108,15 +109,15 @@
                 <!-- Knapp för att spara ändringar -->
                 <Button Content="Save" Command="{Binding SaveUserDetailsCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
                         Foreground="White" Width="70" Height="35" FontSize="16" Margin="10"/>
-                
+
             </StackPanel>
 
         </StackPanel>
 
         <!-- Färgad sidfot -->
-        <Rectangle Grid.Row="3" Fill="Crimson"/>
+        <Rectangle Grid.Row="3" Fill="Crimson" Margin="0,428,0,0" Grid.RowSpan="2"/>
 
     </Grid>
     <!-- SLUT -->
-    
+
 </Window>
