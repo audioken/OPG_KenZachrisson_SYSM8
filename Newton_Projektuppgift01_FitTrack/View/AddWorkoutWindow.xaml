@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View"
+        xmlns:attachedproperties="clr-namespace:Newton_Projektuppgift01_FitTrack.Attached_Properties"
         mc:Ignorable="d"
         Title="AddWorkoutWindow" MinWidth="600" MinHeight="600" Height="600" Width="600">
 
@@ -24,8 +25,8 @@
         <!-- Fönstertitel -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-            <Label Content="Add" FontSize="50" VerticalAlignment="Top" Foreground="Crimson" Margin="0,0,0,0" FontFamily="Arial" FontWeight="UltraLight"/>
-            <Label Content="Workout" FontSize="50" FontWeight="UltraBlack"  Foreground="LightGray" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial"/>
+            <Label Content="Add" FontSize="50" VerticalAlignment="Top" Foreground="Crimson" Margin="0,0,0,0" FontWeight="UltraLight"/>
+            <Label Content="Workout" FontSize="50" FontWeight="UltraBlack"  Foreground="LightGray" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         </StackPanel>
 
@@ -107,7 +108,7 @@
                     </StackPanel>
 
                     <!-- Slider för distans -->
-                    <Slider Value="{Binding SelectedDistanceSlider, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="100" Width="150"
+                    <Slider Value="{Binding SelectedDistanceSlider, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="50" Width="150"
                             VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,18,0,10" Visibility="{Binding DistanceSliderVisibility}"/>
 
                     <!-- Text för repetioner -->
@@ -125,7 +126,7 @@
                     </StackPanel>
 
                     <!-- Slider <för repetitioner -->
-                    <Slider Value="{Binding SelectedRepetitionSlider, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="100" Width="150" 
+                    <Slider Value="{Binding SelectedRepetitionSlider, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="50" Width="150" 
                             VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,18,0,10" Visibility="{Binding RepetitionSliderVisibility}"/>
 
                     <!-- Text för varaktighet -->
@@ -143,7 +144,7 @@
                     </StackPanel>
 
                     <!-- Slider för varaktighet -->
-                    <Slider Value="{Binding SelectedDurationSlider, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="100" Width="150" 
+                    <Slider Value="{Binding SelectedDurationSlider, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="180" Width="150" 
                             VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,18,0,0"/>
 
                 </StackPanel>
@@ -157,7 +158,8 @@
                        Visibility="{Binding PHNotesVisibility}"/>
 
                 <TextBox Text="{Binding NotesInput, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="345" Height="auto" 
-                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson" Margin="120,0,0,0"/>
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" FontWeight="UltraLight" Foreground="Crimson" Margin="120,0,0,0"
+                         attachedproperties:FocusExtension.IsFocused="{Binding IsNotesFocused, Mode=TwoWay}"/>
                 
             </Grid>
             <Border BorderBrush="Crimson" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Width="350"/>
@@ -171,7 +173,7 @@
 
                 <!-- Klistra in -->
                 <Button Content="Paste" Command="{Binding PasteCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"
-                        Foreground="White" Width="90" Height="35" FontSize="16" Margin="10"/>
+                        Foreground="White" Width="90" Height="35" FontSize="16" Margin="10" Visibility="{Binding PasteVisibility}"/>
 
                 <!-- Spara -->
                 <Button Content="Save" Command="{Binding SaveCommand}" Background="Crimson" BorderThickness="0" BorderBrush="Crimson"

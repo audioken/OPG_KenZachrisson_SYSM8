@@ -96,6 +96,19 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Bestämmer om sökfiltret är i fokus
+        private bool isSearchFilterFocused;
+        public bool IsSearchFilterFocused
+        {
+            get { return isSearchFilterFocused; }
+            set
+            {
+                isSearchFilterFocused = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         // Relay-kommando som öppnar olika fönster vid klick
         public RelayCommand AppInfoCommand => new RelayCommand(execute => AppInfo());
         public RelayCommand UserDetailsCommand => new RelayCommand(execute => OpenUserDetails());
@@ -114,6 +127,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             FilteredWorkoutList = new ObservableCollection<Workout>();
             workoutList = new ObservableCollection<Workout>();
             User = new User("No one", "No password", "No country");
+
+            // Sätter fokuset på sökfiltret
+            IsSearchFilterFocused = true;
 
             // Sätter startvärdet för båda filter
             DurationFilter = 0;

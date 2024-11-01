@@ -46,8 +46,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         }
 
         // Inmatning av lösenord med döljbar stödtext
-        private string passwordInput;
-        public string PasswordInput
+        // Nullable för att PasswordHelper och PasswordBox ska fungera korrekt
+        private string? passwordInput;
+        public string? PasswordInput
         {
             get { return passwordInput; }
             set
@@ -230,6 +231,18 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Bestämmer fokus på inmatning för användarnamn
+        private bool isUsernameFocused;
+        public bool IsUsernameFocused
+        {
+            get { return isUsernameFocused; }
+            set
+            {
+                isUsernameFocused = value;
+                OnPropertyChanged();
+            }
+        }
+
         // Relaykommandon som representerar knappklick
         public RelayCommand SignInCommand => new RelayCommand(execute => SignIn());
         public RelayCommand RegisterCommand => new RelayCommand(execute => Register());
@@ -241,21 +254,20 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // KONSTRUKTOR ↓
         public MainWindowViewModel()
         {
+            // Undviker nullvarningar
             usernameInput = string.Empty;
-            passwordInput = string.Empty;
+            passwordInput = null;
             twoFAInput = string.Empty;
+            TwoFACode = string.Empty;
             securityQuestion = string.Empty;
             securityAnswerInput = string.Empty;
+
+            // Sätter fokus på inmatning för användarnamn
+            isUsernameFocused = true;
 
             // Sätter texten för applikationens logotyp
             LabelTitle = "Fit";
             LabelTitle2 = "Track";
-
-            // Tillfälligt för snabbare inlogg vid testning
-            UsernameInput = "user";
-            PasswordInput = "password";
-            TwoFAInput = "123456";
-            TwoFACode = "123456";
 
             // Dölj säkerhetsfrågan initiellt
             HideSecurityQuestion();
@@ -420,6 +432,9 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             TwoFACode = random.Next(100000, 1000000).ToString();
 
             MessageBox.Show($"Din 2FA-kod är {TwoFACode}", "Generated 2FA!", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            // Lägg till koden automatiskt för att underlätta
+            TwoFAInput = TwoFACode;
         }
 
         // Dölj säkerhetsfråga

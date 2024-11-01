@@ -22,7 +22,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 OnPropertyChanged();
 
                 // Visar stödtext om inmatningsfältet är tomt
-                if (string.IsNullOrEmpty(usernameInput))
+                if (string.IsNullOrEmpty(UsernameInput))
                 {
                     PHUsernameVisibility = Visibility.Visible;
                 }
@@ -55,7 +55,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 OnPropertyChanged();
 
                 // Visar stödtext om inmatningsfältet är tomt
-                if (string.IsNullOrEmpty(passwordInput))
+                if (string.IsNullOrEmpty(PasswordInput))
                 {
                     PHPasswordVisibility = Visibility.Visible;
                 }
@@ -88,7 +88,7 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
                 OnPropertyChanged();
 
                 // Visar stödtext om inmatningsfältet är tomt
-                if (string.IsNullOrEmpty(confirmPasswordInput))
+                if (string.IsNullOrEmpty(ConfirmPasswordInput))
                 {
                     PHConfirmPasswordVisibility = Visibility.Visible;
                 }
@@ -164,19 +164,33 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // Det valda landet
         public string SelectedCountry { get; set; }
 
+        // Bestämmer fokus på inmatning för användarnamn
+        private bool isUsernameFocused;
+        public bool IsUsernameFocused
+        {
+            get { return isUsernameFocused; }
+            set
+            {
+                isUsernameFocused = value;
+                OnPropertyChanged();
+            }
+        }
+
         // Relaykommandon som representerar knappklick
         public RelayCommand RegisterNewUserCommand => new RelayCommand(execute => RegisterNewUser());
         public RelayCommand CancelCommand => new RelayCommand(execute => Cancel());
 
         // KONSTRUKTOR ↓
-        public RegisterWindowViewModel(Window _registerWindow)
+        public RegisterWindowViewModel(Window registerWindow)
         {
-            this._registerWindow = _registerWindow;
+            _registerWindow = registerWindow;
+
+            IsUsernameFocused = true;
 
             // Undviker nullvarningar
             usernameInput = string.Empty;
-            passwordInput = string.Empty;
-            confirmPasswordInput = string.Empty;
+            //passwordInput = string.Empty;
+            //confirmPasswordInput = string.Empty;
             selectedSecurityQuestion = string.Empty;
             securityAnswerInput = string.Empty;
             SelectedCountry = string.Empty;

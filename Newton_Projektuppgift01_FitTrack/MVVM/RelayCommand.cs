@@ -7,7 +7,7 @@ namespace Newton_Projektuppgift01_FitTrack.MVVM
     {
         // Två privata fält för att hålla funktionsreferenser
         private Action<object> execute; // Referens till metoden som ska exekveras
-        private Func<object, bool> canExecute; // Referens till metoden som bestämmer om kommandot kan exekveras
+        private Func<object, bool>? canExecute; // Referens till metoden som bestämmer om kommandot kan exekveras
 
         // Händelse som utlöses när villkoren för exekvering ändras
         public event EventHandler? CanExecuteChanged
@@ -17,7 +17,7 @@ namespace Newton_Projektuppgift01_FitTrack.MVVM
         }
 
         // Konstruktor som initialiserar RelayCommand med exekverings- och villkorsmetoder
-        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+        public RelayCommand(Action<object> execute, Func<object, bool>? canExecute = null)
         {
             this.execute = execute;
             this.canExecute = canExecute;

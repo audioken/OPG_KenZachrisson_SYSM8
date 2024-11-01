@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View"
+        xmlns:attachedproperties="clr-namespace:Newton_Projektuppgift01_FitTrack.Attached_Properties"
         mc:Ignorable="d"
         Title="WorkoutDetailsWindow" MinWidth="600" MinHeight="600" Height="600" Width="600">
 
@@ -24,8 +25,8 @@
         <!-- Fönstertitel -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-            <Label Content="Workout" FontSize="50" VerticalAlignment="Top" Foreground="Crimson" Margin="0,0,0,0" FontFamily="Arial" FontWeight="UltraLight"/>
-            <Label Content="Details" FontSize="50" FontWeight="UltraBlack"  Foreground="LightGray" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial"/>
+            <Label Content="Workout" FontSize="50" VerticalAlignment="Top" Foreground="Crimson" Margin="0,0,0,0" FontWeight="UltraLight"/>
+            <Label Content="Details" FontSize="50" FontWeight="UltraBlack"  Foreground="LightGray" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         </StackPanel>
 
@@ -114,7 +115,7 @@
                     </StackPanel>
 
                     <!-- Slider för distans -->
-                    <Slider Value="{Binding SelectedDistanceSlider, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="100" Width="150"
+                    <Slider Value="{Binding SelectedDistanceSlider, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="50" Width="150"
                             VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,18,0,10" Visibility="{Binding DistanceSliderVisibility}"
                             IsEnabled="{Binding IsEditEnabled}"/>
 
@@ -133,7 +134,7 @@
                     </StackPanel>
 
                     <!-- Slider för repetitioner -->
-                    <Slider Value="{Binding SelectedRepetitionSlider, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="100" Width="150" 
+                    <Slider Value="{Binding SelectedRepetitionSlider, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="50" Width="150" 
                             VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,18,0,10" Visibility="{Binding RepetitionSliderVisibility}"
                             IsEnabled="{Binding IsEditEnabled}"/>
 
@@ -152,7 +153,7 @@
                     </StackPanel>
 
                     <!-- Slider för varaktighet -->
-                    <Slider Value="{Binding SelectedDurationSlider, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="100" Width="150" 
+                    <Slider Value="{Binding SelectedDurationSlider, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="180" Width="150" 
                             VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,18,0,0" IsEnabled="{Binding IsEditEnabled}"/>
 
                 </StackPanel>

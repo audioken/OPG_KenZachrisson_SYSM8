@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Newton_Projektuppgift01_FitTrack.View" 
+        xmlns:attachedproperties="clr-namespace:Newton_Projektuppgift01_FitTrack.Attached_Properties" 
         mc:Ignorable="d"
         Title="WorkoutWindow" MinWidth="600" MinHeight="600" Height="600" Width="600">
 
@@ -25,8 +26,8 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
 
             <!-- Spårar inloggad användare -->
-            <Label Content="{Binding User.Username}" FontSize="50" VerticalAlignment="Top" Foreground="Crimson" Margin="0,0,0,0" FontFamily="Arial" FontWeight="UltraLight"/>
-            <Label Content="Workouts" FontSize="50" FontWeight="UltraBlack"  Foreground="LightGray" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial"/>
+            <Label Content="{Binding User.Username}" FontSize="50" VerticalAlignment="Top" Foreground="Crimson" Margin="0,0,0,0" FontWeight="UltraLight"/>
+            <Label Content="Workouts" FontSize="50" FontWeight="UltraBlack" Foreground="LightGray" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             
         </StackPanel>
         
@@ -76,7 +77,8 @@
                        HorizontalAlignment="Center" Margin="3,0,230,3" Visibility="{Binding PHSearchFilterVisibility}" FontWeight="UltraLight" FontStyle="Italic"/>
 
                 <TextBox Text="{Binding SearchFilter, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" FontSize="16" Width="150" Height="auto" 
-                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Margin="0,0,180,0" HorizontalAlignment="Center" Foreground="Crimson" FontWeight="UltraLight"/>
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5" Margin="0,0,180,0" HorizontalAlignment="Center" Foreground="Crimson" FontWeight="UltraLight"
+                         attachedproperties:FocusExtension.IsFocused="{Binding IsSearchFilterFocused, Mode=TwoWay}"/>
 
                 <!-- Varaktighetsfilter -->
                 <Slider Value="{Binding DurationFilter, UpdateSourceTrigger=PropertyChanged}" Minimum="0" Maximum="180" Width="150" 

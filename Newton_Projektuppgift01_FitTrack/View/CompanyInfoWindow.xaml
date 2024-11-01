@@ -25,10 +25,10 @@
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
 
             <Label Content="{Binding LabelTitle}" FontSize="50" FontWeight="UltraLight"  Foreground="Crimson" 
-                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,-10,0" FontFamily="Arial"/>
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,-10,0"/>
 
             <Label Content="{Binding LabelTitle2}" FontSize="50" FontWeight="UltraBlack"  Foreground="LightGray" 
-                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" FontFamily="Arial"/>
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0"/>
 
         </StackPanel>
 

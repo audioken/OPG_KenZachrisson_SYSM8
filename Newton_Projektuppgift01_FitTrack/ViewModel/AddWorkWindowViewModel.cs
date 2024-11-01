@@ -199,6 +199,30 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
             }
         }
 
+        // Döljer eller visar knappen Paste för att kunna klistra in
+        private Visibility pasteVisibility;
+        public Visibility PasteVisibility
+        {
+            get { return pasteVisibility; }
+            set
+            {
+                pasteVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Bestämmer om inmatning för kommenter är i fokus
+        private bool isNotesFocused;
+        public bool IsNotesFocused
+        {
+            get { return isNotesFocused; }
+            set
+            {
+                isNotesFocused = value;
+                OnPropertyChanged();
+            }
+        }
+
         // Listor för olika typer av inmatning som får sina värden i konstruktorn
         public ObservableCollection<string> WorkoutTypes { get; } // Read-only
         public ObservableCollection<int> AvailableDateHours { get; } // Read-only
@@ -212,11 +236,24 @@ namespace Newton_Projektuppgift01_FitTrack.ViewModel
         // KONSTRUKTOR ↓
         public AddWorkWindowViewModel(Window addWorkoutWindow)
         {
-            _addWorkoutWindow = addWorkoutWindow;
+            this._addWorkoutWindow = addWorkoutWindow;
+
+            // Sätter fokus på inmatningen för kommentar
+            IsNotesFocused = true;
 
             // Undviker nullvarningar
             selectedWorkoutType = string.Empty;
             notesInput = string.Empty;
+
+            // Kollar om det finns en kopierad träning
+            if (Manager.Instance.CopiedWorkout == null)
+            {
+                PasteVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                PasteVisibility = Visibility.Visible;
+            }
 
             // Instansierar listor med värden
             WorkoutTypes = new ObservableCollection<string> { "Cardio Workout", "Strength Workout" };
