@@ -18,7 +18,7 @@ namespace Newton_Projektuppgift01_FitTrack.Model
         public override int CalculateCaloriesBurned()
         {
             // Returnera en generell uträkning baserat på medelpersonen
-            return Repetition * 10;
+            return Repetition * 20;
         }
 
         // Överskuggande metod som klonar en träning och möjliggör tillfällig redigering
